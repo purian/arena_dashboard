@@ -24,6 +24,7 @@ export default class EditUser extends Component {
     componentDidMount() {
         const userId = this.props.match.params.id
         getSingleUser(userId).then(resp => {
+            debugger
             this.setState({
                 userName: resp.data.name,
                 email: resp.data.email,

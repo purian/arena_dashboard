@@ -38,6 +38,7 @@ class UserTable extends Component {
     componentDidMount() {
         const { currentPage, searchValue } = this.state;
         getUsers(PAGE_LIMIT, currentPage, searchValue).then(resp => {
+            debugger
             toast.success('Success', {
                 position: "top-right",
                 autoClose: 5000,

@@ -65,6 +65,10 @@ class EditAccount extends Component {
                 userName: value,
                 slug: value.replace(/\s+/g, '-').toLowerCase()
             })
+        }else{
+            this.setState({
+                [type]: value
+            })
         }
     }
     handleAdmins = (e, newValue) => {
@@ -92,15 +96,15 @@ class EditAccount extends Component {
         const acntId = this.props.match.params.id
         const { userName, owner, admins, active, slug , coverURL , iconURL} = this.state;
         let cover ={
-            original: coverURL,
+            original: coverURL || "https://s3.arena.shabloool.co.il/uploads/5f68f9aaf778e2149dc5feb1/QPOqKNTA39rXxrBsCYLnyTFn/S5iJwHwLqEHTDRm5v_ALfKea/Ab-0tZh1SWyvFhmI.jpg",
             sizes: {
-                "720x360": coverURL,
+                "720x360": coverURL || "https://s3.arena.shabloool.co.il/uploads/5f68f9aaf778e2149dc5feb1/QPOqKNTA39rXxrBsCYLnyTFn/S5iJwHwLqEHTDRm5v_ALfKea/Ab-0tZh1SWyvFhmI.jpg",
             }
         }
         let icon ={
-            original: iconURL,
+            original: iconURL || "https://s3.arena.shabloool.co.il/uploads/5f68f9aaf778e2149dc5feb1/QPOqKNTA39rXxrBsCYLnyTFn/S5iJwHwLqEHTDRm5v_ALfKea/Ab-0tZh1SWyvFhmI.jpg",
             sizes: {
-                "720x360": iconURL,
+                "240x240": iconURL || "https://s3.arena.shabloool.co.il/uploads/5f68f9aaf778e2149dc5feb1/QPOqKNTA39rXxrBsCYLnyTFn/S5iJwHwLqEHTDRm5v_ALfKea/Ab-0tZh1SWyvFhmI.jpg",
             }
         }
         payload.name = userName;
@@ -108,8 +112,8 @@ class EditAccount extends Component {
         payload.owner = owner.id;
         payload.admins = admins;
         payload.active = active;
-        payload.cover= cover
-        payload.icon = icon
+        // payload.cover= cover
+        // payload.icon = icon
         debugger
         editAccount(acntId, payload).then(resp => {
             toast.success('Success', {
@@ -177,6 +181,7 @@ class EditAccount extends Component {
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
+                                    onChange={(e) => this.handleChange("slug", e.target.value)}
                                 />
 
                                 <Autocomplete
