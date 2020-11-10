@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+.selectAccount .MuiInputBase-input{
+  padding: 0px !important;
+}
+.selectAccount .MuiFormLabel-root{
+  line-height: 0;
+}
+.noData{
+  font-size: 20px;
+    text-align: center;
+    font-weight: 600;
+}
+.searchInput .MuiIconButton-root{
+  padding: 0 !important;
+}
