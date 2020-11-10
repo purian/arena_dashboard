@@ -11,7 +11,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import ArenaUploader from "../../../common/arenaUploader/arenaUploader"
+import Typography from '@material-ui/core/Typography';
 class EditAccount extends Component {
     state = {
         userData: [],
@@ -89,12 +90,26 @@ class EditAccount extends Component {
     handleSave = () => {
         const payload = {};
         const acntId = this.props.match.params.id
-        const { userName, owner, admins, active, slug } = this.state;
+        const { userName, owner, admins, active, slug , coverURL , iconURL} = this.state;
+        let cover ={
+            original: coverURL,
+            sizes: {
+                "720x360": coverURL,
+            }
+        }
+        let icon ={
+            original: iconURL,
+            sizes: {
+                "720x360": iconURL,
+            }
+        }
         payload.name = userName;
         payload.slug = slug;
         payload.owner = owner.id;
         payload.admins = admins;
-        payload.active = active
+        payload.active = active;
+        payload.cover= cover
+        payload.icon = icon
         debugger
         editAccount(acntId, payload).then(resp => {
             toast.success('Success', {
@@ -120,10 +135,12 @@ class EditAccount extends Component {
         })
     }
 
-    getOptionValue =(owner) =>{
 
-    }
-
+    onUploadComplete = (response, type) => {
+        this.setState({
+          [type]: response?.data?.original,
+        });
+      };
 
     render() {
         const { userData, userName, ownerName, slug, data, active, message } = this.state;
@@ -189,6 +206,30 @@ class EditAccount extends Component {
                                         />
                                     )}
                                 />
+                                <Typography variant="body2" className="mgTop12">
+                                    Account Cover Uploader
+                                </Typography>
+
+                                <ArenaUploader
+                                    isMultiple={false}
+                                    fileURL={this.state.coverURL && this.state.coverURL}
+                                    extensions={["jpg", "jpeg", "png"]}
+                                    onUploadComplete={(response) => {
+                                        this.onUploadComplete(response, "coverURL");
+                                    }}
+                                />
+                                <Typography variant="body2" className="mgTop12">
+                                    Icon Uploader
+                                </Typography>
+                                <ArenaUploader
+                                    isMultiple={false}
+                                    fileURL={this.state.iconURL && this.state.iconURL}
+                                    extensions={["jpg", "jpeg", "png"]}
+                                    onUploadComplete={(response) => {
+                                        this.onUploadComplete(response, "iconURL");
+                                    }}
+                                />
+
                                 <FormControlLabel style={{ width: "100%" }}
                                     control={
                                         <Checkbox

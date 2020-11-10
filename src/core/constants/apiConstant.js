@@ -28,5 +28,7 @@ export const API_ENDPOINTS = {
     BLOCK_USER: `${baseUrl}/users/<USER_ID>/blocked`
   },
   MISC: {
+    UPLOAD_IMAGE: `${baseUrl}/uploads/image`
+
   }
 }

@@ -27,3 +27,18 @@ code {
 .searchInput .MuiIconButton-root{
   padding: 0 !important;
 }
+
+.uploaderMainContainer {
+  height: 50px;
+  width: 100%;
+  border: 2px dashed #9a9a9a;
+  background: #93a2fc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.mgTop12{
+  margin-top: 12px !important;
+}

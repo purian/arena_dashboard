@@ -9,6 +9,7 @@ const POST_ACCOUNT = API_ENDPOINTS.ACCOUNT.POST_ACCOUNT;
 const EDIT_ACCOUNT = API_ENDPOINTS.ACCOUNT.EDIT_ACCOUNT;
 const SEARCH_ACCOUNT = API_ENDPOINTS.ACCOUNT.SEARCH_ACCOUNTS;
 
+
 export function getAccounts(limit, offset, seacrhPrm) {
     const headers = getAuthHeader()
     const url = GET_ACCOUNTS.replace("<LIMIT>", limit).replace("<OFFSET>", offset).replace("<SEARCH_PARM>", seacrhPrm)
