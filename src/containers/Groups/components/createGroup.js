@@ -6,7 +6,7 @@ export default class CreateGroup extends GroupBase {
   state = {
     account: null,
     name: null,
-    users: null,
+    users: [],
     currentPage: 0,
     accountsData: [],
     usersData: [],

@@ -36,5 +36,8 @@ export const API_ENDPOINTS = {
     SEARCH_GROUPS_BY_ACCOUNT_ID: `${baseUrl}/accounts/<ACCOUNT_ID>/groups?imit=<LIMIT>&offset=<OFFSET>&search=<SEARCH_PARM>`,
     GET_GROUP : `${baseUrl}/groups/<GROUP_ID>`,
     EDIT_GROUP: `${baseUrl}/groups/<GROUP_ID>`
+  },
+  CATEGORIES: {
+    GET_CATEGORIES_BY_ACCOUNT_ID: `${baseUrl}/accounts/<ACCOUNT_ID>/categories?imit=<LIMIT>&offset=<OFFSET>&search=<SEARCH_PARM>`,
   }
 }
