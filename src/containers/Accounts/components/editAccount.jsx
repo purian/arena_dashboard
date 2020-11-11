@@ -114,6 +114,7 @@ class EditAccount extends Component {
         payload.active = active;
         // payload.cover= cover
         // payload.icon = icon
+        //TODO: Uncomment this and coverURL and iconURL to be fixed
         debugger
         editAccount(acntId, payload).then(resp => {
             toast.success('Success', {
