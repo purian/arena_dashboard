@@ -30,5 +30,9 @@ export const API_ENDPOINTS = {
   MISC: {
     UPLOAD_IMAGE: `${baseUrl}/uploads/image`
 
+  },
+  GROUPS: {
+    POST_GROUPS: `${baseUrl}/groups`,
+    SEARCH_GROUPS_BY_ACCOUNT_ID: `${baseUrl}/accounts/<ACCOUNT_ID>/groups?imit=<LIMIT>&offset=<OFFSET>&search=<SEARCH_PARM>`
   }
 }

@@ -1,0 +1,17 @@
+import http from 'axios';
+import { API_ENDPOINTS } from '../constants/apiConstant'
+import { handleResponse, handleError } from '../utility'
+import { getAuthHeader } from "../utility/authHeader"
+const POST_GROUPS = API_ENDPOINTS.GROUPS.POST_GROUPS;
+const SEARCH_GROUPS_BY_ACCOUNT_ID = API_ENDPOINTS.GROUPS.SEARCH_GROUPS_BY_ACCOUNT_ID
+export function postGroups(payload) {
+    const headers = getAuthHeader()
+    return http.post(POST_GROUPS, payload, { headers })
+}
+
+export function searchGroupByAccountId(value, accountId, limit, offset) {
+    const headers = getAuthHeader()
+    const url = SEARCH_GROUPS_BY_ACCOUNT_ID.replace("<ACCOUNT_ID>", accountId).replace("<SEARCH_PARM>", value).replace("<LIMIT>", limit).replace("<OFFSET>", offset)
+    debugger
+    return http.get(url, { headers })
+}

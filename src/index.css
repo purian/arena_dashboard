@@ -42,3 +42,6 @@ code {
 .mgTop12{
   margin-top: 12px !important;
 }
+ .displayFlex{
+   display: flex;
+ }

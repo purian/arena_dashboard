@@ -16,11 +16,11 @@ render(){
             color="default"
             onClick={() => this.props.history.push("/admin/groups/new")}
             startIcon={<CloudUploadIcon />}
-            style={{ marginBottom: "20px" }}
+            style={{ marginBottom: "20px", float: "left" }}
         >
             Create
         </Button>
-        {/* <GroupsTable /> */}
+        <GroupsTable />
     </React.Fragment>
   );
 }
