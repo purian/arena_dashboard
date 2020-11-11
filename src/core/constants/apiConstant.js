@@ -33,6 +33,8 @@ export const API_ENDPOINTS = {
   },
   GROUPS: {
     POST_GROUPS: `${baseUrl}/groups`,
-    SEARCH_GROUPS_BY_ACCOUNT_ID: `${baseUrl}/accounts/<ACCOUNT_ID>/groups?imit=<LIMIT>&offset=<OFFSET>&search=<SEARCH_PARM>`
+    SEARCH_GROUPS_BY_ACCOUNT_ID: `${baseUrl}/accounts/<ACCOUNT_ID>/groups?imit=<LIMIT>&offset=<OFFSET>&search=<SEARCH_PARM>`,
+    GET_GROUP : `${baseUrl}/groups/<GROUP_ID>`,
+    EDIT_GROUP: `${baseUrl}/groups/<GROUP_ID>`
   }
 }

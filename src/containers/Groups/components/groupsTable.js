@@ -29,18 +29,23 @@ const PAGE_LIMIT = 20;
 const DATA = [
   {
     name: "Group 1",
+    id: "123"
   },
   {
     name: "Group 2",
+    id: "456"
   },
   {
     name: "Group 3",
+    id: "789"
   },
   {
     name: "Group 4",
+    id: "011"
   },
   {
     name: "Group 5",
+    id: "511"
   },
 ];
 class GroupsTable extends Component {
@@ -221,7 +226,7 @@ class GroupsTable extends Component {
                     <TableCell align="center">
                       <Button
                         onClick={() =>
-                          this.props.history.push(`/admin/accounts/${item.id}`)
+                          this.props.history.push(`/admin/groups/${item.id}`)
                         }
                         color="primary"
                       >

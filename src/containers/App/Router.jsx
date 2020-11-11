@@ -17,6 +17,7 @@ import { getRole } from '../../core/services/authenticationServices'
 import PrivateRoute from './PrivateRoutes'
 import { isValid } from '../../core/services/authenticationServices'
 import CreateGroup from "../Groups/components/createGroup"
+import EditGroup from "../Groups/components/editGroup"
 const Routes = () => (
   <Switch>
     <PrivateRoute exact path="/admin/user" component={User} />
@@ -28,6 +29,8 @@ const Routes = () => (
     <PrivateRoute path="/admin/subjects" component={Subjects} />
     <PrivateRoute exact path="/admin/groups" component={Groups} />
     <PrivateRoute path="/admin/groups/new" component={CreateGroup} />
+    <PrivateRoute path="/admin/groups/:id" component={EditGroup} />
+
 
     <PrivateRoute path="/admin/categories" component={Categories} />
 
