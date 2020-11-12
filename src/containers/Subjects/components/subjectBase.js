@@ -78,7 +78,7 @@ const CHOICE ={
   max: 0,
 }
 
-const ALLOCATION ={
+const ALLOCATION = {
   options: [
     {
       name: "",
@@ -87,8 +87,15 @@ const ALLOCATION ={
       name: "",
     },
   ],
-  min: 0,
-  max: 0,
+  total: "",
+  min: "",
+  max: "",
+  step: "",
+};
+
+const FORM_TYPE ={
+  CHOICE: "choice",
+  ALLOCATION: "allocation"
 }
 
 const CustomOption = ({ innerProps, data, isFocused }) => {
@@ -298,7 +305,7 @@ export default class SubjectBase extends Component {
               InputLabelProps={{
                 shrink: true,
               }}
-              onChange={(e) => this.onChangeOptionsTextField(e, index, "choice")}
+              onChange={(e) => this.onChangeOptionsTextField(e, index, FORM_TYPE.CHOICE)}
             />
 
             <ArenaDropdown
@@ -311,7 +318,7 @@ export default class SubjectBase extends Component {
                 this.onChangeIconDropdown(
                   selectedOption,
                   index,
-                  "choice"
+                  FORM_TYPE.CHOICE
                 );
               }}
               placeholder={"Icon"}
@@ -329,7 +336,7 @@ export default class SubjectBase extends Component {
     return(
       <>
           <Button
-            onClick={() => this.addOption("choice")}
+            onClick={() => this.addOption(FORM_TYPE.CHOICE)}
             id="addChoiceOption"
             fullWidth={true}
             className="mgTop8"
@@ -350,7 +357,7 @@ export default class SubjectBase extends Component {
             InputLabelProps={{
               shrink: true,
             }}
-            onChange={(e) => this.onChangeChoiceAndAllocationTextfields(e,"min","choice")}
+            onChange={(e) => this.onChangeChoiceAndAllocationTextfields(e,"min",FORM_TYPE.CHOICE)}
           />
           <TextField
             id="maximum"
@@ -365,7 +372,7 @@ export default class SubjectBase extends Component {
             InputLabelProps={{
               shrink: true,
             }}
-            onChange={(e) => this.onChangeChoiceAndAllocationTextfields(e,"max","choice")}
+            onChange={(e) => this.onChangeChoiceAndAllocationTextfields(e,"max",FORM_TYPE.CHOICE)}
           />
 
         </div>
@@ -376,7 +383,104 @@ export default class SubjectBase extends Component {
   renderAllocationFields = () => {
     return(
       <React.Fragment>
-        Allocation Fields
+        {this.state.allocation.options.map((item, index) =>{
+          return <div className="displayFlex">
+          <TextField
+            id={`Title ${index}`}
+            label={`Title`}
+            className="textTransform flex1"
+            style={{ margin: 8 }}
+            placeholder={`Title`}
+            value={item.name}
+            fullWidth
+            variant="outlined"
+            margin="normal"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            onChange={(e) => this.onChangeOptionsTextField(e, index, FORM_TYPE.ALLOCATION)}
+          />
+          </div>
+        })}
+        <Button
+          onClick={() => this.addOption(FORM_TYPE.ALLOCATION)}
+          id="addChoiceOption"
+          fullWidth={true}
+          className="mgTop8"
+        >
+          Add Option
+        </Button>
+
+        <div className="displayFlex mgTop8">
+          <TextField
+            id="step"
+            label="Step"
+            className="textTransform"
+            style={{ margin: 8 }}
+            placeholder="Step"
+            value={this.state.allocation.step}
+            fullWidth
+            variant="outlined"
+            margin="normal"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            onChange={(e) => this.onChangeChoiceAndAllocationTextfields(e,"step",FORM_TYPE.ALLOCATION)}
+          />
+
+          <TextField
+            id="total"
+            label="Total"
+            className="textTransform"
+            style={{ margin: 8 }}
+            placeholder="Total"
+            value={this.state.allocation.total}
+            fullWidth
+            variant="outlined"
+            margin="normal"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            onChange={(e) => this.onChangeChoiceAndAllocationTextfields(e,"total",FORM_TYPE.ALLOCATION)}
+          />
+
+          <TextField
+            id="min"
+            label="Min"
+            className="textTransform"
+            style={{ margin: 8 }}
+            placeholder="Min"
+            value={this.state.allocation.min}
+            fullWidth
+            variant="outlined"
+            margin="normal"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            onChange={(e) => this.onChangeChoiceAndAllocationTextfields(e,"min",FORM_TYPE.ALLOCATION)}
+          />
+
+          <TextField
+            id="max"
+            label="Max"
+            className="textTransform"
+            style={{ margin: 8 }}
+            placeholder="Max"
+            value={this.state.allocation.max}
+            fullWidth
+            variant="outlined"
+            margin="normal"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            onChange={(e) => this.onChangeChoiceAndAllocationTextfields(e,"max",FORM_TYPE.ALLOCATION)}
+          />
+
+          
+
+
+        </div>
+        
       </React.Fragment>
     )
   };

@@ -101,11 +101,11 @@ code {
 
 .arena-dropdown__menu-list {
   text-align: end;
-  background: #262833 !important;
+  background: #93a2fc !important;
 }
 .arena-dropdown__control {
   display: flex;
-  background: #262833 !important;
+  background: #93a2fc !important;
   height: 100%;
   border-radius: 8px !important;
   border: 1px solid #9a9a9a !important;
@@ -122,13 +122,13 @@ code {
 }
 .arena-dropdown__option {
   color: #ffffff !important;
-  background: #262833 !important;
+  background: #93a2fc !important;
 }
 .arena-dropdown__option:hover,
 .arena-dropdown__option:focus,
 .arena-dropdown__option:active,
 .arena-dropdown__option:visited {
-  background: #262833 !important;
+  background: #93a2fc !important;
   opacity: 0.5 !important;
 }
 .arena-dropdown__input #react-select-2-input {
