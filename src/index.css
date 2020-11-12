@@ -87,3 +87,66 @@ code {
 }
 
 /*------------- Arena Date Picker Ends --------------*/
+
+.halfFlex{
+  flex: 0.5;
+}
+
+/* ------------------ Arena Dropdown starts ----------*/
+.arena-dropdown__menu {
+  min-width: 200px;
+  z-index: 9999999 !important;
+  overflow: visible;
+}
+
+.arena-dropdown__menu-list {
+  text-align: end;
+  background: #262833 !important;
+}
+.arena-dropdown__control {
+  display: flex;
+  background: #262833 !important;
+  height: 100%;
+  border-radius: 8px !important;
+  border: 1px solid #9a9a9a !important;
+}
+.arena-dropdown__value-container {
+  justify-content: flex-end;
+}
+.arena-dropdown__menu-list {
+  border: 1px solid #9a9a9a !important;
+  border-radius: 8px;
+}
+.arena-dropdown__placeholder {
+  color: #ffffff !important;
+}
+.arena-dropdown__option {
+  color: #ffffff !important;
+  background: #262833 !important;
+}
+.arena-dropdown__option:hover,
+.arena-dropdown__option:focus,
+.arena-dropdown__option:active,
+.arena-dropdown__option:visited {
+  background: #262833 !important;
+  opacity: 0.5 !important;
+}
+.arena-dropdown__input #react-select-2-input {
+  color: #ffffff !important;
+}
+.arena-dropdown__single-value {
+  color: #ffffff !important;
+}
+.arena-dropdown__indicator-separator {
+  display: none;
+}
+
+/* ------------------ Arena Dropdown ends ----------*/
+
+.flex1{
+  flex: 1;
+}
+
+.mgTop8{
+  margin-top: 8px !important;
+}

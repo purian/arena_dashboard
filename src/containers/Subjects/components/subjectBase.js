@@ -18,7 +18,8 @@ import {
 import { getAccounts } from "../../../core/services/accountsServices";
 import { fetchCategoryByAccountId } from "../../../core/services/categoriesServices";
 import { getUsers } from "../../../core/services/usersServices";
-
+import Icon from "@material-ui/core/Icon";
+import ArenaDropdown from "../../../common/arenaDropdown/arenaDropdown"
 const PAGE_LIMIT = 20;
 
 const STATUS_DATA = [
@@ -63,6 +64,46 @@ const IMAGE_DROPDOWN = [
     label: "fas fa-smile",
   },
 ];
+
+const CHOICE ={
+  options: [
+    {
+      name: "",
+    },
+    {
+      name: "",
+    },
+  ],
+  min: 0,
+  max: 0,
+}
+
+const ALLOCATION ={
+  options: [
+    {
+      name: "",
+    },
+    {
+      name: "",
+    },
+  ],
+  min: 0,
+  max: 0,
+}
+
+const CustomOption = ({ innerProps, data, isFocused }) => {
+  //TODO: bring label from translation for aria label
+  return (
+    <div
+      className={`dropDownIconsContainer reverse ${isFocused && "border"}`}
+      {...innerProps}
+      aria-label={data.label}
+    >
+      <Icon className={`${data.value} dropDownIcon`}></Icon>
+      <span className="dullWhite">{data.label}</span>{" "}
+    </div>
+  );
+};
 
 export default class SubjectBase extends Component {
   handleOptionChange = (e, newValue, type) => {
@@ -189,7 +230,168 @@ export default class SubjectBase extends Component {
     return data[0];
   };
 
-  renderMultiChoiceFields = () => {};
+  onChangeOptionsTextField = (e, index, type) => {
+    let dataCopy = Object.assign({}, this.state[type]);
+    dataCopy.options[index].name = e.target.value;
+    this.setState({
+      [type]: dataCopy,
+    });
+  };
+
+  getDropdownValue = (icon) => {
+    let iconOption = {
+      value: icon,
+      label: (
+        <div>
+          <Icon className={`${icon} dropDownIcon`}></Icon>
+          <span>{icon}</span>{" "}
+        </div>
+      ),
+    };
+    debugger
+    return iconOption;
+  };
+
+  onChangeIconDropdown = (selectedOption, index, type) => {
+    debugger
+    let dataCopy = Object.assign({}, this.state[type]);
+    dataCopy.options[index].icon = selectedOption.value;
+    this.setState({
+      [type]: dataCopy,
+    });
+  };
+
+  onChangeChoiceAndAllocationTextfields = (e, field, type) => {
+    let dataCopy = Object.assign({}, this.state[type]);
+    dataCopy[field] = +e.target.value;
+    this.setState({
+      [type]: dataCopy,
+    });
+  };
+
+  addOption = (type) => {
+    let dataCopy = Object.assign({}, this.state[type]);
+    let newData = {
+      name: "",
+    };
+    dataCopy.options.push(newData);
+    this.setState({
+      [type]: dataCopy,
+    });
+  };
+
+  renderMultiChoiceFields = () => {
+    return(
+      <React.Fragment>
+        {this.state.choice.options.map((item, index) =>{
+          return <div className="displayFlex">
+            <TextField
+              id={`Title ${index}`}
+              label={`Title`}
+              className="textTransform flex1"
+              style={{ margin: 8 }}
+              placeholder={`Title`}
+              value={item.name}
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              onChange={(e) => this.onChangeOptionsTextField(e, index, "choice")}
+            />
+
+            <ArenaDropdown
+              components={{ Option: CustomOption }}
+              options={IMAGE_DROPDOWN}
+              selectedOption={this.getDropdownValue(
+                this.state.choice.options[index].icon
+              )}
+              onChange={(selectedOption) => {
+                this.onChangeIconDropdown(
+                  selectedOption,
+                  index,
+                  "choice"
+                );
+              }}
+              placeholder={"Icon"}
+            />
+
+        </div>
+        })}
+
+        {this.renderMultiChoiceConstantFields()}
+      </React.Fragment>
+    )
+  };
+
+  renderMultiChoiceConstantFields =() =>{
+    return(
+      <>
+          <Button
+            onClick={() => this.addOption("choice")}
+            id="addChoiceOption"
+            fullWidth={true}
+            className="mgTop8"
+          >
+            Add Option
+          </Button>
+        <div className="displayFlex mgTop8">
+          <TextField
+            id="minimum"
+            label="Minimum"
+            className="textTransform"
+            style={{ margin: 8 }}
+            placeholder="Minimum"
+            value={this.state.choice.min}
+            fullWidth
+            variant="outlined"
+            margin="normal"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            onChange={(e) => this.onChangeChoiceAndAllocationTextfields(e,"min","choice")}
+          />
+          <TextField
+            id="maximum"
+            label="Maximum"
+            className="textTransform"
+            style={{ margin: 8 }}
+            placeholder="Maximum"
+            value={this.state.choice.max}
+            fullWidth
+            variant="outlined"
+            margin="normal"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            onChange={(e) => this.onChangeChoiceAndAllocationTextfields(e,"max","choice")}
+          />
+
+        </div>
+      </>
+    )
+  }
+
+  renderAllocationFields = () => {
+    return(
+      <React.Fragment>
+        Allocation Fields
+      </React.Fragment>
+    )
+  };
+
+  changeFields =(value) =>{
+    if(value === FORM_TYPE_MAP.choice){
+      this.setState({
+        choice: CHOICE
+      })
+    }else if( value === FORM_TYPE_MAP.allocation){
+      this.setState({
+        allocation: ALLOCATION
+      })
+    }
+  }
 
   renderAccountDropdown = () => {
     return (
@@ -244,8 +446,9 @@ export default class SubjectBase extends Component {
         id="type"
         options={FORM_TYPE_DATA}
         getOptionLabel={(option) => option.name}
-        onChange={(event, newValue) =>
+        onChange={(event, newValue) =>{
           this.handleOptionChange(event, newValue, "type")
+          this.changeFields(newValue.value)}
         }
         renderInput={(params) => (
           <TextField
