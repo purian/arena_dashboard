@@ -295,6 +295,16 @@ export default class SubjectBase extends Component {
     });
   };
 
+  onClickDeleteOptions=(index, type)=>{
+    if (index > 0) {
+      let dataCopy = Object.assign({}, this.state[type]);
+      dataCopy.options.splice(index, 1);
+      this.setState({
+        [type]: dataCopy,
+      });
+    }
+  }
+
   renderMultiChoiceFields = () => {
     return (
       <React.Fragment>
@@ -334,6 +344,10 @@ export default class SubjectBase extends Component {
                 }}
                 placeholder={"Icon"}
               />
+
+              {index > 1 && <Button onClick={() =>this.onClickDeleteOptions(index, FORM_TYPE.CHOICE)}>
+                Delete
+              </Button>}
             </div>
           );
         })}
@@ -425,6 +439,9 @@ export default class SubjectBase extends Component {
                   this.onChangeOptionsTextField(e, index, FORM_TYPE.ALLOCATION)
                 }
               />
+              {index > 1 && <Button onClick={() =>this.onClickDeleteOptions(index, FORM_TYPE.ALLOCATION)}>
+                Delete
+              </Button>}
             </div>
           );
         })}
