@@ -1,18 +1,8 @@
 import React, { Component, Fragment } from "react";
 import SubjectBase from "./subjectBase"
 import {postSubject} from "../../../core/services/subjectsServices"
+import {SUBJECT_STATUS, FORM_TYPE_MAP} from "../../../core/constants/constant"
 
-const SUBJECT_STATUS = [
-    "FINISHED",
-    "PUBLISHED",
-    "DRAFT"
-];
-
-const FORM_TYPE_MAP = {
-    discussion: "FORUM",
-    allocation: "ALLOCATION",
-    choice: "CHOICE",
-  };
 
 export default class CreateSubject extends SubjectBase {
     state = {
@@ -22,18 +12,19 @@ export default class CreateSubject extends SubjectBase {
         accountsData: [],
         adminsData: [],
         description: null,
-        iconURL: null,
-        coverURL: null,
         admins: [],
 
-        status: SUBJECT_STATUS[2],
+        status: this.getStatusType(SUBJECT_STATUS.DRAFT),
         startDate: new Date(),
         endDate: new Date(),
         conclusion: null,
         private: false,
         showReport: false,
         categoryData: [],
-        category: null
+        category: null,
+        question: null,
+        type: this.getFormType(FORM_TYPE_MAP.discussion),
+        cover: null
       };
 
       handleSave = async () => {

@@ -5,7 +5,7 @@ import { getAuthHeader } from "../utility/authHeader"
 
 const GET_SUBJECTS_BY_ACCOUNT_ID = API_ENDPOINTS.SUBJECTS.GET_SUBJECTS_BY_ACCOUNT_ID
 const POST_SUBJECT = API_ENDPOINTS.SUBJECTS.POST_SUBJECT
-
+const GET_SUBJECT_BY_ID = API_ENDPOINTS.SUBJECTS.GET_SUBJECT_BY_ID
 
 export function getSubjectsByAccountId(accountId, limit, offset, value) {
     const headers = getAuthHeader()
@@ -19,3 +19,9 @@ export function postSubject(payload) {
     return http.post(POST_SUBJECT, payload, { headers })
 }
 
+export function fetchSubjectById(subjectId) {
+    const headers = getAuthHeader()
+    const url = GET_SUBJECT_BY_ID.replace("<SUBJECT_ID>", subjectId)
+    debugger
+    return http.get(url, { headers })
+}

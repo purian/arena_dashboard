@@ -14,14 +14,21 @@ import ArenaDatePicker from "../../../common/arenaDatePicker/arenaDatePicker"
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import {fetchCategoryByAccountId} from "../../../core/services/categoriesServices"
+import {SUBJECT_STATUS, FORM_TYPE_MAP} from "../../../core/constants/constant"
 
 const PAGE_LIMIT = 20;
 
-const SUBJECT_STATUS = [
-    "FINISHED",
-    "PUBLISHED",
-    "DRAFT"
-];
+const STATUS_DATA=[
+  {"name":SUBJECT_STATUS.DRAFT, "value":SUBJECT_STATUS.DRAFT },
+  {"name":SUBJECT_STATUS.PUBLISHED, "value":SUBJECT_STATUS.PUBLISHED },
+  {"name":SUBJECT_STATUS.FINISHED, "value":SUBJECT_STATUS.FINISHED },
+]
+
+const FORM_TYPE_DATA=[
+  {"name":FORM_TYPE_MAP.discussion, "value":FORM_TYPE_MAP.discussion },
+  {"name":FORM_TYPE_MAP.allocation, "value":FORM_TYPE_MAP.allocation },
+  {"name":FORM_TYPE_MAP.choice, "value":FORM_TYPE_MAP.choice },
+]
 
 export default class SubjectBase extends Component {
 
@@ -106,10 +113,54 @@ export default class SubjectBase extends Component {
     });
   };
 
+  onUploadComplete = (response, type) => {
+    if (!this.state[type]) {
+      let files = [];
+      files.push(response.data);
+      this.setState({
+        [type]: files,
+      });
+    } else {
+      let fileCopy = Object.assign([], this.state[type]);
+      fileCopy.push(response.data);
+      this.setState({
+        [type]: fileCopy,
+      });
+    }
+  };
+
+  onUploadBackgroundComplete = (response) => {
+    let uploadedURL = response.data && response.data.original;
+    let cover = {
+      original: uploadedURL && uploadedURL,
+      sizes: {
+        "720x1080": uploadedURL && uploadedURL,
+      },
+    };
+    this.setState({
+      cover: cover,
+    });
+  };
+
+  getFormType =(type) =>{
+    let data =  FORM_TYPE_DATA.filter((singleElement) =>{
+      return singleElement.value === type
+    })
+    debugger
+    return data[0]
+  }
+
+  getStatusType =(status) =>{
+    let data =  STATUS_DATA.filter((singleElement) =>{
+      return singleElement.value === status
+    })
+    debugger
+    return data[0]
+  }
 
 
   renderMainContent() {
-    const { adminsData, accountsData, name, description, categoryData, conclusion } = this.state;
+    const { adminsData, accountsData, name, description, categoryData, conclusion, question } = this.state;
     return (
       <div>
         <ToastContainer />
@@ -157,9 +208,28 @@ export default class SubjectBase extends Component {
                 />
 
                 <Autocomplete
+                  id="type"
+                  options={FORM_TYPE_DATA}
+                  getOptionLabel={(option) => option.name}
+                  onChange={(event, newValue) =>
+                    this.handleOptionChange(event, newValue, "type")
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      style={{ margin: 8 }}
+                      label="Type"
+                    //   onChange={(e) => this.handleAccounts(e.target.value)}
+                      variant="outlined"
+                    />
+                  )}
+                  value={this.state.type}
+                />
+
+                <Autocomplete
                   id="status"
-                  options={SUBJECT_STATUS}
-                  getOptionLabel={(option) => option}
+                  options={STATUS_DATA}
+                  getOptionLabel={(option) => option.name}
                   onChange={(event, newValue) =>
                     this.handleOptionChange(event, newValue, "status")
                   }
@@ -217,6 +287,22 @@ export default class SubjectBase extends Component {
                 />
 
                 <TextField
+                  id="question"
+                  label="Question"
+                  className="textTransform"
+                  style={{ margin: 8 }}
+                  placeholder="Question"
+                  value={question}
+                  fullWidth
+                  variant="outlined"
+                  margin="normal"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  onChange={(e) => this.handleChange("question", e.target.value)}
+                />
+
+                <TextField
                   id="description"
                   label="Description"
                   className="textTransform"
@@ -230,10 +316,12 @@ export default class SubjectBase extends Component {
                     shrink: true,
                   }}
                   onChange={(e) => this.handleChange("description", e.target.value)}
+                  multiline
+                  rows={4}
                 />
                 <div className="margin8 fullWidth">
                     <Typography variant="body2" className="mgTop12">
-                        Files
+                        Attachments
                     </Typography>
 
                     <ArenaUploader
@@ -241,10 +329,27 @@ export default class SubjectBase extends Component {
                         fileURL={this.state.iconURL && this.state.iconURL}
                         extensions={["jpg", "jpeg", "png"]}
                         onUploadComplete={(response) => {
-                            this.onUploadComplete(response, "iconURL");
+                          this.onUploadComplete(response, "files");
                         }}
                     />
                 </div>
+
+                <div className="margin8 fullWidth">
+                    <Typography variant="body2" className="mgTop12">
+                        Background Image
+                    </Typography>
+
+                    <ArenaUploader
+                        isMultiple={true}
+                        fileURL={this.state.iconURL && this.state.iconURL}
+                        extensions={["jpg", "jpeg", "png"]}
+                        onUploadComplete={(response) => {
+                          this.onUploadBackgroundComplete(response, "backgroundCover");
+                        }}
+                    />
+                </div>
+
+
                 
                 <TextField
                   id="conclusion"
