@@ -909,6 +909,15 @@ export default class SubjectBase extends Component {
     });
   };
 
+  onClickDeleteConclusion =(index) =>{
+    let conclusionCopy = Object.assign([], this.state.conclusion);
+    conclusionCopy.splice(index, 1);
+
+    this.setState({
+      conclusion: conclusionCopy,
+    });
+  }
+
 
   renderConclusion = () => {
     return this.state.conclusion.map((singleConclusion, index) => {
@@ -922,6 +931,8 @@ export default class SubjectBase extends Component {
             getDropdownValue={this.getDropdownValue}
             onChangeConclusionDropdown={this.onChangeConclusionDropdown}
             onUploadComplete={this.onUploadComplete}
+            length = {this.state.conclusion?.length}
+            onClickDeleteConclusion={this.onClickDeleteConclusion}
           />
         </>
       );

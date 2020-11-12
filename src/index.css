@@ -47,7 +47,7 @@ code {
 }
 
 .margin8{
-  margin: 8px;
+  margin: 8px !important;
 }
 
 .fullWidth{
@@ -149,4 +149,19 @@ code {
 
 .mgTop8{
   margin-top: 8px !important;
+}
+
+.conclusionDropdown .margin8{
+  margin: 0 !important;
+}
+
+.conclusionDropdown{
+  margin: 8px;
+  width: 100%;
+}
+
+#conclusionHeader{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }

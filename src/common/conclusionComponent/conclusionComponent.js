@@ -3,6 +3,8 @@ import TextField from "@material-ui/core/TextField";
 import ArenaDropdown from "../arenaDropdown/arenaDropdown"
 import {CustomOption, IMAGE_DROPDOWN} from "../../containers/Subjects/components/subjectBase"
 import ArenaUploader from "../arenaUploader/arenaUploader"
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 
 export default class ConclusionComponent extends React.Component{
 
@@ -67,7 +69,7 @@ export default class ConclusionComponent extends React.Component{
     }
 
     renderIconDropdown =() =>{
-        return (<div id="dropDown" className="dropdownContainer">
+        return (<div id="dropDown" className="dropdownContainer conclusionDropdown">
         <ArenaDropdown
           components={{ Option: CustomOption }}
           options={IMAGE_DROPDOWN}
@@ -88,20 +90,37 @@ export default class ConclusionComponent extends React.Component{
 
     renderUploader =() =>{
         return(
-            <ArenaUploader
-            isMultiple={true}
-            docUploader={true}
-            extensions={["pdf", "jpeg", "jpg", "png"]}
-            onUploadComplete={(response) => {
-              this.props.onUploadComplete(response, "conclusionFiles");
-            }}
-          />
+            <div className="margin8 fullWidth">
+                <ArenaUploader
+                isMultiple={true}
+                docUploader={true}
+                extensions={["pdf", "jpeg", "jpg", "png"]}
+                onUploadComplete={(response) => {
+                  this.props.onUploadComplete(response, "conclusionFiles");
+                }}
+              />
+
+            </div>
+        )
+    }
+
+    renderHeader =() =>{
+        return(
+            <div id="conclusionHeader" className="margin8" >
+                <Typography variant="h6">
+                    Conclusion {this.props.index + 1}
+                </Typography>
+                {this.props.length > 1 &&  <Button onClick={() =>this.props.onClickDeleteConclusion(this.props.index)}>
+                    Delete
+                </Button>}
+            </div>
         )
     }
 
     render(){
         return(
             <React.Fragment>
+                {this.renderHeader()}
                 {this.renderDescription()}
                 {this.renderIconDropdown()}
                 {this.renderTitle()}
