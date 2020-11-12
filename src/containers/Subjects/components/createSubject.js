@@ -30,29 +30,19 @@ export default class CreateSubject extends SubjectBase {
         question: null,
         type: this.getFormType(FORM_TYPE_MAP.discussion),
         cover: null,
-        showConclusion: false
+        showConclusion: false,
+        choice: null,
+        allocation: null
       };
 
       handleSave = async () => {
-        let cover ={
-            original: this.state.coverURL || "https://s3.arena.shabloool.co.il/uploads/5f68f9aaf778e2149dc5feb1/QPOqKNTA39rXxrBsCYLnyTFn/S5iJwHwLqEHTDRm5v_ALfKea/Ab-0tZh1SWyvFhmI.jpg",
-            sizes: {
-                "720x360": this.state.coverURL || "https://s3.arena.shabloool.co.il/uploads/5f68f9aaf778e2149dc5feb1/QPOqKNTA39rXxrBsCYLnyTFn/S5iJwHwLqEHTDRm5v_ALfKea/Ab-0tZh1SWyvFhmI.jpg",
-            }
-        }
-        let icon ={
-            original: this.state.iconURL || "https://s3.arena.shabloool.co.il/uploads/5f68f9aaf778e2149dc5feb1/QPOqKNTA39rXxrBsCYLnyTFn/S5iJwHwLqEHTDRm5v_ALfKea/Ab-0tZh1SWyvFhmI.jpg",
-            sizes: {
-                "240x240": this.state.iconURL || "https://s3.arena.shabloool.co.il/uploads/5f68f9aaf778e2149dc5feb1/QPOqKNTA39rXxrBsCYLnyTFn/S5iJwHwLqEHTDRm5v_ALfKea/Ab-0tZh1SWyvFhmI.jpg",
-            }
-        }
         let data = {
             account: this.state.account,
             category: this.state.category,
             startDate: this.state.startDate,
             endDate: this.state.endDate,
-            type: FORM_TYPE_MAP.discussion,
-            status: this.state.status,
+            type: this.state.type.value,
+            status: this.state.status.value,
             name: this.state.name,
             description: this.state.description,
             conclusion: this.state.conclusion,
@@ -60,13 +50,21 @@ export default class CreateSubject extends SubjectBase {
             private: this.state.private,
             files: [],
             experts: this.state.admins,
-            groups: this.state.groups
+            groups: this.state.groups,
+            question: this.state.question
         };
+        if(this.state.choice){
+          data.choice = this.state.choice
+        }
+        if(this.state.allocation){
+          data.allocation = this.state.allocation
+        }
         debugger;
         try {
           await postSubject(data);
           debugger;
           alert("Subject post success");
+          this.props.history.push("/admin/subjects")
         } catch (e) {
           console.error(e);
           alert("Subject post error");

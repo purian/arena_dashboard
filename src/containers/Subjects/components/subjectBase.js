@@ -572,7 +572,7 @@ export default class SubjectBase extends Component {
             {...params}
             style={{ margin: 8 }}
             label="Accounts"
-            onChange={(e) => this.handleAbc(e.target.value)}
+            onChange={(e) => this.handleAccounts(e.target.value)}
             variant="outlined"
           />
         )}
