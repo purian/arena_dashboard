@@ -19,7 +19,8 @@ import { getAccounts } from "../../../core/services/accountsServices";
 import { fetchCategoryByAccountId } from "../../../core/services/categoriesServices";
 import { getUsers } from "../../../core/services/usersServices";
 import Icon from "@material-ui/core/Icon";
-import ArenaDropdown from "../../../common/arenaDropdown/arenaDropdown"
+import ArenaDropdown from "../../../common/arenaDropdown/arenaDropdown";
+import ConclusionComponent from "../../../common/conclusionComponent/conclusionComponent";
 const PAGE_LIMIT = 20;
 
 const STATUS_DATA = [
@@ -34,7 +35,7 @@ const FORM_TYPE_DATA = [
   { name: FORM_TYPE_MAP.choice, value: FORM_TYPE_MAP.choice },
 ];
 
-const IMAGE_DROPDOWN = [
+export const IMAGE_DROPDOWN = [
   {
     value: "fa fa-graduation-cap",
     label: "fa fa-graduation-cap",
@@ -65,7 +66,7 @@ const IMAGE_DROPDOWN = [
   },
 ];
 
-const CHOICE ={
+const CHOICE = {
   options: [
     {
       name: "",
@@ -76,7 +77,7 @@ const CHOICE ={
   ],
   min: 0,
   max: 0,
-}
+};
 
 const ALLOCATION = {
   options: [
@@ -93,12 +94,19 @@ const ALLOCATION = {
   step: "",
 };
 
-const FORM_TYPE ={
-  CHOICE: "choice",
-  ALLOCATION: "allocation"
-}
+export const CONCLUSION_DATA = {
+  title: "",
+  icon: null,
+  text1: "",
+  text2: "",
+};
 
-const CustomOption = ({ innerProps, data, isFocused }) => {
+const FORM_TYPE = {
+  CHOICE: "choice",
+  ALLOCATION: "allocation",
+};
+
+export const CustomOption = ({ innerProps, data, isFocused }) => {
   //TODO: bring label from translation for aria label
   return (
     <div
@@ -255,12 +263,12 @@ export default class SubjectBase extends Component {
         </div>
       ),
     };
-    debugger
+    debugger;
     return iconOption;
   };
 
   onChangeIconDropdown = (selectedOption, index, type) => {
-    debugger
+    debugger;
     let dataCopy = Object.assign({}, this.state[type]);
     dataCopy.options[index].icon = selectedOption.value;
     this.setState({
@@ -288,61 +296,64 @@ export default class SubjectBase extends Component {
   };
 
   renderMultiChoiceFields = () => {
-    return(
+    return (
       <React.Fragment>
-        {this.state.choice.options.map((item, index) =>{
-          return <div className="displayFlex">
-            <TextField
-              id={`Title ${index}`}
-              label={`Title`}
-              className="textTransform flex1"
-              style={{ margin: 8 }}
-              placeholder={`Title`}
-              value={item.name}
-              fullWidth
-              variant="outlined"
-              margin="normal"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              onChange={(e) => this.onChangeOptionsTextField(e, index, FORM_TYPE.CHOICE)}
-            />
+        {this.state.choice.options.map((item, index) => {
+          return (
+            <div className="displayFlex">
+              <TextField
+                id={`Title ${index}`}
+                label={`Title`}
+                className="textTransform flex1"
+                style={{ margin: 8 }}
+                placeholder={`Title`}
+                value={item.name}
+                fullWidth
+                variant="outlined"
+                margin="normal"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                onChange={(e) =>
+                  this.onChangeOptionsTextField(e, index, FORM_TYPE.CHOICE)
+                }
+              />
 
-            <ArenaDropdown
-              components={{ Option: CustomOption }}
-              options={IMAGE_DROPDOWN}
-              selectedOption={this.getDropdownValue(
-                this.state.choice.options[index].icon
-              )}
-              onChange={(selectedOption) => {
-                this.onChangeIconDropdown(
-                  selectedOption,
-                  index,
-                  FORM_TYPE.CHOICE
-                );
-              }}
-              placeholder={"Icon"}
-            />
-
-        </div>
+              <ArenaDropdown
+                components={{ Option: CustomOption }}
+                options={IMAGE_DROPDOWN}
+                selectedOption={this.getDropdownValue(
+                  this.state.choice.options[index].icon
+                )}
+                onChange={(selectedOption) => {
+                  this.onChangeIconDropdown(
+                    selectedOption,
+                    index,
+                    FORM_TYPE.CHOICE
+                  );
+                }}
+                placeholder={"Icon"}
+              />
+            </div>
+          );
         })}
 
         {this.renderMultiChoiceConstantFields()}
       </React.Fragment>
-    )
+    );
   };
 
-  renderMultiChoiceConstantFields =() =>{
-    return(
+  renderMultiChoiceConstantFields = () => {
+    return (
       <>
-          <Button
-            onClick={() => this.addOption(FORM_TYPE.CHOICE)}
-            id="addChoiceOption"
-            fullWidth={true}
-            className="mgTop8"
-          >
-            Add Option
-          </Button>
+        <Button
+          onClick={() => this.addOption(FORM_TYPE.CHOICE)}
+          id="addChoiceOption"
+          fullWidth={true}
+          className="mgTop8"
+        >
+          Add Option
+        </Button>
         <div className="displayFlex mgTop8">
           <TextField
             id="minimum"
@@ -357,7 +368,13 @@ export default class SubjectBase extends Component {
             InputLabelProps={{
               shrink: true,
             }}
-            onChange={(e) => this.onChangeChoiceAndAllocationTextfields(e,"min",FORM_TYPE.CHOICE)}
+            onChange={(e) =>
+              this.onChangeChoiceAndAllocationTextfields(
+                e,
+                "min",
+                FORM_TYPE.CHOICE
+              )
+            }
           />
           <TextField
             id="maximum"
@@ -372,35 +389,44 @@ export default class SubjectBase extends Component {
             InputLabelProps={{
               shrink: true,
             }}
-            onChange={(e) => this.onChangeChoiceAndAllocationTextfields(e,"max",FORM_TYPE.CHOICE)}
+            onChange={(e) =>
+              this.onChangeChoiceAndAllocationTextfields(
+                e,
+                "max",
+                FORM_TYPE.CHOICE
+              )
+            }
           />
-
         </div>
       </>
-    )
-  }
+    );
+  };
 
   renderAllocationFields = () => {
-    return(
+    return (
       <React.Fragment>
-        {this.state.allocation.options.map((item, index) =>{
-          return <div className="displayFlex">
-          <TextField
-            id={`Title ${index}`}
-            label={`Title`}
-            className="textTransform flex1"
-            style={{ margin: 8 }}
-            placeholder={`Title`}
-            value={item.name}
-            fullWidth
-            variant="outlined"
-            margin="normal"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            onChange={(e) => this.onChangeOptionsTextField(e, index, FORM_TYPE.ALLOCATION)}
-          />
-          </div>
+        {this.state.allocation.options.map((item, index) => {
+          return (
+            <div className="displayFlex">
+              <TextField
+                id={`Title ${index}`}
+                label={`Title`}
+                className="textTransform flex1"
+                style={{ margin: 8 }}
+                placeholder={`Title`}
+                value={item.name}
+                fullWidth
+                variant="outlined"
+                margin="normal"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                onChange={(e) =>
+                  this.onChangeOptionsTextField(e, index, FORM_TYPE.ALLOCATION)
+                }
+              />
+            </div>
+          );
         })}
         <Button
           onClick={() => this.addOption(FORM_TYPE.ALLOCATION)}
@@ -425,7 +451,13 @@ export default class SubjectBase extends Component {
             InputLabelProps={{
               shrink: true,
             }}
-            onChange={(e) => this.onChangeChoiceAndAllocationTextfields(e,"step",FORM_TYPE.ALLOCATION)}
+            onChange={(e) =>
+              this.onChangeChoiceAndAllocationTextfields(
+                e,
+                "step",
+                FORM_TYPE.ALLOCATION
+              )
+            }
           />
 
           <TextField
@@ -441,7 +473,13 @@ export default class SubjectBase extends Component {
             InputLabelProps={{
               shrink: true,
             }}
-            onChange={(e) => this.onChangeChoiceAndAllocationTextfields(e,"total",FORM_TYPE.ALLOCATION)}
+            onChange={(e) =>
+              this.onChangeChoiceAndAllocationTextfields(
+                e,
+                "total",
+                FORM_TYPE.ALLOCATION
+              )
+            }
           />
 
           <TextField
@@ -457,7 +495,13 @@ export default class SubjectBase extends Component {
             InputLabelProps={{
               shrink: true,
             }}
-            onChange={(e) => this.onChangeChoiceAndAllocationTextfields(e,"min",FORM_TYPE.ALLOCATION)}
+            onChange={(e) =>
+              this.onChangeChoiceAndAllocationTextfields(
+                e,
+                "min",
+                FORM_TYPE.ALLOCATION
+              )
+            }
           />
 
           <TextField
@@ -473,29 +517,30 @@ export default class SubjectBase extends Component {
             InputLabelProps={{
               shrink: true,
             }}
-            onChange={(e) => this.onChangeChoiceAndAllocationTextfields(e,"max",FORM_TYPE.ALLOCATION)}
+            onChange={(e) =>
+              this.onChangeChoiceAndAllocationTextfields(
+                e,
+                "max",
+                FORM_TYPE.ALLOCATION
+              )
+            }
           />
-
-          
-
-
         </div>
-        
       </React.Fragment>
-    )
+    );
   };
 
-  changeFields =(value) =>{
-    if(value === FORM_TYPE_MAP.choice){
+  changeFields = (value) => {
+    if (value === FORM_TYPE_MAP.choice) {
       this.setState({
-        choice: CHOICE
-      })
-    }else if( value === FORM_TYPE_MAP.allocation){
+        choice: CHOICE,
+      });
+    } else if (value === FORM_TYPE_MAP.allocation) {
       this.setState({
-        allocation: ALLOCATION
-      })
+        allocation: ALLOCATION,
+      });
     }
-  }
+  };
 
   renderAccountDropdown = () => {
     return (
@@ -550,10 +595,10 @@ export default class SubjectBase extends Component {
         id="type"
         options={FORM_TYPE_DATA}
         getOptionLabel={(option) => option.name}
-        onChange={(event, newValue) =>{
-          this.handleOptionChange(event, newValue, "type")
-          this.changeFields(newValue.value)}
-        }
+        onChange={(event, newValue) => {
+          this.handleOptionChange(event, newValue, "type");
+          this.changeFields(newValue.value);
+        }}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -793,26 +838,94 @@ export default class SubjectBase extends Component {
     );
   };
 
+  addConclusion =() =>{
+    let conclusionData = Object.assign([], this.state.conclusion)
+    let data ={
+        title: "",
+        icon: null,
+        text1: "",
+        text2: "",
+      }
+    conclusionData.push(data)
+    debugger
+    this.setState({
+      conclusion: conclusionData
+    })
+  }
+
+  addConclusionButton =() =>{
+    return(
+      <Button
+      onClick={() => this.addConclusion()}
+      id="addConclusion"
+      fullWidth={true}
+      className="mgTop8"
+    >
+      Add Conclusion
+    </Button>
+    )
+  }
+
   renderConclusionFields = () => {
     return (
       <>
-        <TextField
-          id="conclusion"
-          label="Conclusion"
-          className="textTransform"
-          style={{ margin: 8 }}
-          placeholder="Conclusion"
-          value={this.state.conclusion}
-          fullWidth
-          variant="outlined"
-          margin="normal"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          onChange={(e) => this.handleChange("conclusion", e.target.value)}
-        />
+        <div className="checkBoxContainer margin8 fullWidth">
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={this.state.showConclusion}
+                onChange={(e) =>
+                  this.handleCheckboxChange("showConclusion", e.target.checked)
+                }
+                name="checkedB"
+                color="primary"
+              />
+            }
+            label={"Conclusion"}
+          />
+        </div>
+        {this.state.showConclusion && this.renderConclusion()}
+        {this.state.showConclusion && this.addConclusionButton()}
+
       </>
     );
+  };
+
+  onChangeConclusionTextfields = (e, index, type) => {
+    let conclusionCopy = Object.assign([], this.state.conclusion);
+    conclusionCopy[index][type] = e.target.value;
+    debugger
+    this.setState({
+      conclusion: conclusionCopy,
+    });
+  };
+
+  onChangeConclusionDropdown = (selectedOption, index, type) => {
+    let conclusioCopy = Object.assign([], this.state.conclusion);
+    conclusioCopy[index].icon = selectedOption.value;
+
+    this.setState({
+      conclusion: conclusioCopy,
+    });
+  };
+
+
+  renderConclusion = () => {
+    return this.state.conclusion.map((singleConclusion, index) => {
+      debugger;
+      return (
+        <>
+          <ConclusionComponent
+            conclusionData={singleConclusion}
+            index={index}
+            onChangeConclusionTextfields={this.onChangeConclusionTextfields}
+            getDropdownValue={this.getDropdownValue}
+            onChangeConclusionDropdown={this.onChangeConclusionDropdown}
+            onUploadComplete={this.onUploadComplete}
+          />
+        </>
+      );
+    });
   };
   renderMainContent() {
     return (

@@ -17,14 +17,20 @@ export default class CreateSubject extends SubjectBase {
         status: this.getStatusType(SUBJECT_STATUS.DRAFT),
         startDate: new Date(),
         endDate: new Date(),
-        conclusion: null,
+        conclusion: [{
+          title: "",
+          icon: null,
+          text1: "",
+          text2: "",
+        }],
         private: false,
         showReport: false,
         categoryData: [],
         category: null,
         question: null,
         type: this.getFormType(FORM_TYPE_MAP.discussion),
-        cover: null
+        cover: null,
+        showConclusion: false
       };
 
       handleSave = async () => {
