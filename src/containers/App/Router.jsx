@@ -19,6 +19,9 @@ import { isValid } from '../../core/services/authenticationServices'
 import CreateGroup from "../Groups/components/createGroup"
 import EditGroup from "../Groups/components/editGroup"
 import CreateCategory from "../Categories/components/createCategory"
+import EditCategory from "../Categories/components/editCategory"
+import CreateSubject from "../Subjects/components/createSubject"
+import EditSubject from "../Subjects/components/editSubject"
 const Routes = () => (
   <Switch>
     <PrivateRoute exact path="/admin/user" component={User} />
@@ -27,14 +30,20 @@ const Routes = () => (
     <PrivateRoute exact path="/admin/accounts" component={Accounts} />
     <PrivateRoute path="/admin/accounts/new" component={CreateAccount} />
     <PrivateRoute path="/admin/accounts/:id" component={EditAccount} />
-    <PrivateRoute path="/admin/subjects" component={Subjects} />
+
+    <PrivateRoute exact path="/admin/subjects" component={Subjects} />
+    <PrivateRoute exact path="/admin/subjects/new" component={CreateSubject} />
+    <PrivateRoute exact path="/admin/subjects/:id" component={EditSubject} />
+
     <PrivateRoute exact path="/admin/groups" component={Groups} />
     <PrivateRoute path="/admin/groups/new" component={CreateGroup} />
     <PrivateRoute path="/admin/groups/:id" component={EditGroup} />
 
 
     <PrivateRoute exact path="/admin/categories" component={Categories} />
-    <PrivateRoute path="/admin/categories" component={CreateCategory} />
+    <PrivateRoute path="/admin/categories/new" component={CreateCategory} />
+    <PrivateRoute path="/admin/categories/:id" component={EditCategory} />
+
 
 
   </Switch>

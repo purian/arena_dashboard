@@ -39,6 +39,11 @@ export const API_ENDPOINTS = {
   },
   CATEGORIES: {
     GET_CATEGORIES_BY_ACCOUNT_ID: `${baseUrl}/accounts/<ACCOUNT_ID>/categories?imit=<LIMIT>&offset=<OFFSET>&search=<SEARCH_PARM>`,
-    POST_CATEGORIES: `${baseUrl}/categories`
+    POST_CATEGORIES: `${baseUrl}/categories`,
+    GET_CATEGORIES_BY_ID: `${baseUrl}/categories/<CATEGORY_ID>`,
+    EDIT_CATEGORY: `${baseUrl}/categories/<CATEGORY_ID>`
+  },
+  SUBJECTS: {
+    GET_SUBJECTS_BY_ACCOUNT_ID: `${baseUrl}/accounts/<ACCOUNT_ID>/subjects?imit=<LIMIT>&offset=<OFFSET>&search=<SEARCH_PARM>`,
   }
 }

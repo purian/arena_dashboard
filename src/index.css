@@ -53,3 +53,37 @@ code {
 .fullWidth{
   width: 100%;
 }
+
+/*------------- Arena Date Picker Starts --------------*/
+
+.arenaDatePickerMainContainer {
+  border: 1px solid #9a9a9a;
+  padding: 8px 8px;
+  border-radius: 8px;
+  background: #93a2fc;
+}
+
+.arenaDatePickerMainContainer .MuiFormControl-root {
+  width: 100%;
+}
+.arenaDatePickerMainContainer .MuiInputBase-root {
+  display: flex;
+  flex-direction: row-reverse;
+  color: #fff !important;
+}
+
+.arenaDatePickerMainContainer .date-picker-dialog {
+  text-align: end !important;
+  color: #ffffff !important;
+}
+.arenaDatePickerMainContainer .MuiInput-underline:before {
+  display: none !important;
+}
+.arenaDatePickerMainContainer .MuiInput-underline:after {
+  display: none !important;
+}
+.arenaDatePickerMainContainer .MuiIconButton-label {
+  color: #ffffff !important;
+}
+
+/*------------- Arena Date Picker Ends --------------*/
