@@ -421,12 +421,11 @@ export default class SubjectBase extends Component {
       <React.Fragment>
         {this.state.allocation.options.map((item, index) => {
           return (
-            <div className="displayFlex">
+            <div className="displayFlex margin8 fullWidth">
               <TextField
                 id={`Title ${index}`}
                 label={`Title`}
-                className="textTransform flex1"
-                style={{ margin: 8 }}
+                className="textTransform flex1 fullWidth noMargin"
                 placeholder={`Title`}
                 value={item.name}
                 fullWidth
