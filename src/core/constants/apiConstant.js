@@ -45,5 +45,7 @@ export const API_ENDPOINTS = {
   },
   SUBJECTS: {
     GET_SUBJECTS_BY_ACCOUNT_ID: `${baseUrl}/accounts/<ACCOUNT_ID>/subjects?imit=<LIMIT>&offset=<OFFSET>&search=<SEARCH_PARM>`,
+    POST_SUBJECT: `${baseUrl}/subjects`,
+
   }
 }

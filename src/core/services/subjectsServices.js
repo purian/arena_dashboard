@@ -4,9 +4,8 @@ import { handleResponse, handleError } from '../utility'
 import { getAuthHeader } from "../utility/authHeader"
 
 const GET_SUBJECTS_BY_ACCOUNT_ID = API_ENDPOINTS.SUBJECTS.GET_SUBJECTS_BY_ACCOUNT_ID
-const POST_CATEGORIES = API_ENDPOINTS.CATEGORIES.POST_CATEGORIES
-const GET_CATEGORIES_BY_ID = API_ENDPOINTS.CATEGORIES.GET_CATEGORIES_BY_ID
-const EDIT_CATEGORY = API_ENDPOINTS.CATEGORIES.EDIT_CATEGORY
+const POST_SUBJECT = API_ENDPOINTS.SUBJECTS.POST_SUBJECT
+
 
 export function getSubjectsByAccountId(accountId, limit, offset, value) {
     const headers = getAuthHeader()
@@ -15,21 +14,8 @@ export function getSubjectsByAccountId(accountId, limit, offset, value) {
     return http.get(url, { headers })
 }
 
-// export function postCategory(payload) {
-//     const headers = getAuthHeader()
-//     return http.post(POST_CATEGORIES, payload, { headers })
-// }
+export function postSubject(payload) {
+    const headers = getAuthHeader()
+    return http.post(POST_SUBJECT, payload, { headers })
+}
 
-// export function fetchCategoryById(categoryId) {
-//     const headers = getAuthHeader()
-//     const url = GET_CATEGORIES_BY_ID.replace("<CATEGORY_ID>", categoryId)
-//     debugger
-//     return http.get(url, { headers })
-// }
-
-// export function editCategory(payload, categoryId) {
-//     const headers = getAuthHeader()
-//     const url = EDIT_CATEGORY.replace("<CATEGORY_ID>", categoryId)
-//     debugger
-//     return http.put(url, payload, { headers })
-// }
