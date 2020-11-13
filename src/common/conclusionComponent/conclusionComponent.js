@@ -126,6 +126,10 @@ export default class ConclusionComponent extends React.Component{
                 {this.renderTitle()}
                 {this.renderContent()}
                 {this.renderUploader()}
+                {this.props.conclusionFiles?.length > 0&& this.props.renderUploadedImages(
+                  this.props.conclusionFiles,
+                  "conclusionFiles"
+                )}
             </React.Fragment>
         )
     }

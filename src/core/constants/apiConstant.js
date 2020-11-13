@@ -28,8 +28,8 @@ export const API_ENDPOINTS = {
     BLOCK_USER: `${baseUrl}/users/<USER_ID>/blocked`
   },
   MISC: {
-    UPLOAD_IMAGE: `${baseUrl}/uploads/image`
-
+    UPLOAD_IMAGE: `${baseUrl}/uploads/image`,
+    UPLOAD_DOCUMENT: `${baseUrl}/uploads/document`
   },
   GROUPS: {
     POST_GROUPS: `${baseUrl}/groups`,

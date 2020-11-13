@@ -201,6 +201,7 @@ export default class SubjectBase extends Component {
   };
 
   onUploadComplete = (response, type) => {
+    debugger
     if (!this.state[type]) {
       let files = [];
       files.push(response.data);
@@ -389,6 +390,8 @@ export default class SubjectBase extends Component {
                 FORM_TYPE.CHOICE
               )
             }
+            error={this.state.checkErrors && this.errorInMultiChoiceMin()}
+
           />
           <TextField
             id="maximum"
@@ -410,6 +413,8 @@ export default class SubjectBase extends Component {
                 FORM_TYPE.CHOICE
               )
             }
+            error={this.state.checkErrors && this.errorInMultiChoiceMax()}
+
           />
         </div>
       </>
@@ -474,6 +479,8 @@ export default class SubjectBase extends Component {
                 FORM_TYPE.ALLOCATION
               )
             }
+            error={this.state.checkErrors && this.errorInAllocationStep()}
+
           />
 
           <TextField
@@ -496,6 +503,8 @@ export default class SubjectBase extends Component {
                 FORM_TYPE.ALLOCATION
               )
             }
+            error={this.state.checkErrors && this.errorInAllocationTotal()}
+
           />
 
           <TextField
@@ -518,6 +527,8 @@ export default class SubjectBase extends Component {
                 FORM_TYPE.ALLOCATION
               )
             }
+            error={this.state.checkErrors && this.errorInAllocationMin()}
+
           />
 
           <TextField
@@ -540,6 +551,8 @@ export default class SubjectBase extends Component {
                 FORM_TYPE.ALLOCATION
               )
             }
+            error={this.state.checkErrors && this.errorInAllocationMax()}
+
           />
         </div>
       </React.Fragment>
@@ -574,6 +587,7 @@ export default class SubjectBase extends Component {
             label="Accounts"
             onChange={(e) => this.handleAccounts(e.target.value)}
             variant="outlined"
+            error={this.state.checkErrors && this.errorInAccounts()}
           />
         )}
         value={this.state.account}
@@ -597,6 +611,8 @@ export default class SubjectBase extends Component {
             label="Categories"
             onChange={(e) => this.handleCategories(e.target.value)}
             variant="outlined"
+            error={this.state.checkErrors && this.errorInCategory()}
+
           />
         )}
         value={this.state.category}
@@ -622,6 +638,8 @@ export default class SubjectBase extends Component {
             label="Type"
             //   onChange={(e) => this.handleAccounts(e.target.value)}
             variant="outlined"
+            error={this.state.checkErrors && this.errorInType()}
+
           />
         )}
         value={this.state.type}
@@ -645,6 +663,8 @@ export default class SubjectBase extends Component {
             label="Status"
             //   onChange={(e) => this.handleAccounts(e.target.value)}
             variant="outlined"
+            error={this.state.checkErrors && this.errorInStatus()}
+
           />
         )}
         value={this.state.status}
@@ -677,9 +697,59 @@ export default class SubjectBase extends Component {
             onChange={(date) => {
               this.onChangeDate(date, "endDate");
             }}
+            minDate={this.state.startDate}
           />
         </div>
       </>
+    );
+  };
+
+  renderUploadedImages = (files, key) => {
+    if (!files || files.length < 1) {
+      return;
+    }
+    return files.map((item) => {
+      return this.renderImage(item, files, key);
+    });
+  };
+
+  onClickDeleteAttachments = (file, files, key) => {
+    let index = files.indexOf(file);
+    if (index === -1) {
+      return;
+    }
+    files.splice(index, 1);
+    if (key === "conclusionFiles") {
+      this.setState({
+        conclusionFiles: files,
+      });
+    } else {
+      this.setState({
+        files,
+      });
+    }
+  };
+
+  renderImage = (file, files, key) => {
+    debugger
+    return (
+      <div id="imageUploaderContainer" className="uploadedImageContainer">
+        <div id="imageContainer">
+          <ArenaUploader fileURL={file.url} />
+        </div>
+        <Typography
+          variant="body2"
+          id="imageUploaderName"
+          className="marginLeft8 dullWhite bold textAlignEnd"
+        >
+          {file.name}
+        </Typography>
+        <Button onClick={() => this.onClickDeleteAttachments(file, files, key)}>
+          Delete
+        </Button>
+          
+        
+      </div>
     );
   };
 
@@ -700,6 +770,8 @@ export default class SubjectBase extends Component {
             shrink: true,
           }}
           onChange={(e) => this.handleChange("name", e.target.value)}
+          error={this.state.checkErrors && this.errorInName()}
+          
         />
 
         <TextField
@@ -716,6 +788,8 @@ export default class SubjectBase extends Component {
             shrink: true,
           }}
           onChange={(e) => this.handleChange("question", e.target.value)}
+          error={this.state.checkErrors && this.errorInQuestion()}
+
         />
 
         <TextField
@@ -734,6 +808,8 @@ export default class SubjectBase extends Component {
           onChange={(e) => this.handleChange("description", e.target.value)}
           multiline
           rows={4}
+          error={this.state.checkErrors && this.errorInDescription()}
+
         />
         <div className="margin8 fullWidth">
           <Typography variant="body2" className="mgTop12">
@@ -742,6 +818,7 @@ export default class SubjectBase extends Component {
 
           <ArenaUploader
             isMultiple={true}
+            docUploader={true}
             fileURL={this.state.iconURL && this.state.iconURL}
             extensions={["jpg", "jpeg", "png"]}
             onUploadComplete={(response) => {
@@ -749,6 +826,7 @@ export default class SubjectBase extends Component {
             }}
           />
         </div>
+        {this.state.files?.length > 0 && this.renderUploadedImages(this.state.files)}
 
         <div className="margin8 fullWidth">
           <Typography variant="body2" className="mgTop12">
@@ -949,6 +1027,8 @@ export default class SubjectBase extends Component {
             onUploadComplete={this.onUploadComplete}
             length = {this.state.conclusion?.length}
             onClickDeleteConclusion={this.onClickDeleteConclusion}
+            renderUploadedImages={this.renderUploadedImages}
+            conclusionFiles={this.state.conclusionFiles}
           />
         </>
       );
@@ -1000,4 +1080,143 @@ export default class SubjectBase extends Component {
       </div>
     );
   }
+
+  errorInAccounts=()=>{
+    return !this.state.account;
+  }
+
+  errorInCategory=()=>{
+    return !this.state.category;
+  }
+
+  errorInType=()=>{
+    return !this.state.type;
+  }
+
+  errorInStatus=()=>{
+    return !this.state.status;
+  }
+
+  errorInName=()=>{
+    return !this.state.name;
+  }
+
+  errorInDescription=()=>{
+    return !this.state.description;
+  }
+
+  errorInQuestion=()=>{
+    return !this.state.question;
+  }
+
+  errorInAllocationTotal=()=>{
+    return this.state.type?.value === FORM_TYPE_MAP.allocation && !this.state.allocation.total;
+  }
+
+  errorInAllocationMin=()=>{
+    return this.state.type?.value === FORM_TYPE_MAP.allocation && !this.state.allocation.min;
+  }
+
+  errorInAllocationMax=()=>{
+    return this.state.type?.value === FORM_TYPE_MAP.allocation && !this.state.allocation.max;
+  }
+
+  errorInAllocationStep=()=>{
+    return this.state.type?.value === FORM_TYPE_MAP.allocation && !this.state.allocation.step;
+  }
+
+  errorInMultiChoiceMin=()=>{
+    return this.state.type?.value === FORM_TYPE_MAP.choice && !this.state.choice.min;
+  }
+
+  errorInMultiChoiceMax=()=>{
+    return this.state.type?.value === FORM_TYPE_MAP.choice && !this.state.choice.max;
+  }
+
+
+  checkErrors() {
+    if (!this.state.account) {
+      // window.NotificationUtils.showError("Account not selected");
+      return true;
+    }
+    if (!this.state.category) {
+      // window.NotificationUtils.showError("Category not selected");
+      return true;
+    }
+    if (!this.state.type) {
+      // window.NotificationUtils.showError("Type not selected");
+      return true;
+    }
+    if (!this.state.status) {
+      // window.NotificationUtils.showError("Status not selected");
+      return true;
+    }
+    if (!this.state.name) {
+      // window.NotificationUtils.showError("Name not present");
+      return true;
+    }
+    if (!this.state.description) {
+      // window.NotificationUtils.showError("Description not present");
+      return true;
+    }
+    if (!this.state.question) {
+      // window.NotificationUtils.showError("Question not present");
+      return true;
+    }
+    if (this.state.type?.value === FORM_TYPE_MAP.allocation) {
+      let allocation = this.state.allocation;
+
+      for (let item of this.state.allocation.options) {
+        if (!item.name|| !item.icon) {
+          // window.NotificationUtils.showError("Enter Allocation Fields");
+          return true;
+        }
+      }
+      if (!allocation.total) {
+        // window.NotificationUtils.showError("Enter Allocation Total");
+        return true;
+      }
+      if (!allocation.min) {
+        // window.NotificationUtils.showError("Enter Allocation minimum value");
+        return true;
+      }
+      if (!allocation.max) {
+        // window.NotificationUtils.showError("Enter Allocation maximum value");
+        return true;
+      }
+      if (!allocation.step) {
+        // window.NotificationUtils.showError(
+        //   "Enter Allocation step value"
+        // );
+        return true;
+      }
+    }
+
+    if (this.state.type?.value === FORM_TYPE_MAP.choice) {
+      let choice = this.state.choice;
+
+      for (let item of this.state.choice.options) {
+        if (!item.name || !item.icon) {
+          // window.NotificationUtils.showError("Enter Multi-choice Fields");
+          return true;
+        }
+      }
+      if (!choice.min) {
+        // window.NotificationUtils.showError("Enter Multi-choice Minimum value");
+        return true;
+      }
+      if (!choice.max) {
+        // window.NotificationUtils.showError("Enter Multi-choice Maximum value");
+        return true;
+      }
+    }
+
+    if (this.state.startDate > this.state.endDate) {
+      // window.NotificationUtils.showError("Start date cannot be greater than end date");
+      return true;
+    }
+
+    return false;
+  }
+
 }

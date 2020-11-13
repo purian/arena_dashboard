@@ -169,3 +169,14 @@ code {
 .noMargin{
   margin: 0 !important;
 }
+
+#imageContainer{
+  max-width: 250px;
+}
+
+.uploadedImageContainer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px;
+}

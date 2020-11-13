@@ -36,6 +36,17 @@ export default class CreateSubject extends SubjectBase {
       };
 
       handleSave = async () => {
+        this.setState({
+          checkErrors: true,
+        });
+        if (this.checkErrors()) {
+          let target = document.querySelector('#account');
+          target.scrollIntoView &&
+              target.scrollIntoView({
+                  behavior: "smooth"
+              });
+          return;
+        }
         let data = {
             account: this.state.account,
             category: this.state.category,

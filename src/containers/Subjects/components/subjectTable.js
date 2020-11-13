@@ -187,7 +187,7 @@ class SubjectsTable extends Component {
         >
           <InputBase
             className={classes.input}
-            placeholder="Search Categories"
+            placeholder="Search Subjects"
             onChange={(e) => {
               this.handleSearch(e.target.value);
             }}

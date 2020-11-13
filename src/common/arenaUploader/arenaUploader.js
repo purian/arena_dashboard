@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import BackupIcon from "@material-ui/icons/Backup";
 import Spinner from "@material-ui/core/CircularProgress";
 import Dropzone from "react-dropzone";
-import { uploadImage } from '../../core/services/miscServices';
+import { uploadImage, uploadDocument } from '../../core/services/miscServices';
 import { ToastContainer, toast } from 'react-toastify';
 
 export default class ArenaUploader extends Component {
@@ -17,6 +17,7 @@ export default class ArenaUploader extends Component {
 
   onFileChange = (file) => {
     let files = Array.from(file);
+  
     this.setState(
       {
         selectedFileForUpload: files,
@@ -65,11 +66,12 @@ export default class ArenaUploader extends Component {
     try {
       let fileData =
         this.state.selectedFileForUpload && this.state.selectedFileForUpload;
+        debugger
       for (let file of fileData) {
         let formData = new FormData();
 
         formData.append("file", file);
-        let response = uploadImage(formData);
+        let response = await uploadDocument(formData);
         if (!response.data) {
           this.renderFailureNotification()
           return;
@@ -106,7 +108,7 @@ export default class ArenaUploader extends Component {
         formData.append("crop[]", cropData);
         formData.append("file", file);
         uploadImage(formData).then(resp=>{
-          alert("Success")
+          this.renderSuccessNotification()
         this.setState({
           uploadedFileURL: resp && resp.data && resp.data.original,
         });
@@ -114,8 +116,7 @@ export default class ArenaUploader extends Component {
 
         }).catch(err =>{
           debugger
-          alert("Error")
-
+          this.renderFailureNotification()
         })
 
 
