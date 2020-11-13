@@ -78,7 +78,10 @@ export default class EditCategory extends CategoryBase{
                 admins: response.data.admins,
                 loading: false,
                 categoryData: response.data,
-                categoryId: id
+                categoryId: id,
+                coverURL: response.data?.cover?.original,
+                iconURL: response.data?.icon?.original,
+
             })
 
         }catch(e){
@@ -91,6 +94,17 @@ export default class EditCategory extends CategoryBase{
     }
     
       handleSave = async () => {
+        this.setState({
+          checkErrors: true,
+        });
+        if (this.checkErrors()) {
+          let target = document.querySelector('#account');
+          target.scrollIntoView &&
+              target.scrollIntoView({
+                  behavior: "smooth"
+              });
+          return;
+        }
         let cover ={
             original: this.state.coverURL || "https://s3.arena.shabloool.co.il/uploads/5f68f9aaf778e2149dc5feb1/QPOqKNTA39rXxrBsCYLnyTFn/S5iJwHwLqEHTDRm5v_ALfKea/Ab-0tZh1SWyvFhmI.jpg",
             sizes: {
@@ -116,6 +130,7 @@ export default class EditCategory extends CategoryBase{
           await editCategory(data, this.state.categoryId);
           debugger;
           alert("Category edit success");
+          this.props.history.goBack()
         } catch (e) {
           console.error(e);
           alert("Category edit error");

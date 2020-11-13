@@ -76,13 +76,15 @@ export default class EditSubject extends SubjectBase{
               conclusion: response.data.conclusion,
               showReport: response.data.intermediateReport,
               private: response.data.private,
-              files: [],
+              files: response.data.files,
               experts: response.data.admins,
               groups: response.data.groups,
               loading: false,
               subjectData: response.data,
               subjectId: id,
               question: response.data.question,
+              cover: response.data?.cover?.original,
+              conclusionFiles: response.data.conclusionFiles
 
             })
             alert("Subject data fetched")
@@ -135,7 +137,7 @@ export default class EditSubject extends SubjectBase{
         await editSubject(data, this.state.subjectId);
         debugger;
         alert("Subject edit success");
-        this.props.history.push("/admin/subjects")
+        this.props.history.goBack()
       } catch (e) {
         console.error(e);
         alert("Subject edit error");

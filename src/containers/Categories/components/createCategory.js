@@ -16,16 +16,27 @@ export default class CreateCategory extends CategoryBase {
   };
 
   handleSave = async () => {
+    this.setState({
+      checkErrors: true,
+    });
+    if (this.checkErrors()) {
+      let target = document.querySelector('#account');
+      target.scrollIntoView &&
+          target.scrollIntoView({
+              behavior: "smooth"
+          });
+      return;
+    }
     let cover ={
-        original: this.state.coverURL || "https://s3.arena.shabloool.co.il/uploads/5f68f9aaf778e2149dc5feb1/QPOqKNTA39rXxrBsCYLnyTFn/S5iJwHwLqEHTDRm5v_ALfKea/Ab-0tZh1SWyvFhmI.jpg",
+        original: this.state.coverURL,
         sizes: {
-            "720x360": this.state.coverURL || "https://s3.arena.shabloool.co.il/uploads/5f68f9aaf778e2149dc5feb1/QPOqKNTA39rXxrBsCYLnyTFn/S5iJwHwLqEHTDRm5v_ALfKea/Ab-0tZh1SWyvFhmI.jpg",
+            "720x360": this.state.coverURL,
         }
     }
     let icon ={
-        original: this.state.iconURL || "https://s3.arena.shabloool.co.il/uploads/5f68f9aaf778e2149dc5feb1/QPOqKNTA39rXxrBsCYLnyTFn/S5iJwHwLqEHTDRm5v_ALfKea/Ab-0tZh1SWyvFhmI.jpg",
+        original: this.state.iconURL,
         sizes: {
-            "240x240": this.state.iconURL || "https://s3.arena.shabloool.co.il/uploads/5f68f9aaf778e2149dc5feb1/QPOqKNTA39rXxrBsCYLnyTFn/S5iJwHwLqEHTDRm5v_ALfKea/Ab-0tZh1SWyvFhmI.jpg",
+            "240x240": this.state.iconURL,
         }
     }
     let data = {
@@ -41,6 +52,8 @@ export default class CreateCategory extends CategoryBase {
       await postCategory(data);
       debugger;
       alert("Category post success");
+      this.props.history.goBack()
+
     } catch (e) {
       console.error(e);
       alert("Category post error");

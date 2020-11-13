@@ -57,6 +57,49 @@ export default class CategoryBase extends Component {
     });
   };
 
+  errorInAccounts=()=>{
+    return !this.state.account;
+  }
+
+  errorInName=()=>{
+    return !this.state.name;
+  }
+
+  errorInDescription=()=>{
+    return !this.state.description;
+  }
+
+
+  checkErrors =()=>{
+    if (!this.state.account) {
+      // window.NotificationUtils.showError("Account not selected");
+      return true;
+    }
+    if (!this.state.name) {
+      // window.NotificationUtils.showError("Name not selected");
+      return true;
+    }
+    if (!this.state.description) {
+      // window.NotificationUtils.showError("Description not selected");
+      return true;
+    }
+    if (!this.state.iconURL) {
+      // window.NotificationUtils.showError("Icon not uploaded");
+      return true;
+    }
+    if (!this.state.coverURL) {
+      // window.NotificationUtils.showError("Cover not uploaded");
+      return true;
+    }
+    return false;
+  }
+
+  onUploadComplete = (response, type) => {
+    this.setState({
+      [type]: response.data.original,
+    });
+  };
+
 
 
   renderMainContent() {
@@ -82,6 +125,8 @@ export default class CategoryBase extends Component {
                       label="Accounts"
                       onChange={(e) => this.handleAccounts(e.target.value)}
                       variant="outlined"
+                      error={this.state.checkErrors && this.errorInAccounts()}
+
                     />
                   )}
                   value={this.state.account}
@@ -100,6 +145,7 @@ export default class CategoryBase extends Component {
                     shrink: true,
                   }}
                   onChange={(e) => this.handleChange("name", e.target.value)}
+                  error={this.state.checkErrors && this.errorInName()}
                 />
 
                 <TextField
@@ -116,6 +162,7 @@ export default class CategoryBase extends Component {
                     shrink: true,
                   }}
                   onChange={(e) => this.handleChange("description", e.target.value)}
+                  error={this.state.checkErrors && this.errorInDescription()}
                 />
                 <div className="margin8 fullWidth">
                     <Typography variant="body2" className="mgTop12">

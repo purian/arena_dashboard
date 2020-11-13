@@ -835,7 +835,7 @@ export default class SubjectBase extends Component {
 
           <ArenaUploader
             isMultiple={true}
-            fileURL={this.state.iconURL && this.state.iconURL}
+            fileURL={this.state.cover && this.state.cover}
             extensions={["jpg", "jpeg", "png"]}
             onUploadComplete={(response) => {
               this.onUploadBackgroundComplete(response, "backgroundCover");

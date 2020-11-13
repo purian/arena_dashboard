@@ -32,7 +32,8 @@ export default class CreateSubject extends SubjectBase {
         cover: null,
         showConclusion: false,
         choice: null,
-        allocation: null
+        allocation: null,
+        files: []
       };
 
       handleSave = async () => {
@@ -59,10 +60,11 @@ export default class CreateSubject extends SubjectBase {
             conclusion: this.state.conclusion,
             intermediateReport: this.state.showReport,
             private: this.state.private,
-            files: [],
+            files: this.state.files,
             experts: this.state.admins,
             groups: this.state.groups,
-            question: this.state.question
+            question: this.state.question,
+            cover: this.state.cover
         };
         if(this.state.choice){
           data.choice = this.state.choice
@@ -75,7 +77,7 @@ export default class CreateSubject extends SubjectBase {
           await postSubject(data);
           debugger;
           alert("Subject post success");
-          this.props.history.push("/admin/subjects")
+          this.props.history.goBack()
         } catch (e) {
           console.error(e);
           alert("Subject post error");
