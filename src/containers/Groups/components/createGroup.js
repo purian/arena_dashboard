@@ -18,10 +18,10 @@ export default class CreateGroup extends GroupBase {
       name: this.state.name,
       users: [this.state.user],
     };
-    debugger;
+    ;
     try {
       await postGroups(data);
-      debugger;
+      ;
       alert("Group post success");
     } catch (e) {
       console.error(e);

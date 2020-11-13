@@ -106,7 +106,7 @@ class SubjectsTable extends Component {
         this.state.currentPage,
         value
       );
-      debugger;
+      ;
       this.setState({
         accountsData: response.data.items,
       });
@@ -116,15 +116,15 @@ class SubjectsTable extends Component {
   };
 
   handleOptionChange = async(e, newValue, type) => {
-    debugger;
+    ;
     this.setState({
       [type]: newValue,
     });
-    debugger
+    
     if(type === "account"){
         try{
             let response = await getSubjectsByAccountId(newValue.id, PAGE_LIMIT, this.state.currentPage, "")
-            debugger
+            
             this.setState({
                 data: response.data.items,
                 accountId: newValue.id
@@ -137,13 +137,13 @@ class SubjectsTable extends Component {
   };
 
   handleSearch = async (value) => {
-      debugger
+      
     if (!this.state.account) {
       return;
     }
     try {
     let response = await getSubjectsByAccountId(this.state.account.id,PAGE_LIMIT, this.state.currentPage, value);
-    debugger
+    
     this.setState({
         data: response.data.items,
     })

@@ -126,7 +126,7 @@ class GroupsTable extends Component {
         this.state.currentPage,
         value
       );
-      debugger;
+      ;
       this.setState({
         accountsData: response.data.items,
       });
@@ -136,7 +136,7 @@ class GroupsTable extends Component {
   };
 
   handleOptionChange = (e, newValue, type) => {
-    debugger;
+    ;
     this.setState({
       [type]: newValue,
     });

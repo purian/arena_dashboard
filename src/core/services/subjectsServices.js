@@ -11,7 +11,7 @@ const EDIT_SUBJECT = API_ENDPOINTS.SUBJECTS.EDIT_SUBJECT
 export function getSubjectsByAccountId(accountId, limit, offset, value) {
     const headers = getAuthHeader()
     const url = GET_SUBJECTS_BY_ACCOUNT_ID.replace("<ACCOUNT_ID>", accountId).replace("<SEARCH_PARM>", value).replace("<LIMIT>", limit).replace("<OFFSET>", offset)
-    debugger
+    
     return http.get(url, { headers })
 }
 
@@ -23,13 +23,13 @@ export function postSubject(payload) {
 export function fetchSubjectById(subjectId) {
     const headers = getAuthHeader()
     const url = GET_SUBJECT_BY_ID.replace("<SUBJECT_ID>", subjectId)
-    debugger
+    
     return http.get(url, { headers })
 }
 
 export function editSubject(payload, subjectId) {
     const headers = getAuthHeader()
     const url = EDIT_SUBJECT.replace("<SUBJECT_ID>", subjectId)
-    debugger
+    
     return http.put(url, payload, { headers })
 }

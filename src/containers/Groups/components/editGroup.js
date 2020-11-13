@@ -57,7 +57,7 @@ export default class EditGroup extends GroupBase{
 
     async componentDidMount(){
         const groupId = this.props.match.params.id
-        debugger
+        
         this.fetchGroupData(groupId)
       }
 
@@ -98,10 +98,10 @@ export default class EditGroup extends GroupBase{
           name: this.state.name,
           users: this.state.users,
         };
-        debugger;
+        ;
         try {
           await editGroup(data, this.state.groupId);
-          debugger;
+          ;
           alert("Group edit success");
         } catch (e) {
           console.error(e);

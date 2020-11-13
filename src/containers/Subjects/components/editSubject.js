@@ -42,7 +42,7 @@ export default class EditSubject extends SubjectBase{
 
     componentDidMount(){
         const subjectId = this.props.match.params.id
-        debugger
+        
         this.fetchSubjectData(subjectId)
       }
 
@@ -52,7 +52,7 @@ export default class EditSubject extends SubjectBase{
         }
         try{
             let response = await fetchSubjectById(id)
-            debugger
+            
             if(response.data.choice){
               this.setState({
                 choice :response.data.choice
@@ -132,10 +132,10 @@ export default class EditSubject extends SubjectBase{
       if(this.state.allocation){
         data.allocation = this.state.allocation
       }
-      debugger;
+      ;
       try {
         await editSubject(data, this.state.subjectId);
-        debugger;
+        ;
         alert("Subject edit success");
         this.props.history.goBack()
       } catch (e) {

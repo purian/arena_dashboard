@@ -60,7 +60,7 @@ export default class EditCategory extends CategoryBase{
 
     componentDidMount(){
         const categoryId = this.props.match.params.id
-        debugger
+        
         this.fetchCategoryData(categoryId)
       }
 
@@ -70,7 +70,7 @@ export default class EditCategory extends CategoryBase{
         }
         try{
             let response = await fetchCategoryById(id)
-            debugger
+            
             this.setState({
                 account: response.data.account,
                 name: response.data.name,
@@ -125,10 +125,10 @@ export default class EditCategory extends CategoryBase{
             icon: icon,
             admins: this.state.admins,
         };
-        debugger;
+        ;
         try {
           await editCategory(data, this.state.categoryId);
-          debugger;
+          ;
           alert("Category edit success");
           this.props.history.goBack()
         } catch (e) {

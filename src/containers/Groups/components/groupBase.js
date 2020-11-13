@@ -15,7 +15,7 @@ export default class GroupBase extends Component {
 
 
   handleOptionChange = (e, newValue, type) => {
-    debugger;
+    ;
     this.setState({
       [type]: newValue,
     });
@@ -28,7 +28,7 @@ export default class GroupBase extends Component {
         this.state.currentPage,
         value
       );
-      debugger;
+      ;
       this.setState({
         accountsData: response.data.items,
       });
@@ -40,7 +40,7 @@ export default class GroupBase extends Component {
   handleUsers = async (value) => {
     try {
       let response = await getUsers(PAGE_LIMIT, this.state.currentPage, value);
-      debugger;
+      ;
       this.setState({
         usersData: response.data.items,
       });

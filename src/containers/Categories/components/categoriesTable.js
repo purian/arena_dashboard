@@ -106,7 +106,7 @@ class CategoriesTable extends Component {
         this.state.currentPage,
         value
       );
-      debugger;
+      ;
       this.setState({
         accountsData: response.data.items,
       });
@@ -116,14 +116,14 @@ class CategoriesTable extends Component {
   };
 
   handleOptionChange = async(e, newValue, type) => {
-    debugger;
+    ;
     this.setState({
       [type]: newValue,
     });
     if(type === "account"){
         try{
             let response = await fetchCategoryByAccountId(newValue.id, PAGE_LIMIT, this.state.currentPage, "")
-            debugger
+            
             this.setState({
                 data: response.data.items,
                 accountId: newValue.id
@@ -136,13 +136,13 @@ class CategoriesTable extends Component {
   };
 
   handleSearch = async (value) => {
-      debugger
+      
     if (!this.state.account) {
       return;
     }
     try {
     let response = await fetchCategoryByAccountId(this.state.account.id,PAGE_LIMIT, this.state.currentPage, value);
-    debugger
+    
     this.setState({
         data: response.data.items,
     })

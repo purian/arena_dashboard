@@ -17,7 +17,7 @@ export default class CategoryBase extends Component {
 
 
   handleOptionChange = (e, newValue, type) => {
-    debugger;
+    ;
     this.setState({
       [type]: newValue,
     });
@@ -30,7 +30,7 @@ export default class CategoryBase extends Component {
         this.state.currentPage,
         value
       );
-      debugger;
+      ;
       this.setState({
         accountsData: response.data.items,
       });
@@ -42,7 +42,7 @@ export default class CategoryBase extends Component {
   handleUsers = async (value) => {
     try {
       let response = await getUsers(PAGE_LIMIT, this.state.currentPage, value);
-      debugger;
+      ;
       this.setState({
         adminsData: response.data.items,
       });

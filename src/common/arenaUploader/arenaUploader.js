@@ -66,7 +66,7 @@ export default class ArenaUploader extends Component {
     try {
       let fileData =
         this.state.selectedFileForUpload && this.state.selectedFileForUpload;
-        debugger
+        
       for (let file of fileData) {
         let formData = new FormData();
 
@@ -115,7 +115,7 @@ export default class ArenaUploader extends Component {
         this.props.onUploadComplete && this.props.onUploadComplete(resp);
 
         }).catch(err =>{
-          debugger
+          
           this.renderFailureNotification()
         })
 

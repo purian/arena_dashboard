@@ -122,7 +122,7 @@ export const CustomOption = ({ innerProps, data, isFocused }) => {
 
 export default class SubjectBase extends Component {
   handleOptionChange = (e, newValue, type) => {
-    debugger;
+    ;
     this.setState({
       [type]: newValue,
     });
@@ -135,7 +135,7 @@ export default class SubjectBase extends Component {
         this.state.currentPage,
         value
       );
-      debugger;
+      ;
       this.setState({
         accountsData: response.data.items,
       });
@@ -163,7 +163,7 @@ export default class SubjectBase extends Component {
   handleUsers = async (value) => {
     try {
       let response = await getUsers(PAGE_LIMIT, this.state.currentPage, value);
-      debugger;
+      ;
       this.setState({
         adminsData: response.data.items,
       });
@@ -194,14 +194,14 @@ export default class SubjectBase extends Component {
   };
 
   handleCheckboxChange = (type, newValue) => {
-    debugger;
+    ;
     this.setState({
       [type]: newValue,
     });
   };
 
   onUploadComplete = (response, type) => {
-    debugger
+    
     if (!this.state[type]) {
       let files = [];
       files.push(response.data);
@@ -234,7 +234,7 @@ export default class SubjectBase extends Component {
     let data = FORM_TYPE_DATA.filter((singleElement) => {
       return singleElement.value === type;
     });
-    debugger;
+    ;
     return data[0];
   };
 
@@ -242,7 +242,7 @@ export default class SubjectBase extends Component {
     let data = STATUS_DATA.filter((singleElement) => {
       return singleElement.value === status;
     });
-    debugger;
+    ;
     return data[0];
   };
 
@@ -264,12 +264,12 @@ export default class SubjectBase extends Component {
         </div>
       ),
     };
-    debugger;
+    ;
     return iconOption;
   };
 
   onChangeIconDropdown = (selectedOption, index, type) => {
-    debugger;
+    ;
     let dataCopy = Object.assign({}, this.state[type]);
     dataCopy.options[index].icon = selectedOption.value;
     this.setState({
@@ -731,7 +731,7 @@ export default class SubjectBase extends Component {
   };
 
   renderImage = (file, files, key) => {
-    debugger
+    
     return (
       <div id="imageUploaderContainer" className="uploadedImageContainer">
         <div id="imageContainer">
@@ -941,7 +941,7 @@ export default class SubjectBase extends Component {
         text2: "",
       }
     conclusionData.push(data)
-    debugger
+    
     this.setState({
       conclusion: conclusionData
     })
@@ -988,7 +988,7 @@ export default class SubjectBase extends Component {
   onChangeConclusionTextfields = (e, index, type) => {
     let conclusionCopy = Object.assign([], this.state.conclusion);
     conclusionCopy[index][type] = e.target.value;
-    debugger
+    
     this.setState({
       conclusion: conclusionCopy,
     });
@@ -1015,7 +1015,7 @@ export default class SubjectBase extends Component {
 
   renderConclusion = () => {
     return this.state.conclusion.map((singleConclusion, index) => {
-      debugger;
+      ;
       return (
         <>
           <ConclusionComponent

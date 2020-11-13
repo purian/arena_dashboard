@@ -47,10 +47,10 @@ export default class CreateCategory extends CategoryBase {
         icon: icon,
         admins: this.state.admins,
     };
-    debugger;
+    ;
     try {
       await postCategory(data);
-      debugger;
+      ;
       alert("Category post success");
       this.props.history.goBack()
 

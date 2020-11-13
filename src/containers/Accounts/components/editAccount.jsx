@@ -29,7 +29,7 @@ class EditAccount extends Component {
     componentDidMount() {
         const acntId = this.props.match.params.id
         getUserAccount(acntId).then(resp => {
-            debugger
+            
             this.setState({
                 userName: resp.data.name,
                 slug: resp.data.slug,
@@ -115,7 +115,7 @@ class EditAccount extends Component {
         // payload.cover= cover
         // payload.icon = icon
         //TODO: Uncomment this and coverURL and iconURL to be fixed
-        debugger
+        
         editAccount(acntId, payload).then(resp => {
             toast.success('Success', {
                 position: "top-right",

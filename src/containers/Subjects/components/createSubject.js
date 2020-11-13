@@ -72,10 +72,10 @@ export default class CreateSubject extends SubjectBase {
         if(this.state.allocation){
           data.allocation = this.state.allocation
         }
-        debugger;
+        ;
         try {
           await postSubject(data);
-          debugger;
+          ;
           alert("Subject post success");
           this.props.history.goBack()
         } catch (e) {

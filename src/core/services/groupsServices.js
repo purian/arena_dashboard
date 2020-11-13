@@ -17,14 +17,14 @@ export function postGroups(payload) {
 export function searchGroupByAccountId(value, accountId, limit, offset) {
     const headers = getAuthHeader()
     const url = SEARCH_GROUPS_BY_ACCOUNT_ID.replace("<ACCOUNT_ID>", accountId).replace("<SEARCH_PARM>", value).replace("<LIMIT>", limit).replace("<OFFSET>", offset)
-    debugger
+    
     return http.get(url, { headers })
 }
 
 export function fetchGroupData(groupId) {
     const headers = getAuthHeader()
     const url = GET_GROUP.replace("<GROUP_ID>", groupId)
-    debugger
+    
     return http.get(url, { headers })
 }
 
