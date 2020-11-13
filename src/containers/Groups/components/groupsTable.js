@@ -19,6 +19,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAccounts } from "../../../core/services/accountsServices";
 import { searchGroupByAccountId } from "../../../core/services/groupsServices";
+import { renderFailureNotification } from "../../../common/Notifications/showNotifications";
+
 const styles = (theme) => ({
   table: {
     minWidth: 650,
@@ -50,75 +52,13 @@ const DATA = [
 ];
 class GroupsTable extends Component {
   state = {
-    data: DATA,
+    data: null,
     totalItems: null,
     currentPage: 0,
     searchValue: "",
     accountsData: [],
     account: null,
   };
-  // componentDidMount() {
-  //     const { currentPage, searchValue } = this.state;
-  //     getAccounts(PAGE_LIMIT, currentPage, searchValue).then(resp => {
-  //         toast.success('Success', {
-  //             position: "top-right",
-  //             autoClose: 5000,
-  //             hideProgressBar: false,
-  //             closeOnClick: true,
-  //             pauseOnHover: true,
-  //             draggable: true,
-  //             progress: undefined,
-  //         });
-  //         this.setState({
-  //             data: resp.data.items,
-  //             totalItems: resp.data.count
-  //         })
-  //     }).catch(err => {
-  //         toast.error('Error', {
-  //             position: "top-right",
-  //             autoClose: 5000,
-  //             hideProgressBar: false,
-  //             closeOnClick: true,
-  //             pauseOnHover: true,
-  //             draggable: true,
-  //             progress: undefined,
-  //         });
-  //     })
-  // }
-  // handleSearch = (value) => {
-  //     const { currentPage, searchValue } = this.state;
-  //     this.setState({
-  //         searchValue: value
-  //     }, () => getAccounts(PAGE_LIMIT, currentPage, value).then(resp => {
-  //         this.setState({
-  //             data: resp.data.items,
-  //             totalItems: resp.data.count
-  //         })
-  //     })
-  //     )
-
-  // }
-
-  // handlePageChange(page) {
-  //     this.setState({
-  //         currentPage: page
-  //     }, () => this.loadPageData())
-
-  // }
-  // loadPageData = () => {
-  //     const { currentPage, searchValue } = this.state;
-  //     let offset = (currentPage - 1) * PAGE_LIMIT
-  //     if (offset < 0) {
-  //         offset = 0
-  //     }
-  //     getAccounts(PAGE_LIMIT, offset, searchValue).then(resp => {
-  //         this.setState({
-  //             data: resp.data.items,
-  //             totalItems: resp.data.count
-  //         })
-  //     })
-  // }
-
   handleAccounts = async (value) => {
     try {
       let response = await getAccounts(
@@ -135,24 +75,40 @@ class GroupsTable extends Component {
     }
   };
 
-  handleOptionChange = (e, newValue, type) => {
-    ;
+  handleOptionChange = async(e, newValue, type) => {
     this.setState({
       [type]: newValue,
     });
+    if(type === "account"){
+      try{
+          let response = await searchGroupByAccountId("",newValue.id, PAGE_LIMIT, this.state.currentPage)
+          
+          this.setState({
+              data: response.data.items,
+              accountId: newValue.id
+          })
+
+      }catch(e){
+          renderFailureNotification("Subject fetch error")
+      }
+  }
   };
 
   handleSearch = async (value) => {
+    debugger
     if (!this.state.account) {
       return;
     }
     try {
-      await searchGroupByAccountId(
+      let response = await searchGroupByAccountId(
         value,
         this.state.account.id,
         PAGE_LIMIT,
         this.state.currentPage
       );
+      this.setState({
+        data: response.data.items,
+    })
     } catch (e) {
       console.error(e);
     }

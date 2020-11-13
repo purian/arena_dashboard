@@ -74,7 +74,8 @@ export default class EditGroup extends GroupBase{
                 users: response.data.users,
                 loading: false,
                 groupData: response.data,
-                groupId: id
+                groupId: id,
+                editGroup: true
             })
             renderSuccessNotification("Group data fetched")
 
@@ -105,6 +106,9 @@ export default class EditGroup extends GroupBase{
           await editGroup(data, this.state.groupId);
           ;
           renderSuccessNotification("Group edit success");
+          setTimeout(()=>{
+            this.props.history.goBack()
+          },1000)
         } catch (e) {
           console.error(e);
           renderFailureNotification("Group edit error");

@@ -17,13 +17,17 @@ export default class CreateGroup extends GroupBase {
     let data = {
       account: this.state.account,
       name: this.state.name,
-      users: [this.state.user],
+      users: this.state.users,
     };
     ;
     try {
+      debugger
       await postGroups(data);
-      ;
+      debugger
       renderSuccessNotification("Group post success");
+      setTimeout(()=>{
+        this.props.history.goBack()
+      },1000)
     } catch (e) {
       console.error(e);
       renderFailureNotification("Group post error");

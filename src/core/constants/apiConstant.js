@@ -35,18 +35,18 @@ export const API_ENDPOINTS = {
   },
   GROUPS: {
     POST_GROUPS: `${baseUrl}/groups`,
-    SEARCH_GROUPS_BY_ACCOUNT_ID: `${baseUrl}/accounts/<ACCOUNT_ID>/groups?imit=<LIMIT>&offset=<OFFSET>&search=<SEARCH_PARM>`,
+    SEARCH_GROUPS_BY_ACCOUNT_ID: `${baseUrl}/accounts/<ACCOUNT_ID>/groups?limit=<LIMIT>&offset=<OFFSET>&search=<SEARCH_PARM>`,
     GET_GROUP : `${baseUrl}/groups/<GROUP_ID>`,
     EDIT_GROUP: `${baseUrl}/groups/<GROUP_ID>`
   },
   CATEGORIES: {
-    GET_CATEGORIES_BY_ACCOUNT_ID: `${baseUrl}/accounts/<ACCOUNT_ID>/categories?imit=<LIMIT>&offset=<OFFSET>&search=<SEARCH_PARM>`,
+    GET_CATEGORIES_BY_ACCOUNT_ID: `${baseUrl}/accounts/<ACCOUNT_ID>/categories?limit=<LIMIT>&offset=<OFFSET>&search=<SEARCH_PARM>`,
     POST_CATEGORIES: `${baseUrl}/categories`,
     GET_CATEGORIES_BY_ID: `${baseUrl}/categories/<CATEGORY_ID>`,
     EDIT_CATEGORY: `${baseUrl}/categories/<CATEGORY_ID>`
   },
   SUBJECTS: {
-    GET_SUBJECTS_BY_ACCOUNT_ID: `${baseUrl}/accounts/<ACCOUNT_ID>/subjects?imit=<LIMIT>&offset=<OFFSET>&search=<SEARCH_PARM>`,
+    GET_SUBJECTS_BY_ACCOUNT_ID: `${baseUrl}/accounts/<ACCOUNT_ID>/subjects?limit=<LIMIT>&offset=<OFFSET>&search=<SEARCH_PARM>`,
     POST_SUBJECT: `${baseUrl}/subjects`,
     GET_SUBJECT_BY_ID: `${baseUrl}/subjects/<SUBJECT_ID>`,
     EDIT_SUBJECT: `${baseUrl}/categories/<SUBJECT_ID>`

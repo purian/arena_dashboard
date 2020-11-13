@@ -53,7 +53,9 @@ export default class CreateCategory extends CategoryBase {
       await postCategory(data);
       ;
       renderSuccessNotification("Category post success");
-      this.props.history.goBack()
+      setTimeout(()=>{
+        this.props.history.goBack()
+      },1000)
 
     } catch (e) {
       console.error(e);

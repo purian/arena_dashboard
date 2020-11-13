@@ -68,10 +68,10 @@ export default class CreateSubject extends SubjectBase {
             question: this.state.question,
             cover: this.state.cover
         };
-        if(this.state.choice){
+        if(this.state.type.value === FORM_TYPE_MAP.choice){
           data.choice = this.state.choice
         }
-        if(this.state.allocation){
+        if(this.state.type.value === FORM_TYPE_MAP.allocation){
           data.allocation = this.state.allocation
         }
         ;
@@ -79,7 +79,10 @@ export default class CreateSubject extends SubjectBase {
           await postSubject(data);
           ;
           renderSuccessNotification("Subject post success");
-          this.props.history.goBack()
+          setTimeout(()=>{
+            this.props.history.goBack()
+          },1000)
+          
         } catch (e) {
           console.error(e);
           renderFailureNotification("Subject post error");

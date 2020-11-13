@@ -32,5 +32,5 @@ export function editGroup(payload, groupId) {
     const headers = getAuthHeader()
     const url = EDIT_GROUP.replace("<GROUP_ID>", groupId)
 
-    return http.post(url, payload, { headers })
+    return http.put(url, payload, { headers })
 }

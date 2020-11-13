@@ -83,6 +83,7 @@ export default class GroupBase extends Component {
                     />
                   )}
                   value={this.state.account}
+                  disabled={this.state.editGroup}
                 />
                 <TextField
                   id="name"
@@ -104,7 +105,7 @@ export default class GroupBase extends Component {
                   multiple
                   id="users"
                   options={usersData}
-                  getOptionLabel={(option) => option.name}
+                  getOptionLabel={(option) => option.email}
                   onChange={(event, newValue) =>
                     this.handleOptionChange(event, newValue, "users")
                   }

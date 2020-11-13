@@ -131,7 +131,9 @@ export default class EditCategory extends CategoryBase{
           await editCategory(data, this.state.categoryId);
           ;
           renderSuccessNotification("Category edit success");
-          this.props.history.goBack()
+          setTimeout(()=>{
+            this.props.history.goBack()
+          },1000)
         } catch (e) {
           console.error(e);
           renderFailureNotification("Category edit error");

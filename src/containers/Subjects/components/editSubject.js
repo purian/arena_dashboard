@@ -139,7 +139,9 @@ export default class EditSubject extends SubjectBase{
         await editSubject(data, this.state.subjectId);
         ;
         renderSuccessNotification("Subject edit success");
-        this.props.history.goBack()
+        setTimeout(()=>{
+          this.props.history.goBack()
+        },1000)
       } catch (e) {
         console.error(e);
         renderFailureNotification("Subject edit error");
