@@ -350,7 +350,7 @@ export default class SubjectBase extends Component {
                 placeholder={"Icon"}
               />
 
-              {index > 1 && <Button onClick={() =>this.onClickDeleteOptions(index, FORM_TYPE.CHOICE)}>
+              {index > 1 && <Button color="primary" className="mgLeft8" onClick={() =>this.onClickDeleteOptions(index, FORM_TYPE.CHOICE)}>
                 Delete
               </Button>}
             </div>
@@ -369,7 +369,8 @@ export default class SubjectBase extends Component {
           onClick={() => this.addOption(FORM_TYPE.CHOICE)}
           id="addChoiceOption"
           fullWidth={true}
-          className="mgTop8"
+          className="margin8"
+          color="primary" variant="contained"
         >
           Add Option
         </Button>
@@ -447,7 +448,7 @@ export default class SubjectBase extends Component {
                   this.onChangeOptionsTextField(e, index, FORM_TYPE.ALLOCATION)
                 }
               />
-              {index > 1 && <Button onClick={() =>this.onClickDeleteOptions(index, FORM_TYPE.ALLOCATION)}>
+              {index > 1 && <Button color="primary" className="mgLeft8" onClick={() =>this.onClickDeleteOptions(index, FORM_TYPE.ALLOCATION)}>
                 Delete
               </Button>}
             </div>
@@ -457,7 +458,8 @@ export default class SubjectBase extends Component {
           onClick={() => this.addOption(FORM_TYPE.ALLOCATION)}
           id="addChoiceOption"
           fullWidth={true}
-          className="mgTop8"
+          className="margin8"
+          color="primary" variant="contained"
         >
           Add Option
         </Button>
@@ -749,7 +751,7 @@ export default class SubjectBase extends Component {
         >
           {file.name}
         </Typography>
-        <Button onClick={() => this.onClickDeleteAttachments(file, files, key)}>
+        <Button color="primary" variant="contained" onClick={() => this.onClickDeleteAttachments(file, files, key)}>
           Delete
         </Button>
           
@@ -959,6 +961,7 @@ export default class SubjectBase extends Component {
       id="addConclusion"
       fullWidth={true}
       className="mgTop8"
+      color="primary" variant="contained"
     >
       Add Conclusion
     </Button>
@@ -1070,7 +1073,7 @@ export default class SubjectBase extends Component {
 
   renderViewCommentButton=()=>{
     return(
-      <Button onClick={this.onClickViewComments}>
+      <Button color="primary" variant="contained" onClick={this.onClickViewComments}>
         View Comments
       </Button>
     )

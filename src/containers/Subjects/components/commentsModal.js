@@ -11,6 +11,14 @@ import Dialog from '@material-ui/core/Dialog';
 import Divider from '@material-ui/core/Divider';
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
+import PersonIcon from '@material-ui/icons/Person';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 export default class CommentsModal extends React.Component{
     state={
@@ -49,23 +57,63 @@ export default class CommentsModal extends React.Component{
         })
     }
 
+    renderTable(){
+        return(
+            <TableContainer component={Paper} elevation={0}>
+            <Table >
+              <TableHead>
+                <TableRow>
+                    <TableCell>
+                        <Typography variant="h6" className="margin8 bold" >
+                            Name
+                        </Typography>
+                    </TableCell>
+                  <TableCell >
+                        <Typography variant="h6" className="margin8 bold" >
+                            Comment
+                        </Typography>
+                </TableCell>
+                  <TableCell >
+                    <Typography variant="h6" className="margin8 bold" >
+                            Action
+                        </Typography>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {this.state.commentsData.map((singleComment, index) => (
+                  <TableRow key={index}>
+                    <TableCell component="th" scope="row">
+                        <div className="displayFlex">
+                            <PersonIcon color="primary" className="margin8"  />
+                            <Typography className="margin8" >
+                                {singleComment.user.name}
+                            </Typography>
+
+                        </div>
+                    </TableCell>
+                    <TableCell >
+                        <Typography className="margin8" >
+                            {singleComment.text}
+                        </Typography>
+                    </TableCell>
+                    <TableCell >
+                        <Button className="margin8" color="primary" onClick={()=>{this.onClickDelete(index)}}>
+                            Delete
+                        </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )
+    }
+
     renderDialogContent(){
         return(
             <React.Fragment>
-                {this.state.commentsData.map((singleComment, index) =>{
-                    return(<>
-                        <div id="commentSingleContainer">
-                            <Typography key={index}>
-                                {singleComment.text}
-                            </Typography>
-                            <Button onClick={()=>{this.onClickDelete(index)}}>
-                                Delete
-                            </Button>
-                        </div>
-                        <Divider />
-                        </>
-                    )
-                })}
+                {this.renderTable()}
             </React.Fragment>
         )
     }

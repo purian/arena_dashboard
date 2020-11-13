@@ -100,42 +100,38 @@ code {
 }
 
 .arena-dropdown__menu-list {
-  text-align: end;
-  background: #93a2fc !important;
+  background: #fff !important;
 }
 .arena-dropdown__control {
   display: flex;
-  background: #93a2fc !important;
+  background: #fff !important;
   height: 100%;
   border-radius: 8px !important;
   border: 1px solid #9a9a9a !important;
-}
-.arena-dropdown__value-container {
-  justify-content: flex-end;
 }
 .arena-dropdown__menu-list {
   border: 1px solid #9a9a9a !important;
   border-radius: 8px;
 }
 .arena-dropdown__placeholder {
-  color: #ffffff !important;
+  color: #000 !important;
 }
 .arena-dropdown__option {
-  color: #ffffff !important;
-  background: #93a2fc !important;
+  color: #000 !important;
+  background: #fff !important;
 }
 .arena-dropdown__option:hover,
 .arena-dropdown__option:focus,
 .arena-dropdown__option:active,
 .arena-dropdown__option:visited {
-  background: #93a2fc !important;
+  background: #fff !important;
   opacity: 0.5 !important;
 }
 .arena-dropdown__input #react-select-2-input {
-  color: #ffffff !important;
+  color: #000 !important;
 }
 .arena-dropdown__single-value {
-  color: #ffffff !important;
+  color: #000 !important;
 }
 .arena-dropdown__indicator-separator {
   display: none;
@@ -226,4 +222,14 @@ code {
 
 .minWidthInitial{
   min-width: initial !important;
+}
+
+#imageContainer .uploaderMainContainer{
+  width: 100px;
+  background-color: #fff;
+  height: initial;
+}
+
+.mgLeft8{
+  margin-left: 8px !important;
 }
