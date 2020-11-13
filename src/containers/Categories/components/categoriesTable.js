@@ -20,6 +20,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { getAccounts } from "../../../core/services/accountsServices";
 import { searchGroupByAccountId } from "../../../core/services/groupsServices";
 import { fetchCategoryByAccountId} from "../../../core/services/categoriesServices"
+import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
+
 const styles = (theme) => ({
   table: {
     minWidth: 650,
@@ -128,9 +130,10 @@ class CategoriesTable extends Component {
                 data: response.data.items,
                 accountId: newValue.id
             })
+            renderSuccessNotification("Category fetched")
 
         }catch(e){
-            alert("Category fetch error")
+          renderFailureNotification("Category fetch error")
         }
     }
   };

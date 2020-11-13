@@ -2,6 +2,7 @@ import GroupBase from "./groupBase"
 import { postGroups, fetchGroupData, editGroup } from "../../../core/services/groupsServices";
 import Spinner from "@material-ui/core/CircularProgress";
 import { Typography } from "@material-ui/core";
+import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
 
 const DATA ={
     "id": "",
@@ -63,7 +64,7 @@ export default class EditGroup extends GroupBase{
 
     fetchGroupData =async(id) =>{
         if(!id){
-            alert("id not present")
+          renderFailureNotification("id not present")
         }
         try{
             let response = await fetchGroupData(id)
@@ -75,10 +76,11 @@ export default class EditGroup extends GroupBase{
                 groupData: response.data,
                 groupId: id
             })
+            renderSuccessNotification("Group data fetched")
 
         }catch(e){
             console.error(e)
-            alert("Group data not fetched")
+            renderFailureNotification("Group data not fetched")
             this.setState({
                 loading: false,
                 //Delete this once api works 
@@ -102,10 +104,10 @@ export default class EditGroup extends GroupBase{
         try {
           await editGroup(data, this.state.groupId);
           ;
-          alert("Group edit success");
+          renderSuccessNotification("Group edit success");
         } catch (e) {
           console.error(e);
-          alert("Group edit error");
+          renderFailureNotification("Group edit error");
         }
       };
     

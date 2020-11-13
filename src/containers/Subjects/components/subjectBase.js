@@ -21,6 +21,10 @@ import { getUsers } from "../../../core/services/usersServices";
 import Icon from "@material-ui/core/Icon";
 import ArenaDropdown from "../../../common/arenaDropdown/arenaDropdown";
 import ConclusionComponent from "../../../common/conclusionComponent/conclusionComponent";
+import CommentsModal from "./commentsModal"
+import Dialog from '@material-ui/core/Dialog';
+import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
+
 const PAGE_LIMIT = 20;
 
 const STATUS_DATA = [
@@ -168,7 +172,7 @@ export default class SubjectBase extends Component {
         adminsData: response.data.items,
       });
     } catch (e) {
-      alert("Experts not fetched");
+      renderFailureNotification("Experts not fetched");
       console.error(e);
     }
   };
@@ -176,7 +180,7 @@ export default class SubjectBase extends Component {
   handleGroups = async (value) => {
     try {
     } catch (e) {
-      alert("Groups not fetched");
+      renderFailureNotification("Groups not fetched");
       console.error(e);
     }
   };
@@ -629,7 +633,7 @@ export default class SubjectBase extends Component {
         getOptionLabel={(option) => option.name}
         onChange={(event, newValue) => {
           this.handleOptionChange(event, newValue, "type");
-          this.changeFields(newValue.value);
+          this.changeFields(newValue?.value);
         }}
         renderInput={(params) => (
           <TextField
@@ -1034,6 +1038,34 @@ export default class SubjectBase extends Component {
       );
     });
   };
+
+  renderCommentModal=()=>{
+    return(
+      <Dialog
+      open={this.state.openCommentModal}
+      >
+        <CommentsModal
+        subjectId={this.state.subjectId}
+        />
+      </Dialog>
+    )
+  }
+
+  onClickViewComments=()=>{
+    this.setState({
+      openCommentModal: true
+    })
+  }
+
+  renderViewCommentButton=()=>{
+    return(
+      <Button onClick={this.onClickViewComments}>
+        View Comments
+      </Button>
+    )
+  }
+
+
   renderMainContent() {
     return (
       <div>
@@ -1047,6 +1079,10 @@ export default class SubjectBase extends Component {
                 {this.renderCategoryDropdown()}
 
                 {this.renderTypeDropdown()}
+
+                {this.state.type?.value === FORM_TYPE_MAP.discussion  && 
+                this.state.subjectId &&
+                this.renderViewCommentButton()}
 
                 {this.state.type?.value === FORM_TYPE_MAP.choice &&
                   this.renderMultiChoiceFields()}
@@ -1064,6 +1100,7 @@ export default class SubjectBase extends Component {
                 {this.renderGroupsDropdown()}
 
                 {this.renderExpertsDropdown()}
+                {this.renderCommentModal()}
 
                 <Button
                   variant="contained"

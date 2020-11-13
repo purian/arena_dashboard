@@ -20,6 +20,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { getAccounts } from "../../../core/services/accountsServices";
 import { getSubjectsByAccountId } from "../../../core/services/subjectsServices";
 import { fetchCategoryByAccountId} from "../../../core/services/categoriesServices"
+import { renderFailureNotification } from "../../../common/Notifications/showNotifications";
 const styles = (theme) => ({
   table: {
     minWidth: 650,
@@ -131,7 +132,7 @@ class SubjectsTable extends Component {
             })
 
         }catch(e){
-            alert("Subject fetch error")
+            renderFailureNotification("Subject fetch error")
         }
     }
   };

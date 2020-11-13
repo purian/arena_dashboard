@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import SubjectBase from "./subjectBase"
 import {postSubject} from "../../../core/services/subjectsServices"
 import {SUBJECT_STATUS, FORM_TYPE_MAP} from "../../../core/constants/constant"
+import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
 
 
 export default class CreateSubject extends SubjectBase {
@@ -33,7 +34,8 @@ export default class CreateSubject extends SubjectBase {
         showConclusion: false,
         choice: null,
         allocation: null,
-        files: []
+        files: [],
+        openCommentModal: false
       };
 
       handleSave = async () => {
@@ -76,11 +78,11 @@ export default class CreateSubject extends SubjectBase {
         try {
           await postSubject(data);
           ;
-          alert("Subject post success");
+          renderSuccessNotification("Subject post success");
           this.props.history.goBack()
         } catch (e) {
           console.error(e);
-          alert("Subject post error");
+          renderFailureNotification("Subject post error");
         }
       };
 

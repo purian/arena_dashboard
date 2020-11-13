@@ -1,5 +1,6 @@
 import GroupBase from "./groupBase"
 import { postGroups } from "../../../core/services/groupsServices";
+import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
 
 
 export default class CreateGroup extends GroupBase {
@@ -22,10 +23,10 @@ export default class CreateGroup extends GroupBase {
     try {
       await postGroups(data);
       ;
-      alert("Group post success");
+      renderSuccessNotification("Group post success");
     } catch (e) {
       console.error(e);
-      alert("Group post error");
+      renderFailureNotification("Group post error");
     }
   };
 

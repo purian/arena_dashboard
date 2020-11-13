@@ -2,6 +2,7 @@ import CategoryBase from "./categoryBase"
 import { fetchCategoryById, editCategory } from "../../../core/services/categoriesServices";
 import Spinner from "@material-ui/core/CircularProgress";
 import { Typography } from "@material-ui/core";
+import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
 
 const DATA ={
     "id": "",
@@ -66,7 +67,7 @@ export default class EditCategory extends CategoryBase{
 
     fetchCategoryData =async(id) =>{
         if(!id){
-            alert("id not present")
+          renderFailureNotification("id not present")
         }
         try{
             let response = await fetchCategoryById(id)
@@ -86,7 +87,7 @@ export default class EditCategory extends CategoryBase{
 
         }catch(e){
             console.error(e)
-            alert("Category data not fetched")
+            renderFailureNotification("Category data not fetched")
             this.setState({
                 loading: false
             })
@@ -129,11 +130,11 @@ export default class EditCategory extends CategoryBase{
         try {
           await editCategory(data, this.state.categoryId);
           ;
-          alert("Category edit success");
+          renderSuccessNotification("Category edit success");
           this.props.history.goBack()
         } catch (e) {
           console.error(e);
-          alert("Category edit error");
+          renderFailureNotification("Category edit error");
         }
       };
     

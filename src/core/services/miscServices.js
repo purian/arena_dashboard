@@ -9,6 +9,7 @@ const API_ENDPOINT_LIST_STORES = API_ENDPOINTS.MISC.STORE_LIST
 const API_ENDPOINT_LIST_INSPECTORS = API_ENDPOINTS.MISC.INSPECTOR_LIST
 const UPLOAD_IMAGE = API_ENDPOINTS.MISC.UPLOAD_IMAGE;
 const UPLOAD_DOCUMENT = API_ENDPOINTS.MISC.UPLOAD_DOCUMENT
+const GET_COMMENTS = API_ENDPOINTS.MISC.GET_COMMENTS
 
 export function exportToExel(payload) {
   return http.post(API_ENDPOINT_EXPORT, payload)
@@ -43,4 +44,11 @@ export function uploadImage(payload) {
 export function uploadDocument(payload) {
   const headers = getAuthHeader()
   return http.post(UPLOAD_DOCUMENT, payload, { headers })
+}
+
+export function getComments(subjectId) {
+  const headers = getAuthHeader()
+  const url = GET_COMMENTS.replace("<SUBJECT_ID>", subjectId)
+  
+  return http.get(url, { headers })
 }

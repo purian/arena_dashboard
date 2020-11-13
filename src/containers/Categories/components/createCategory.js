@@ -1,5 +1,6 @@
 import CategoryBase from "./categoryBase"
 import { postCategory } from "../../../core/services/categoriesServices";
+import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
 
 
 export default class CreateCategory extends CategoryBase {
@@ -51,12 +52,12 @@ export default class CreateCategory extends CategoryBase {
     try {
       await postCategory(data);
       ;
-      alert("Category post success");
+      renderSuccessNotification("Category post success");
       this.props.history.goBack()
 
     } catch (e) {
       console.error(e);
-      alert("Category post error");
+      renderFailureNotification("Category post error");
     }
   };
 

@@ -4,6 +4,7 @@ import { fetchSubjectById, editSubject} from "../../../core/services/subjectsSer
 import Spinner from "@material-ui/core/CircularProgress";
 import { Typography } from "@material-ui/core";
 import {SUBJECT_STATUS, FORM_TYPE_MAP} from "../../../core/constants/constant"
+import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
 
 
 export default class EditSubject extends SubjectBase{
@@ -37,7 +38,8 @@ export default class EditSubject extends SubjectBase{
     allocation: null,
     loading: true,
     subjectData: null,
-    subjectId: null
+    subjectId: null,
+    openCommentModal: false
   };
 
     componentDidMount(){
@@ -48,7 +50,7 @@ export default class EditSubject extends SubjectBase{
 
     fetchSubjectData =async(id) =>{
         if(!id){
-            alert("id not present")
+          renderFailureNotification("id not present")
         }
         try{
             let response = await fetchSubjectById(id)
@@ -87,11 +89,11 @@ export default class EditSubject extends SubjectBase{
               conclusionFiles: response.data.conclusionFiles
 
             })
-            alert("Subject data fetched")
+            renderSuccessNotification("Subject data fetched")
 
         }catch(e){
             console.error(e)
-            alert("Subject data not fetched")
+            renderFailureNotification("Subject data not fetched")
             this.setState({
                 loading: false
             })
@@ -136,11 +138,11 @@ export default class EditSubject extends SubjectBase{
       try {
         await editSubject(data, this.state.subjectId);
         ;
-        alert("Subject edit success");
+        renderSuccessNotification("Subject edit success");
         this.props.history.goBack()
       } catch (e) {
         console.error(e);
-        alert("Subject edit error");
+        renderFailureNotification("Subject edit error");
       }
     };
     
