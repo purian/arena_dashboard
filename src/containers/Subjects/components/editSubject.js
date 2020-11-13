@@ -143,7 +143,7 @@ export default class EditSubject extends SubjectBase{
         data.allocation = this.state.allocation
       }
       ;
-      debugger
+      
       try {
         await editSubject(data, this.state.subjectId);
         ;

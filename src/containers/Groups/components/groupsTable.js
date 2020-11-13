@@ -95,7 +95,7 @@ class GroupsTable extends Component {
   };
 
   handleSearch = async (value) => {
-    debugger
+    
     if (!this.state.account) {
       return;
     }

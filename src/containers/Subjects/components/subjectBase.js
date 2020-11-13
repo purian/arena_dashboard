@@ -24,7 +24,7 @@ import ConclusionComponent from "../../../common/conclusionComponent/conclusionC
 import CommentsModal from "./commentsModal"
 import Dialog from '@material-ui/core/Dialog';
 import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
-
+import {searchGroupByAccountId} from "../../../core/services/groupsServices"
 const PAGE_LIMIT = 20;
 
 const STATUS_DATA = [
@@ -179,6 +179,11 @@ export default class SubjectBase extends Component {
 
   handleGroups = async (value) => {
     try {
+      let response = await searchGroupByAccountId("",this.state.account.id, PAGE_LIMIT, this.state.currentPage)
+      
+      this.setState({
+        groups: response.data.items,
+      });
     } catch (e) {
       renderFailureNotification("Groups not fetched");
       console.error(e);
@@ -857,7 +862,7 @@ export default class SubjectBase extends Component {
     return (
       <Autocomplete
         id="groups"
-        options={this.state.adminsData}
+        options={this.state.groups}
         getOptionLabel={(option) => option.name}
         onChange={(event, newValue) =>
           this.handleOptionChange(event, newValue, "groups")

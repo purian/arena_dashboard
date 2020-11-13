@@ -50,7 +50,7 @@ export default class CommentsModal extends React.Component{
     }
 
     onClickDelete =(index) =>{
-        debugger
+        
         this.setState({
             openConfirmModal: true,
             index: index
@@ -134,7 +134,7 @@ export default class CommentsModal extends React.Component{
         try{
             await deleteComment(this.state.commentsData[this.state.index].id)
             let commentDataCopy = Object.assign([], this.state.commentsData)
-            debugger
+            
             commentDataCopy.splice(this.state.index, 1)
             this.setState({
                 commentsData: commentDataCopy,
@@ -181,7 +181,7 @@ export default class CommentsModal extends React.Component{
         if(this.state.loading){
             return <Spinner size="24px" style={{ color: "#65D2FC" }} />
         }
-        debugger
+        
 
         return(
             <React.Fragment>

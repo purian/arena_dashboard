@@ -53,7 +53,7 @@ export function blockUser(payload, userId) {
 }
 
 export function getAccountActivityUsers(accountId, limit, offset, seacrhPrm) {
-    debugger
+    
     const headers = getAuthHeader()
     const url = GET_ACCOUNT_ACTIVITY_USERS.replace("<ACCOUNT_ID>", accountId).replace("<LIMIT>", limit).replace("<OFFSET>", offset).replace("<SEARCH_PARM>", seacrhPrm)
     return http.get(url, { headers })

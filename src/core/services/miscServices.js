@@ -55,7 +55,7 @@ export function getComments(subjectId) {
 }
 
 export function deleteComment(commentId) {
-  debugger
+  
   const headers = getAuthHeader()
   const url = DELETE_COMMENT.replace("<COMMENT_ID>", commentId)
   

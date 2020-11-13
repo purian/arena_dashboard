@@ -14,7 +14,7 @@ export default class CreateSubject extends SubjectBase {
         adminsData: [],
         description: null,
         admins: [],
-
+        groups:[],
         status: this.getStatusType(SUBJECT_STATUS.DRAFT),
         startDate: new Date(),
         endDate: new Date(),

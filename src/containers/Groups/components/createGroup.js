@@ -21,9 +21,9 @@ export default class CreateGroup extends GroupBase {
     };
     ;
     try {
-      debugger
+      
       await postGroups(data);
-      debugger
+      
       renderSuccessNotification("Group post success");
       setTimeout(()=>{
         this.props.history.goBack()
