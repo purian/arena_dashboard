@@ -10,6 +10,7 @@ import { getAccounts } from "../../../core/services/accountsServices";
 import { getUsers } from "../../../core/services/usersServices";
 import ArenaUploader from "../../../common/arenaUploader/arenaUploader"
 import Typography from '@material-ui/core/Typography';
+import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
 
 const PAGE_LIMIT = 20;
 
@@ -72,23 +73,23 @@ export default class CategoryBase extends Component {
 
   checkErrors =()=>{
     if (!this.state.account) {
-      // window.NotificationUtils.showError("Account not selected");
+      renderFailureNotification("Account not selected");
       return true;
     }
     if (!this.state.name) {
-      // window.NotificationUtils.showError("Name not selected");
+      renderFailureNotification("Name not selected");
       return true;
     }
     if (!this.state.description) {
-      // window.NotificationUtils.showError("Description not selected");
+      renderFailureNotification("Description not selected");
       return true;
     }
     if (!this.state.iconURL) {
-      // window.NotificationUtils.showError("Icon not uploaded");
+      renderFailureNotification("Icon not uploaded");
       return true;
     }
     if (!this.state.coverURL) {
-      // window.NotificationUtils.showError("Cover not uploaded");
+      renderFailureNotification("Cover not uploaded");
       return true;
     }
     return false;
@@ -130,6 +131,7 @@ export default class CategoryBase extends Component {
                     />
                   )}
                   value={this.state.account}
+                  disabled={this.state.editCategory}
                 />
                 <TextField
                   id="name"

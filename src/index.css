@@ -215,3 +215,15 @@ code {
   align-items: center;
   justify-content: center;
 }
+
+.customHeight .MuiInputBase-root{
+  height: 40px;
+}
+
+.noPadding{
+  padding: 0 !important;
+}
+
+.minWidthInitial{
+  min-width: initial !important;
+}

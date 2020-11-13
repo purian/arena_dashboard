@@ -136,38 +136,41 @@ class AccountTable extends Component {
         return (
             <Fragment>
                 <Paper component="form" className="searchInput" style={{ marginBottom: "20px", width: "22%", padding: "2px 18px", float: "right" }}>
-                    <InputBase
-                        className={classes.input}
-                        placeholder="Search"
-                        inputProps={{ 'aria-label': 'search google maps' }}
-                        onChange={(e) => { this.handleSearch(e.target.value) }}
-                    />
-                    <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                        <SearchIcon />
-                    </IconButton>
+                    <div className="displayFlex">
+                        <InputBase
+                            className={classes.input}
+                            placeholder="Search"
+                            inputProps={{ 'aria-label': 'search google maps' }}
+                            onChange={(e) => { this.handleSearch(e.target.value) }}
+                        />
+                        <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                            <SearchIcon />
+                        </IconButton>
+
+                    </div>
                 </Paper>
                 <TableContainer component={Paper}>
                     <Table className={classes.table} size="small" aria-label="a dense table">
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">Name</TableCell>
-                                <TableCell align="center">Slug</TableCell>
-                                <TableCell align="center">Owner</TableCell>
-                                <TableCell align="center">Edit</TableCell>
-                                <TableCell align="center">Active</TableCell>
+                                <TableCell >Name</TableCell>
+                                <TableCell >Slug</TableCell>
+                                <TableCell >Owner</TableCell>
+                                <TableCell >Actions</TableCell>
+                                <TableCell >Active</TableCell>
                             </TableRow>
                         </TableHead>
                         {data && data.length ?
                             <TableBody>
                                 {data.map((item, index) => (
                                     <TableRow key={item.id}>
-                                        <TableCell align="center">{item.name}</TableCell>
-                                        <TableCell align="center">{item.slug}</TableCell>
-                                        <TableCell align="center"></TableCell>
-                                        <TableCell align="center">
-                                            <Button onClick={() => this.props.history.push(`/admin/accounts/${item.id}`)} color="primary">Edit</Button>
+                                        <TableCell >{item.name}</TableCell>
+                                        <TableCell >{item.slug}</TableCell>
+                                        <TableCell ></TableCell>
+                                        <TableCell >
+                                            <Button className="noPadding minWidthInitial" onClick={() => this.props.history.push(`/admin/accounts/${item.id}`)} color="primary">Edit</Button>
                                         </TableCell>
-                                        <TableCell align="center">
+                                        <TableCell >
                                             <Checkbox
                                                 checked={item.active}
                                                 color="primary"

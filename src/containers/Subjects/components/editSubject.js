@@ -61,9 +61,14 @@ export default class EditSubject extends SubjectBase{
 
               })
             }
-            if(response.data.allocation){
+            if(response.data?.allocation){
               this.setState({
                 allocation : response.data.allocation
+              })
+            }
+            if(response.data?.conclusion.length > 0){
+              this.setState({
+                showConclusion: true
               })
             }
             this.setState({
@@ -85,9 +90,9 @@ export default class EditSubject extends SubjectBase{
               subjectData: response.data,
               subjectId: id,
               question: response.data.question,
-              cover: response.data?.cover?.original,
-              conclusionFiles: response.data.conclusionFiles
-
+              cover: response.data?.cover,
+              conclusionFiles: response.data.conclusionFiles,
+              editSubject: true
             })
             renderSuccessNotification("Subject data fetched")
 
@@ -124,9 +129,12 @@ export default class EditSubject extends SubjectBase{
           conclusion: this.state.conclusion,
           intermediateReport: this.state.showReport,
           private: this.state.private,
-          files: [],
+          files: this.state.files,
           experts: this.state.admins,
-          groups: this.state.groups
+          groups: this.state.groups,
+          question: this.state.question,
+          cover: this.state.cover,
+          conclusionFiles: this.state.conclusionFiles
       };
       if(this.state.choice){
         data.choice = this.state.choice
@@ -135,6 +143,7 @@ export default class EditSubject extends SubjectBase{
         data.allocation = this.state.allocation
       }
       ;
+      debugger
       try {
         await editSubject(data, this.state.subjectId);
         ;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SubjectsTable from "./components/subjectTable";
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import AddIcon from '@material-ui/icons/Add';
+
 import Button from '@material-ui/core/Button';
 export default class Subjects extends Component {
     
@@ -11,7 +12,7 @@ render(){
             variant="contained"
             color="default"
             onClick={() => this.props.history.push("/admin/subjects/new")}
-            startIcon={<CloudUploadIcon />}
+            startIcon={<AddIcon />}
             style={{ marginBottom: "20px", float: "left" }}
         >
             Create

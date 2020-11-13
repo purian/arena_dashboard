@@ -82,6 +82,7 @@ export default class EditCategory extends CategoryBase{
                 categoryId: id,
                 coverURL: response.data?.cover?.original,
                 iconURL: response.data?.icon?.original,
+                editCategory: true
 
             })
 

@@ -162,7 +162,7 @@ class CategoriesTable extends Component {
         <Autocomplete
           id="account"
           options={accountsData}
-          style={{ width: "20%", float: "left", margin: "0 8px" }}
+          style={{ width: "20%", float: "left", margin: "0 16px" }}
           getOptionLabel={(option) => option.name}
           onChange={(event, newValue) =>
             this.handleOptionChange(event, newValue, "account")
@@ -170,7 +170,7 @@ class CategoriesTable extends Component {
           renderInput={(params) => (
             <TextField
               {...params}
-              className="selectAccount"
+              className="selectAccount customHeight"
               label="Select Account"
               onChange={(e) => this.handleAccounts(e.target.value)}
               variant="outlined"
@@ -210,24 +210,25 @@ class CategoriesTable extends Component {
           >
             <TableHead>
               <TableRow>
-                <TableCell align="center">Name</TableCell>
-                <TableCell align="center">Account</TableCell>
-                <TableCell align="center">Edit</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Account</TableCell>
+                <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             {data && data.length ? (
               <TableBody>
                 {data.map((item, index) => (
                   <TableRow key={item.id}>
-                    <TableCell align="center">{item.name}</TableCell>
-                    <TableCell align="center">{item.account.name}</TableCell>
+                    <TableCell>{item.name}</TableCell>
+                    <TableCell>{item.account.name}</TableCell>
 
-                    <TableCell align="center">
+                    <TableCell>
                       <Button
                         onClick={() =>
                           this.props.history.push(`/admin/categories/${item.id}`)
                         }
                         color="primary"
+                        className="noPadding minWidthInitial"
                       >
                         Edit
                       </Button>

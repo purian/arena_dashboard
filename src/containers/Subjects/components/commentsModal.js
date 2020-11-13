@@ -119,15 +119,22 @@ export default class CommentsModal extends React.Component{
         </Dialog>)
     }
 
+    renderContent=()=>{
+        if(!this.state.commentsData || this.state.commentsData.length <= 0 ){
+            return this.renderEmptyPlaceHolder()
+        }
+        return(<DialogContent>
+        {this.renderDialogContent()}
+    </DialogContent>)
+    }
+
 
     render(){
         if(this.state.loading){
             return <Spinner size="24px" style={{ color: "#65D2FC" }} />
         }
         debugger
-        if(!this.state.commentsData || this.state.commentsData.length <= 0 ){
-            return this.renderEmptyPlaceHolder()
-        }
+
         return(
             <React.Fragment>
                 <DialogTitle>
@@ -141,9 +148,8 @@ export default class CommentsModal extends React.Component{
                 >
                     <CloseIcon />
                 </IconButton>
-                <DialogContent>
-                    {this.renderDialogContent()}
-                </DialogContent>
+                {this.renderContent()}
+
                 {this.renderConfirmModal()}
             </React.Fragment>
         )

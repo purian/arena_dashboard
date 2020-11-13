@@ -595,6 +595,7 @@ export default class SubjectBase extends Component {
           />
         )}
         value={this.state.account}
+        disabled={this.state.editSubject}
       />
     );
   };
@@ -839,7 +840,7 @@ export default class SubjectBase extends Component {
 
           <ArenaUploader
             isMultiple={true}
-            fileURL={this.state.cover && this.state.cover}
+            fileURL={this.state.cover && this.state.cover.original}
             extensions={["jpg", "jpeg", "png"]}
             onUploadComplete={(response) => {
               this.onUploadBackgroundComplete(response, "backgroundCover");
@@ -1183,31 +1184,31 @@ export default class SubjectBase extends Component {
 
   checkErrors() {
     if (!this.state.account) {
-      // window.NotificationUtils.showError("Account not selected");
+      renderFailureNotification("Account not selected");
       return true;
     }
     if (!this.state.category) {
-      // window.NotificationUtils.showError("Category not selected");
+      renderFailureNotification("Category not selected");
       return true;
     }
     if (!this.state.type) {
-      // window.NotificationUtils.showError("Type not selected");
+      renderFailureNotification("Type not selected");
       return true;
     }
     if (!this.state.status) {
-      // window.NotificationUtils.showError("Status not selected");
+      renderFailureNotification("Status not selected");
       return true;
     }
     if (!this.state.name) {
-      // window.NotificationUtils.showError("Name not present");
+      renderFailureNotification("Name not present");
       return true;
     }
     if (!this.state.description) {
-      // window.NotificationUtils.showError("Description not present");
+      renderFailureNotification("Description not present");
       return true;
     }
     if (!this.state.question) {
-      // window.NotificationUtils.showError("Question not present");
+      renderFailureNotification("Question not present");
       return true;
     }
     if (this.state.type?.value === FORM_TYPE_MAP.allocation) {
@@ -1215,26 +1216,26 @@ export default class SubjectBase extends Component {
 
       for (let item of this.state.allocation.options) {
         if (!item.name|| !item.icon) {
-          // window.NotificationUtils.showError("Enter Allocation Fields");
+          renderFailureNotification("Enter Allocation Fields");
           return true;
         }
       }
       if (!allocation.total) {
-        // window.NotificationUtils.showError("Enter Allocation Total");
+        renderFailureNotification("Enter Allocation Total");
         return true;
       }
       if (!allocation.min) {
-        // window.NotificationUtils.showError("Enter Allocation minimum value");
+        renderFailureNotification("Enter Allocation minimum value");
         return true;
       }
       if (!allocation.max) {
-        // window.NotificationUtils.showError("Enter Allocation maximum value");
+        renderFailureNotification("Enter Allocation maximum value");
         return true;
       }
       if (!allocation.step) {
-        // window.NotificationUtils.showError(
-        //   "Enter Allocation step value"
-        // );
+        renderFailureNotification(
+          "Enter Allocation step value"
+        );
         return true;
       }
     }
@@ -1244,22 +1245,22 @@ export default class SubjectBase extends Component {
 
       for (let item of this.state.choice.options) {
         if (!item.name || !item.icon) {
-          // window.NotificationUtils.showError("Enter Multi-choice Fields");
+          renderFailureNotification("Enter Multi-choice Fields");
           return true;
         }
       }
       if (!choice.min) {
-        // window.NotificationUtils.showError("Enter Multi-choice Minimum value");
+        renderFailureNotification("Enter Multi-choice Minimum value");
         return true;
       }
       if (!choice.max) {
-        // window.NotificationUtils.showError("Enter Multi-choice Maximum value");
+        renderFailureNotification("Enter Multi-choice Maximum value");
         return true;
       }
     }
 
     if (this.state.startDate > this.state.endDate) {
-      // window.NotificationUtils.showError("Start date cannot be greater than end date");
+      renderFailureNotification("Start date cannot be greater than end date");
       return true;
     }
 

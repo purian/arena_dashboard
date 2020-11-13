@@ -165,40 +165,43 @@ class UserTable extends Component {
                 <Autocomplete
                     id="owner"
                     options={userData}
-                    style={{ width: "20%", float: "left", margin: "0 8px" }}
+                    style={{ width: "20%", float: "left", margin: "0 16px" }}
                     getOptionLabel={(option) => option.name}
                     onChange={(event, newValue) => this.handleUsersOption(event, newValue)}
-                    renderInput={(params) => <TextField {...params} className="selectAccount" label="Select Account" onChange={(e) => this.handleUser(e.target.value)} variant="outlined" />}
+                    renderInput={(params) => <TextField {...params} className="selectAccount customHeight" label="Select Account" onChange={(e) => this.handleUser(e.target.value)} variant="outlined" />}
                 />
                 <Paper component="form" className="searchInput" style={{ marginBottom: "20px", width: "22%", padding: "2px 18px", float: "right" }}>
-                    <InputBase
-                        placeholder="Search"
-                        inputProps={{ 'aria-label': 'search google maps' }}
-                        onChange={(e) => { this.handleSearch(e.target.value) }}
-                    />
-                    <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                        <SearchIcon />
-                    </IconButton>
+                    <div className="displayFlex">
+                        <InputBase
+                            placeholder="Search"
+                            inputProps={{ 'aria-label': 'search google maps' }}
+                            onChange={(e) => { this.handleSearch(e.target.value) }}
+                        />
+                        <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                            <SearchIcon />
+                        </IconButton>
+
+                    </div>
                 </Paper>
                 <TableContainer component={Paper}>
                     <Table className={classes.table} size="small" aria-label="a dense table">
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">Name</TableCell>
-                                <TableCell align="center">Email</TableCell>
-                                <TableCell align="center">Edit</TableCell>
-                                <TableCell align="center">Active</TableCell>
+                                <TableCell >Name</TableCell>
+                                <TableCell >Email</TableCell>
+                                <TableCell >Actions</TableCell>
+                                <TableCell >Active</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {data && data.length ? data.map((item, index) => (
                                 <TableRow key={item.id}>
-                                    <TableCell align="center">{item.name}</TableCell>
-                                    <TableCell align="center">{item.email}</TableCell>
-                                    <TableCell align="center">
-                                        <Button onClick={() => this.props.history.push(`/admin/user/${item.id}`)} color="primary">Edit</Button>
+                                    <TableCell >{item.name}</TableCell>
+                                    <TableCell >{item.email}</TableCell>
+                                    <TableCell >
+                                        <Button className="noPadding minWidthInitial" onClick={() => this.props.history.push(`/admin/user/${item.id}`)} color="primary">Edit</Button>
                                     </TableCell>
-                                    <TableCell align="center">
+                                    <TableCell >
                                         <Checkbox
                                             color="primary"
                                             inputProps={{ 'aria-label': 'secondary checkbox' }}
