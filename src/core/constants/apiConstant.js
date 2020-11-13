@@ -25,7 +25,8 @@ export const API_ENDPOINTS = {
     POST_USER: `${baseUrl}/users`,
     GET_SINGLE_USER: `${baseUrl}/users/<USER_ID>`,
     EDIT_USER: `${baseUrl}/users/<USER_ID>`,
-    BLOCK_USER: `${baseUrl}/users/<USER_ID>/blocked`
+    BLOCK_USER: `${baseUrl}/users/<USER_ID>/blocked`,
+    GET_ACCOUNT_ACTIVITY_USERS: `${baseUrl}/accounts/<ACCOUNT_ID>/users?limit=<LIMIT>&offset=<OFFSET>`
   },
   MISC: {
     UPLOAD_IMAGE: `${baseUrl}/uploads/image`,

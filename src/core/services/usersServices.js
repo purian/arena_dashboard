@@ -9,6 +9,7 @@ const EDIT_USER = API_ENDPOINTS.USER.EDIT_USER;
 const BLOCK_USER = API_ENDPOINTS.USER.BLOCK_USER;
 const SEARCH_USER = API_ENDPOINTS.USER.SEARCH_USERS;
 const SEARCH_USER_ACCOUNT = API_ENDPOINTS.USER.SEARCH_USERS_ACCOUNT;
+const GET_ACCOUNT_ACTIVITY_USERS = API_ENDPOINTS.USER.GET_ACCOUNT_ACTIVITY_USERS
 
 export function getUsers(limit, offset, seacrhPrm) {
     const headers = getAuthHeader()
@@ -49,4 +50,11 @@ export function blockUser(payload, userId) {
     const headers = getAuthHeader()
     const url = BLOCK_USER.replace("<USER_ID>", userId)
     return http.post(url, payload, { headers })
+}
+
+export function getAccountActivityUsers(accountId, limit, offset, seacrhPrm) {
+    debugger
+    const headers = getAuthHeader()
+    const url = GET_ACCOUNT_ACTIVITY_USERS.replace("<ACCOUNT_ID>", accountId).replace("<LIMIT>", limit).replace("<OFFSET>", offset).replace("<SEARCH_PARM>", seacrhPrm)
+    return http.get(url, { headers })
 }

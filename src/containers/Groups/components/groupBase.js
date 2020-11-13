@@ -7,7 +7,7 @@ import React, { Component } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAccounts } from "../../../core/services/accountsServices";
-import { getUsers } from "../../../core/services/usersServices";
+import { getAccountActivityUsers } from "../../../core/services/usersServices";
 
 const PAGE_LIMIT = 20;
 
@@ -39,7 +39,7 @@ export default class GroupBase extends Component {
 
   handleUsers = async (value) => {
     try {
-      let response = await getUsers(PAGE_LIMIT, this.state.currentPage, value);
+      let response = await getAccountActivityUsers(this.state.account.id, PAGE_LIMIT, this.state.currentPage, value);
       ;
       this.setState({
         usersData: response.data.items,
@@ -119,6 +119,7 @@ export default class GroupBase extends Component {
                     />
                   )}
                   value={this.state.users}
+                  disabled={!this.state.account?.id}
                 />
                 <Button
                   variant="contained"
