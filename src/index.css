@@ -180,3 +180,38 @@ code {
   align-items: center;
   margin: 8px;
 }
+
+#commentSingleContainer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bold{
+  font-weight: bold !important;
+}
+
+.alignCenter{
+  align-self: center !important;
+}
+
+#commentModalMainContainer .MuiDialog-paperScrollPaper{
+  height: 500px;
+}
+
+::-webkit-scrollbar {
+  width: 0px !important;
+  background: transparent; /* Chrome/Safari/Webkit */
+}
+
+#closeSubjectCommentIcon{
+  position: absolute;
+  right: 4px;
+  top: 4px;
+}
+
+#commentModalTitle{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

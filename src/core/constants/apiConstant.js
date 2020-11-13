@@ -30,8 +30,8 @@ export const API_ENDPOINTS = {
   MISC: {
     UPLOAD_IMAGE: `${baseUrl}/uploads/image`,
     UPLOAD_DOCUMENT: `${baseUrl}/uploads/document`,
-    GET_COMMENTS: `${baseUrl}/subjects/<SUBJECT_ID>/comments
-    `
+    GET_COMMENTS: `${baseUrl}/subjects/<SUBJECT_ID>/comments`,
+    DELETE_COMMENT: `${baseUrl}/comments/<COMMENT_ID>`
   },
   GROUPS: {
     POST_GROUPS: `${baseUrl}/groups`,

@@ -10,6 +10,7 @@ const API_ENDPOINT_LIST_INSPECTORS = API_ENDPOINTS.MISC.INSPECTOR_LIST
 const UPLOAD_IMAGE = API_ENDPOINTS.MISC.UPLOAD_IMAGE;
 const UPLOAD_DOCUMENT = API_ENDPOINTS.MISC.UPLOAD_DOCUMENT
 const GET_COMMENTS = API_ENDPOINTS.MISC.GET_COMMENTS
+const DELETE_COMMENT = API_ENDPOINTS.MISC.DELETE_COMMENT
 
 export function exportToExel(payload) {
   return http.post(API_ENDPOINT_EXPORT, payload)
@@ -51,4 +52,12 @@ export function getComments(subjectId) {
   const url = GET_COMMENTS.replace("<SUBJECT_ID>", subjectId)
   
   return http.get(url, { headers })
+}
+
+export function deleteComment(commentId) {
+  debugger
+  const headers = getAuthHeader()
+  const url = DELETE_COMMENT.replace("<COMMENT_ID>", commentId)
+  
+  return http.delete(url, { headers })
 }

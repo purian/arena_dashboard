@@ -1039,13 +1039,23 @@ export default class SubjectBase extends Component {
     });
   };
 
+  closeCommentModal=()=>{
+    this.setState({
+      openCommentModal: false
+    })
+  }
   renderCommentModal=()=>{
     return(
       <Dialog
       open={this.state.openCommentModal}
+      fullWidth={true}
+      maxWidth="md"
+      id="commentModalMainContainer"
       >
         <CommentsModal
         subjectId={this.state.subjectId}
+        closeCommentModal={this.closeCommentModal}
+
         />
       </Dialog>
     )
