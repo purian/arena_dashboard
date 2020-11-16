@@ -8,6 +8,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAccounts } from "../../../core/services/accountsServices";
 import { getAccountActivityUsers } from "../../../core/services/usersServices";
+import ArenaUploader from "../../../common/arenaUploader/arenaUploader"
+import Typography from "@material-ui/core/Typography";
+import {uploadGroupCSV} from "../../../core/services/groupsServices"
+import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
 
 const PAGE_LIMIT = 20;
 
@@ -55,6 +59,16 @@ export default class GroupBase extends Component {
     });
   };
 
+  onFileUpload =async(selectedFileForUpload) =>{
+    debugger
+    try{
+      await uploadGroupCSV(selectedFileForUpload)
+      renderSuccessNotification()
+    }catch(e){
+      console.error(e)
+      renderFailureNotification("Something went wrong while uploading")
+    }
+  }
 
 
   renderMainContent() {
@@ -121,6 +135,23 @@ export default class GroupBase extends Component {
                   value={this.state.users}
                   disabled={!this.state.account?.id}
                 />
+
+              {this.state.editGroup && 
+              <>
+              <Typography variant="body2" className="margin8 bold">
+                Upload csv file with users
+              </Typography>
+              <div className="mgLeft8 fullWidth">
+                <ArenaUploader
+                docUploader={true}
+                extensions={["csv"]}
+                onFileUpload ={this.onFileUpload}
+                />
+
+              </div>
+              </>
+              }
+
                 <Button
                   variant="contained"
                   style={{ margin: 8 }}

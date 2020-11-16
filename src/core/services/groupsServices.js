@@ -6,7 +6,7 @@ const POST_GROUPS = API_ENDPOINTS.GROUPS.POST_GROUPS;
 const SEARCH_GROUPS_BY_ACCOUNT_ID = API_ENDPOINTS.GROUPS.SEARCH_GROUPS_BY_ACCOUNT_ID
 const GET_GROUP = API_ENDPOINTS.GROUPS.GET_GROUP
 const EDIT_GROUP = API_ENDPOINTS.GROUPS.EDIT_GROUP
-
+const POST_GROUP_CSV = API_ENDPOINTS.GROUPS.POST_GROUP_CSV
 
 
 export function postGroups(payload) {
@@ -33,4 +33,9 @@ export function editGroup(payload, groupId) {
     const url = EDIT_GROUP.replace("<GROUP_ID>", groupId)
 
     return http.put(url, payload, { headers })
+}
+
+export function uploadGroupCSV(payload) {
+    const headers = getAuthHeader()
+    return http.post(POST_GROUP_CSV, payload, { headers })
 }

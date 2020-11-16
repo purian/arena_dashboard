@@ -28,6 +28,9 @@ export default class ArenaUploader extends Component {
   };
 
   uploadFile = () => {
+    if(this.props.onFileUpload){
+      this.props.onFileUpload(this.state.selectedFileForUpload)
+    }
     if (this.props.docUploader) {
       this.uploadDoc();
     } else {
