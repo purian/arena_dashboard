@@ -21,6 +21,10 @@ import { getAccounts } from "../../../core/services/accountsServices";
 import { getSubjectsByAccountId } from "../../../core/services/subjectsServices";
 import { fetchCategoryByAccountId} from "../../../core/services/categoriesServices"
 import { renderFailureNotification } from "../../../common/Notifications/showNotifications";
+import Divider from '@material-ui/core/Divider';
+import {FORM_TYPE_MAP} from "../../../core/constants/constant"
+import CommentsModal from "./commentsModal"
+
 const styles = (theme) => ({
   table: {
     minWidth: 650,
@@ -38,67 +42,7 @@ class SubjectsTable extends Component {
     account: null,
     accountId: null
   };
-  // componentDidMount() {
-  //     const { currentPage, searchValue } = this.state;
-  //     getAccounts(PAGE_LIMIT, currentPage, searchValue).then(resp => {
-  //         toast.success('Success', {
-  //             position: "top-right",
-  //             autoClose: 5000,
-  //             hideProgressBar: false,
-  //             closeOnClick: true,
-  //             pauseOnHover: true,
-  //             draggable: true,
-  //             progress: undefined,
-  //         });
-  //         this.setState({
-  //             data: resp.data.items,
-  //             totalItems: resp.data.count
-  //         })
-  //     }).catch(err => {
-  //         toast.error('Error', {
-  //             position: "top-right",
-  //             autoClose: 5000,
-  //             hideProgressBar: false,
-  //             closeOnClick: true,
-  //             pauseOnHover: true,
-  //             draggable: true,
-  //             progress: undefined,
-  //         });
-  //     })
-  // }
-  // handleSearch = (value) => {
-  //     const { currentPage, searchValue } = this.state;
-  //     this.setState({
-  //         searchValue: value
-  //     }, () => getAccounts(PAGE_LIMIT, currentPage, value).then(resp => {
-  //         this.setState({
-  //             data: resp.data.items,
-  //             totalItems: resp.data.count
-  //         })
-  //     })
-  //     )
 
-  // }
-
-  // handlePageChange(page) {
-  //     this.setState({
-  //         currentPage: page
-  //     }, () => this.loadPageData())
-
-  // }
-  // loadPageData = () => {
-  //     const { currentPage, searchValue } = this.state;
-  //     let offset = (currentPage - 1) * PAGE_LIMIT
-  //     if (offset < 0) {
-  //         offset = 0
-  //     }
-  //     getAccounts(PAGE_LIMIT, offset, searchValue).then(resp => {
-  //         this.setState({
-  //             data: resp.data.items,
-  //             totalItems: resp.data.count
-  //         })
-  //     })
-  // }
 
   handleAccounts = async (value) => {
     try {
@@ -152,6 +96,30 @@ class SubjectsTable extends Component {
       console.error(e);
     }
   };
+
+  closeCommentModal=()=>{
+    this.setState({
+      openCommentModal: false
+    })
+  }
+  renderCommentModal=()=>{
+    return(
+
+        <CommentsModal
+        subjectId={this.state.subjectId}
+        closeCommentModal={this.closeCommentModal}
+        openCommentModal={this.state.openCommentModal}
+        />
+    )
+  }
+
+  onClickViewComments=(item)=>{
+    this.setState({
+      openCommentModal: true,
+      subjectId : item.id
+    })
+  }
+
 
   render() {
     const { classes } = this.props;
@@ -222,15 +190,31 @@ class SubjectsTable extends Component {
                     <TableCell >{item.category.name}</TableCell>
 
                     <TableCell >
-                      <Button
-                        onClick={() =>
-                          this.props.history.push(`/admin/subjects/${item.id}`)
-                        }
-                        color="primary"
-                        className="noPadding minWidthInitial"
-                      >
-                        Edit
-                      </Button>
+                      <div className="displayFlex">
+                        <Button
+                          onClick={() =>
+                            this.props.history.push(`/admin/subjects/${item.id}`)
+                          }
+                          color="primary"
+                          className="noPadding minWidthInitial "
+                        >
+                          Edit
+                        </Button>
+                        {item.type === FORM_TYPE_MAP.discussion && 
+                        <Divider id="editDivider" className="mgLeft8" orientation="vertical" />}
+                        {item.type === FORM_TYPE_MAP.discussion && 
+                        <Button
+                          onClick={() =>
+                            this.onClickViewComments(item)
+                          }
+                          color="primary"
+                          className="noPadding minWidthInitial mgLeft8"
+                        >
+                          View Comments
+                        </Button>}
+
+                      </div>
+
                     </TableCell>
                   </TableRow>
                 ))}
@@ -246,6 +230,7 @@ class SubjectsTable extends Component {
           />
         </TableContainer>
         <ToastContainer />
+        {this.state.openCommentModal && this.renderCommentModal()}
       </Fragment>
     );
   }

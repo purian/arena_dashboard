@@ -233,3 +233,7 @@ code {
 .mgLeft8{
   margin-left: 8px !important;
 }
+
+#editDivider{
+  height: 24px !important;
+}

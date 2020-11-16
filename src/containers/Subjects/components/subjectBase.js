@@ -655,6 +655,7 @@ export default class SubjectBase extends Component {
           />
         )}
         value={this.state.type}
+        disabled={this.state.editSubject}
       />
     );
   };
@@ -1055,18 +1056,12 @@ export default class SubjectBase extends Component {
   }
   renderCommentModal=()=>{
     return(
-      <Dialog
-      open={this.state.openCommentModal}
-      fullWidth={true}
-      maxWidth="md"
-      id="commentModalMainContainer"
-      >
+
         <CommentsModal
         subjectId={this.state.subjectId}
         closeCommentModal={this.closeCommentModal}
-
+        openCommentModal={this.state.openCommentModal}
         />
-      </Dialog>
     )
   }
 
@@ -1078,7 +1073,7 @@ export default class SubjectBase extends Component {
 
   renderViewCommentButton=()=>{
     return(
-      <Button color="primary" variant="contained" onClick={this.onClickViewComments}>
+      <Button color="primary" variant="contained" className="margin8" onClick={this.onClickViewComments}>
         View Comments
       </Button>
     )
@@ -1119,7 +1114,7 @@ export default class SubjectBase extends Component {
                 {this.renderGroupsDropdown()}
 
                 {this.renderExpertsDropdown()}
-                {this.renderCommentModal()}
+                {this.state.openCommentModal && this.renderCommentModal()}
 
                 <Button
                   variant="contained"
