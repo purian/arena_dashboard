@@ -254,3 +254,11 @@ code {
 .justifyContentSpaceBetween{
   justify-content: space-between !important;
 }
+#csvDataContainer {
+  margin: 8px;
+  border: 1px solid #000;
+  padding: 8px;
+}
+.mgBottom8{
+  margin-bottom: 8px !important;
+}

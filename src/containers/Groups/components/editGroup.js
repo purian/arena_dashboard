@@ -97,20 +97,7 @@ export default class EditGroup extends GroupBase{
         }
     }
 
-    prepareCsvData =(data)=>{
-      let users=[]
-      data?.map((singleData) =>{
-        if(singleData.data[1]){
-          let userData={
-          "name": singleData.data[0],
-          "email": singleData.data[1]
-          }
-          users.push(userData)
-        }
-      })
-      return users
-    }
-    
+
       handleSave = async () => {
         let data = {
           account: this.state.account,
@@ -122,10 +109,8 @@ export default class EditGroup extends GroupBase{
         try {
           if(this.state.csvUploaded){
 
-            let result = this.prepareCsvData(this.state.csvData)
-
-            let payloadData ={
-              users: result
+            let payloadData = {
+              users: this.state.csvData
             }
             let csvResult = await uploadGroupCSV(payloadData, this.state.groupId)
             

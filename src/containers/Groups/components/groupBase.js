@@ -59,14 +59,29 @@ export default class GroupBase extends Component {
     });
   };
 
+  prepareCsvData =(data)=>{
+    let users=[]
+    data?.map((singleData) =>{
+      if(singleData.data[1]){
+        let userData={
+        "name": singleData.data[0],
+        "email": singleData.data[1]
+        }
+        users.push(userData)
+      }
+    })
+    return users
+  }
+  
+
 
 
   onFileUpload =async(data) =>{
+    let result = this.prepareCsvData(data)
     this.setState({
-      csvData: data,
+      csvData: result,
       csvUploaded: true
     })
-
 
   }
 
@@ -75,6 +90,17 @@ export default class GroupBase extends Component {
       csvData: null,
       csvUploaded: false
     })
+  }
+
+  renderCsvData=(singleData) =>{
+    return(
+      <>
+      <Typography className="mgBottom8" variant="body2">
+        {singleData.name}({singleData.email})
+      </Typography>
+
+      </>
+    )
   }
 
 
@@ -112,7 +138,7 @@ export default class GroupBase extends Component {
                   className="textTransform"
                   style={{ margin: 8 }}
                   placeholder="Name"
-                  value={name}
+                  valurenderCsvDatae={name}
                   fullWidth
                   variant="outlined"
                   margin="normal"
@@ -157,6 +183,15 @@ export default class GroupBase extends Component {
               </div>
               </>
               }
+              {this.state.editGroup && this.state.csvUploaded &&<div id="csvDataContainer">
+                
+                  {this.state.csvData?.map((singleData, index) =>{
+                    return this.renderCsvData(singleData)
+                  })}
+
+              </div>
+
+                }
 
                 <Button
                   variant="contained"
