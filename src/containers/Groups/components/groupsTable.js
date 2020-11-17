@@ -122,7 +122,7 @@ class GroupsTable extends Component {
     })
   }
 
-  deleteSubjectLocally=(id)=>{
+  deleteGroupLocally=(id)=>{
     let data = this.state.data
     let index = data.findIndex((item) => item.id === id);
     if (index < 0) {
@@ -138,7 +138,7 @@ class GroupsTable extends Component {
     try{
       await deleteGroup(this.state.item?.id)
       renderSuccessNotification("group deleted")
-      this.deleteSubjectLocally(this.state.item.id)
+      this.deleteGroupLocally(this.state.item.id)
       this.setState({
         openDeleteModal: false
       })
