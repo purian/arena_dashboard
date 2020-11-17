@@ -63,11 +63,11 @@ export default class CreateSubject extends SubjectBase {
             intermediateReport: this.state.showReport,
             private: this.state.private,
             files: this.state.files,
-            experts: this.state.admins,
-            groups: this.state.groups,
+            experts: this.state.experts,
+            groups: [this.state.groups],
             question: this.state.question,
             cover: this.state.cover,
-            conclusionFiles: this.state.conclusionFiles
+            conclusionFiles: this.state.conclusionFiles,
         };
         if(this.state.type.value === FORM_TYPE_MAP.choice){
           data.choice = this.state.choice

@@ -16,7 +16,8 @@ export const API_ENDPOINTS = {
     GET_USER_ACCOUNT: `${baseUrl}/accounts/<ACT_ID>`,
     POST_ACCOUNT: `${baseUrl}/accounts`,
     GET_USERS: `${baseUrl}/users?search=<USER_NAME>`,
-    EDIT_ACCOUNT: `${baseUrl}/accounts/<ACT_ID>`
+    EDIT_ACCOUNT: `${baseUrl}/accounts/<ACT_ID>`,
+    GET_USERS_BY_ACCOUNT_ID: `${baseUrl}/accounts/<ACT_ID>/users?limit=<LIMIT>&offset=<OFFSET>&search=<SEARCH_PARM>`,
   },
   USER: {
     GET_USERS: `${baseUrl}/users?limit=<LIMIT>&offset=<OFFSET>&search=<SEARCH_PARM>`,

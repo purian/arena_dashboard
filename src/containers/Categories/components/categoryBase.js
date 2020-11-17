@@ -6,7 +6,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import React, { Component } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getAccounts } from "../../../core/services/accountsServices";
+import { getAccounts, getUsersByAccountId } from "../../../core/services/accountsServices";
 import { getUsers } from "../../../core/services/usersServices";
 import ArenaUploader from "../../../common/arenaUploader/arenaUploader"
 import Typography from '@material-ui/core/Typography';
@@ -41,8 +41,9 @@ export default class CategoryBase extends Component {
   };
 
   handleUsers = async (value) => {
+    debugger
     try {
-      let response = await getUsers(PAGE_LIMIT, this.state.currentPage, value);
+      let response = await getUsersByAccountId(this.state.account.id, PAGE_LIMIT, this.state.currentPage, value);
       ;
       this.setState({
         adminsData: response.data.items,
@@ -217,7 +218,7 @@ export default class CategoryBase extends Component {
                       variant="outlined"
                     />
                   )}
-                  value={this.state.users}
+                  value={this.state.admins}
                 />
                 <Button
                   variant="contained"

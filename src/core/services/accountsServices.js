@@ -8,7 +8,7 @@ const GET_USERS = API_ENDPOINTS.ACCOUNT.GET_USERS;
 const POST_ACCOUNT = API_ENDPOINTS.ACCOUNT.POST_ACCOUNT;
 const EDIT_ACCOUNT = API_ENDPOINTS.ACCOUNT.EDIT_ACCOUNT;
 const SEARCH_ACCOUNT = API_ENDPOINTS.ACCOUNT.SEARCH_ACCOUNTS;
-
+const GET_USERS_BY_ACCOUNT_ID = API_ENDPOINTS.ACCOUNT.GET_USERS_BY_ACCOUNT_ID
 
 export function getAccounts(limit, offset, seacrhPrm) {
     const headers = getAuthHeader()
@@ -42,4 +42,8 @@ export function getUserAccount(actId) {
     const url = GET_USER_ACCOUNTS.replace("<ACT_ID>", actId)
     return http.get(url, { headers })
 }
-
+export function getUsersByAccountId(accountId, limit, offset, seacrhPrm) {
+    const headers = getAuthHeader()
+    const url = GET_USERS_BY_ACCOUNT_ID.replace("<ACT_ID>", accountId).replace("<LIMIT>", limit).replace("<OFFSET>", offset).replace("<SEARCH_PARM>", seacrhPrm)
+    return http.get(url, { headers })
+}

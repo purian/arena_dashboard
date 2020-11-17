@@ -15,8 +15,8 @@ import {
   FORM_TYPE_MAP,
   SUBJECT_STATUS,
 } from "../../../core/constants/constant";
-import { getAccounts } from "../../../core/services/accountsServices";
-import { fetchCategoryByAccountId } from "../../../core/services/categoriesServices";
+import { getAccounts, getUsersByAccountId } from "../../../core/services/accountsServices";
+import { fetchCategoryByAccountId,  } from "../../../core/services/categoriesServices";
 import { getUsers } from "../../../core/services/usersServices";
 import Icon from "@material-ui/core/Icon";
 import ArenaDropdown from "../../../common/arenaDropdown/arenaDropdown";
@@ -165,7 +165,7 @@ export default class SubjectBase extends Component {
 
   handleUsers = async (value) => {
     try {
-      let response = await getUsers(PAGE_LIMIT, this.state.currentPage, value);
+      let response = await getUsersByAccountId(this.state.account.id, PAGE_LIMIT, this.state.currentPage, value);
       ;
       this.setState({
         adminsData: response.data.items,
@@ -890,7 +890,7 @@ export default class SubjectBase extends Component {
         options={this.state.adminsData}
         getOptionLabel={(option) => option.name}
         onChange={(event, newValue) =>
-          this.handleOptionChange(event, newValue, "admins")
+          this.handleOptionChange(event, newValue, "experts")
         }
         renderInput={(params) => (
           <TextField
@@ -901,7 +901,7 @@ export default class SubjectBase extends Component {
             variant="outlined"
           />
         )}
-        value={this.state.users}
+        value={this.state.experts}
       />
     );
   };
