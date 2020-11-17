@@ -7,7 +7,7 @@ const GET_SUBJECTS_BY_ACCOUNT_ID = API_ENDPOINTS.SUBJECTS.GET_SUBJECTS_BY_ACCOUN
 const POST_SUBJECT = API_ENDPOINTS.SUBJECTS.POST_SUBJECT
 const GET_SUBJECT_BY_ID = API_ENDPOINTS.SUBJECTS.GET_SUBJECT_BY_ID
 const EDIT_SUBJECT = API_ENDPOINTS.SUBJECTS.EDIT_SUBJECT
-
+const DELETE_SUBJECT = API_ENDPOINTS.SUBJECTS.DELETE_SUBJECT
 export function getSubjectsByAccountId(accountId, limit, offset, value) {
     const headers = getAuthHeader()
     const url = GET_SUBJECTS_BY_ACCOUNT_ID.replace("<ACCOUNT_ID>", accountId).replace("<SEARCH_PARM>", value).replace("<LIMIT>", limit).replace("<OFFSET>", offset)
@@ -32,4 +32,11 @@ export function editSubject(payload, subjectId) {
     const url = EDIT_SUBJECT.replace("<SUBJECT_ID>", subjectId)
     
     return http.put(url, payload, { headers })
+}
+
+export function deleteSubject(subjectId){
+    const headers = getAuthHeader()
+    const url = DELETE_SUBJECT.replace("<SUBJECT_ID>", subjectId)
+    
+    return http.delete(url, { headers })
 }

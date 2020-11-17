@@ -7,7 +7,7 @@ const SEARCH_GROUPS_BY_ACCOUNT_ID = API_ENDPOINTS.GROUPS.SEARCH_GROUPS_BY_ACCOUN
 const GET_GROUP = API_ENDPOINTS.GROUPS.GET_GROUP
 const EDIT_GROUP = API_ENDPOINTS.GROUPS.EDIT_GROUP
 const POST_GROUP_CSV = API_ENDPOINTS.GROUPS.POST_GROUP_CSV
-
+const DELETE_GROUP = API_ENDPOINTS.GROUPS.DELETE_GROUP
 
 export function postGroups(payload) {
     const headers = getAuthHeader()
@@ -39,4 +39,11 @@ export function uploadGroupCSV(payload, groupId) {
     const headers = getAuthHeader()
     const url = POST_GROUP_CSV.replace("<GROUP_ID>", groupId)
     return http.post(url, payload, { headers })
+}
+
+export function deleteGroup(groupId){
+    const headers = getAuthHeader()
+    const url = DELETE_GROUP.replace("<GROUP_ID>", groupId)
+    
+    return http.delete(url, { headers })
 }

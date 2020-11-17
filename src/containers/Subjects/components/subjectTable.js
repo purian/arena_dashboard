@@ -18,12 +18,13 @@ import { withRouter } from "react-router";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAccounts } from "../../../core/services/accountsServices";
-import { getSubjectsByAccountId } from "../../../core/services/subjectsServices";
+import { getSubjectsByAccountId, deleteSubject } from "../../../core/services/subjectsServices";
 import { fetchCategoryByAccountId} from "../../../core/services/categoriesServices"
-import { renderFailureNotification } from "../../../common/Notifications/showNotifications";
+import { renderFailureNotification, renderSuccessNotification } from "../../../common/Notifications/showNotifications";
 import Divider from '@material-ui/core/Divider';
 import {FORM_TYPE_MAP} from "../../../core/constants/constant"
 import CommentsModal from "./commentsModal"
+import DeleteModal from "../../../common/deleteModal/deleteModal"
 
 const styles = (theme) => ({
   table: {
@@ -120,6 +121,56 @@ class SubjectsTable extends Component {
     })
   }
 
+  onClickCancel =()=>{
+    this.setState({
+      openDeleteModal: false
+    })
+  }
+
+  deleteSubjectLocally=(id)=>{
+    let data = this.state.data
+    let index = data.findIndex((item) => item.id === id);
+    if (index < 0) {
+      return;
+    }
+    data.splice(index, 1);
+  }
+
+  onClickDelete=async()=>{
+    if(!this.state.item?.id){
+      return
+    }
+    try{
+      await deleteSubject(this.state.item?.id)
+      renderSuccessNotification("subject deleted")
+      this.deleteSubjectLocally(this.state.item.id)
+      this.setState({
+        openDeleteModal: false
+      })
+    }catch(e){
+      console.error(e)
+      renderFailureNotification()
+    }
+  }
+
+  renderDeleteModal=()=>{
+    return(
+      <DeleteModal 
+      openDeleteModal={this.state.openDeleteModal}
+      onClickCancel={this.onClickCancel}
+      onClickDelete={this.onClickDelete}
+      name={this.state.item?.name}
+      />
+    )
+  }
+
+  onClickDeleteItem=(item)=>{
+    this.setState({
+      item: item,
+      openDeleteModal: true
+    })
+  }
+
 
   render() {
     const { classes } = this.props;
@@ -200,6 +251,16 @@ class SubjectsTable extends Component {
                         >
                           Edit
                         </Button>
+                        <Divider id="editDivider" className="mgLeft8" orientation="vertical" />
+                        <Button
+                          onClick={() =>
+                            this.onClickDeleteItem(item)
+                          }
+                          color="primary"
+                          className="noPadding minWidthInitial mgLeft8"
+                        >
+                          Delete
+                        </Button>
                         {item.type === FORM_TYPE_MAP.discussion && 
                         <Divider id="editDivider" className="mgLeft8" orientation="vertical" />}
                         {item.type === FORM_TYPE_MAP.discussion && 
@@ -231,6 +292,7 @@ class SubjectsTable extends Component {
         </TableContainer>
         <ToastContainer />
         {this.state.openCommentModal && this.renderCommentModal()}
+        {this.renderDeleteModal()}
       </Fragment>
     );
   }

@@ -19,8 +19,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAccounts } from "../../../core/services/accountsServices";
 import { searchGroupByAccountId } from "../../../core/services/groupsServices";
-import { fetchCategoryByAccountId} from "../../../core/services/categoriesServices"
+import { fetchCategoryByAccountId, deleteCategory} from "../../../core/services/categoriesServices"
 import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
+import DeleteModal from "../../../common/deleteModal/deleteModal"
+import Divider from '@material-ui/core/Divider';
 
 const styles = (theme) => ({
   table: {
@@ -37,69 +39,9 @@ class CategoriesTable extends Component {
     searchValue: "",
     accountsData: [],
     account: null,
-    accountId: null
+    accountId: null,
+    openDeleteModal: false
   };
-  // componentDidMount() {
-  //     const { currentPage, searchValue } = this.state;
-  //     getAccounts(PAGE_LIMIT, currentPage, searchValue).then(resp => {
-  //         toast.success('Success', {
-  //             position: "top-right",
-  //             autoClose: 5000,
-  //             hideProgressBar: false,
-  //             closeOnClick: true,
-  //             pauseOnHover: true,
-  //             draggable: true,
-  //             progress: undefined,
-  //         });
-  //         this.setState({
-  //             data: resp.data.items,
-  //             totalItems: resp.data.count
-  //         })
-  //     }).catch(err => {
-  //         toast.error('Error', {
-  //             position: "top-right",
-  //             autoClose: 5000,
-  //             hideProgressBar: false,
-  //             closeOnClick: true,
-  //             pauseOnHover: true,
-  //             draggable: true,
-  //             progress: undefined,
-  //         });
-  //     })
-  // }
-  // handleSearch = (value) => {
-  //     const { currentPage, searchValue } = this.state;
-  //     this.setState({
-  //         searchValue: value
-  //     }, () => getAccounts(PAGE_LIMIT, currentPage, value).then(resp => {
-  //         this.setState({
-  //             data: resp.data.items,
-  //             totalItems: resp.data.count
-  //         })
-  //     })
-  //     )
-
-  // }
-
-  // handlePageChange(page) {
-  //     this.setState({
-  //         currentPage: page
-  //     }, () => this.loadPageData())
-
-  // }
-  // loadPageData = () => {
-  //     const { currentPage, searchValue } = this.state;
-  //     let offset = (currentPage - 1) * PAGE_LIMIT
-  //     if (offset < 0) {
-  //         offset = 0
-  //     }
-  //     getAccounts(PAGE_LIMIT, offset, searchValue).then(resp => {
-  //         this.setState({
-  //             data: resp.data.items,
-  //             totalItems: resp.data.count
-  //         })
-  //     })
-  // }
 
   handleAccounts = async (value) => {
     try {
@@ -153,6 +95,56 @@ class CategoriesTable extends Component {
       console.error(e);
     }
   };
+
+  onClickCancel =()=>{
+    this.setState({
+      openDeleteModal: false
+    })
+  }
+
+  deleteCategoryLocally=(id)=>{
+    let data = this.state.data
+    let index = data.findIndex((item) => item.id === id);
+    if (index < 0) {
+      return;
+    }
+    data.splice(index, 1);
+  }
+
+  onClickDelete=async()=>{
+    if(!this.state.item?.id){
+      return
+    }
+    try{
+      await deleteCategory(this.state.item?.id)
+      renderSuccessNotification("category deleted")
+      this.deleteCategoryLocally(this.state.item.id)
+      this.setState({
+        openDeleteModal: false
+      })
+    }catch(e){
+      console.error(e)
+      renderFailureNotification()
+    }
+  }
+
+  renderDeleteModal=()=>{
+    return(
+      <DeleteModal 
+      openDeleteModal={this.state.openDeleteModal}
+      onClickCancel={this.onClickCancel}
+      onClickDelete={this.onClickDelete}
+      name={this.state.item?.name}
+      />
+    )
+  }
+
+  onClickDeleteItem=(item)=>{
+    this.setState({
+      item: item,
+      openDeleteModal: true
+    })
+  }
 
   render() {
     const { classes } = this.props;
@@ -223,6 +215,7 @@ class CategoriesTable extends Component {
                     <TableCell>{item.account.name}</TableCell>
 
                     <TableCell>
+                    <div className="displayFlex">
                       <Button
                         onClick={() =>
                           this.props.history.push(`/admin/categories/${item.id}`)
@@ -232,6 +225,19 @@ class CategoriesTable extends Component {
                       >
                         Edit
                       </Button>
+                      <Divider id="editDivider" className="mgLeft8" orientation="vertical" />
+                        <Button
+                          onClick={() =>
+                            this.onClickDeleteItem(item)
+                          }
+                          color="primary"
+                          className="noPadding minWidthInitial mgLeft8"
+                        >
+                          Delete
+                        </Button>
+                    
+
+                    </div>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -247,6 +253,7 @@ class CategoriesTable extends Component {
           />
         </TableContainer>
         <ToastContainer />
+        {this.renderDeleteModal()}
       </Fragment>
     );
   }

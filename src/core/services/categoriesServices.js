@@ -7,7 +7,7 @@ const GET_CATEGORIES_BY_ACCOUNT_ID = API_ENDPOINTS.CATEGORIES.GET_CATEGORIES_BY_
 const POST_CATEGORIES = API_ENDPOINTS.CATEGORIES.POST_CATEGORIES
 const GET_CATEGORIES_BY_ID = API_ENDPOINTS.CATEGORIES.GET_CATEGORIES_BY_ID
 const EDIT_CATEGORY = API_ENDPOINTS.CATEGORIES.EDIT_CATEGORY
-
+const DELETE_CATEGORY = API_ENDPOINTS.CATEGORIES.DELETE_CATEGORY
 export function fetchCategoryByAccountId(accountId, limit, offset, value) {
     const headers = getAuthHeader()
     const url = GET_CATEGORIES_BY_ACCOUNT_ID.replace("<ACCOUNT_ID>", accountId).replace("<SEARCH_PARM>", value).replace("<LIMIT>", limit).replace("<OFFSET>", offset)
@@ -32,4 +32,11 @@ export function editCategory(payload, categoryId) {
     const url = EDIT_CATEGORY.replace("<CATEGORY_ID>", categoryId)
     
     return http.put(url, payload, { headers })
+}
+
+export function deleteCategory(categoryId){
+    const headers = getAuthHeader()
+    const url = DELETE_CATEGORY.replace("<CATEGORY_ID>", categoryId)
+    
+    return http.delete(url, { headers })
 }

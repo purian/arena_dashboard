@@ -18,8 +18,10 @@ import { withRouter } from "react-router";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAccounts } from "../../../core/services/accountsServices";
-import { searchGroupByAccountId } from "../../../core/services/groupsServices";
-import { renderFailureNotification } from "../../../common/Notifications/showNotifications";
+import { searchGroupByAccountId, deleteGroup } from "../../../core/services/groupsServices";
+import { renderFailureNotification, renderSuccessNotification } from "../../../common/Notifications/showNotifications";
+import DeleteModal from "../../../common/deleteModal/deleteModal"
+import Divider from '@material-ui/core/Divider';
 
 const styles = (theme) => ({
   table: {
@@ -114,6 +116,57 @@ class GroupsTable extends Component {
     }
   };
 
+  onClickCancel =()=>{
+    this.setState({
+      openDeleteModal: false
+    })
+  }
+
+  deleteSubjectLocally=(id)=>{
+    let data = this.state.data
+    let index = data.findIndex((item) => item.id === id);
+    if (index < 0) {
+      return;
+    }
+    data.splice(index, 1);
+  }
+
+  onClickDelete=async()=>{
+    if(!this.state.item?.id){
+      return
+    }
+    try{
+      await deleteGroup(this.state.item?.id)
+      renderSuccessNotification("group deleted")
+      this.deleteSubjectLocally(this.state.item.id)
+      this.setState({
+        openDeleteModal: false
+      })
+    }catch(e){
+      console.error(e)
+      renderFailureNotification()
+    }
+  }
+
+  renderDeleteModal=()=>{
+    return(
+      <DeleteModal 
+      openDeleteModal={this.state.openDeleteModal}
+      onClickCancel={this.onClickCancel}
+      onClickDelete={this.onClickDelete}
+      name={this.state.item?.name}
+      />
+    )
+  }
+
+  onClickDeleteItem=(item)=>{
+    this.setState({
+      item: item,
+      openDeleteModal: true
+    })
+  }
+
+
   render() {
     const { classes } = this.props;
     const { data, totalItems, selectedPage, accountsData } = this.state;
@@ -180,6 +233,7 @@ class GroupsTable extends Component {
                   <TableRow key={item.id}>
                     <TableCell >{item.name}</TableCell>
                     <TableCell >
+                    <div className="displayFlex">
                       <Button
                         onClick={() =>
                           this.props.history.push(`/admin/groups/${item.id}`)
@@ -189,6 +243,18 @@ class GroupsTable extends Component {
                       >
                         Edit
                       </Button>
+                      <Divider id="editDivider" className="mgLeft8" orientation="vertical" />
+                        <Button
+                          onClick={() =>
+                            this.onClickDeleteItem(item)
+                          }
+                          color="primary"
+                          className="noPadding minWidthInitial mgLeft8"
+                        >
+                          Delete
+                        </Button>
+
+                    </div>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -204,6 +270,7 @@ class GroupsTable extends Component {
           />
         </TableContainer>
         <ToastContainer />
+        {this.renderDeleteModal()}
       </Fragment>
     );
   }
