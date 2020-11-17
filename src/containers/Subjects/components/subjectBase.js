@@ -110,16 +110,15 @@ const FORM_TYPE = {
   ALLOCATION: "allocation",
 };
 
-export const CustomOption = ({ innerProps, data, isFocused }) => {
+export const CustomOption = ({ data}) => {
+  debugger
   //TODO: bring label from translation for aria label
   return (
     <div
-      className={`dropDownIconsContainer reverse ${isFocused && "border"}`}
-      {...innerProps}
-      aria-label={data.label}
+      className={`dropDownIconsContainer`}
     >
-      <Icon className={`${data.value} dropDownIcon`}></Icon>
-      <span className="dullWhite">{data.label}</span>{" "}
+      <Icon className={`${data.value} dropDownIcon`} />
+      <span >{data.label}</span>{" "}
     </div>
   );
 };

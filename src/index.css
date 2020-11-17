@@ -137,6 +137,19 @@ code {
   display: none;
 }
 
+.dropDownIcon {
+  color: #000 !important;
+  margin-right: 12px !important;
+  height: 20px !important;
+  width: 32px !important;
+}
+
+.dropDownIconsContainer {
+  padding: 16px 8px !important;
+  background: transparent;
+  display: flex;
+}
+
 /* ------------------ Arena Dropdown ends ----------*/
 
 .flex1{
