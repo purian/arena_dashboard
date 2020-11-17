@@ -12,7 +12,7 @@ import ArenaUploader from "../../../common/arenaUploader/arenaUploader"
 import Typography from "@material-ui/core/Typography";
 import {uploadGroupCSV} from "../../../core/services/groupsServices"
 import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
-
+import CSVUploader from "../../../common/csvReader/csvReader"
 const PAGE_LIMIT = 20;
 
 export default class GroupBase extends Component {
@@ -59,15 +59,22 @@ export default class GroupBase extends Component {
     });
   };
 
-  onFileUpload =async(selectedFileForUpload) =>{
-    debugger
-    try{
-      await uploadGroupCSV(selectedFileForUpload)
-      renderSuccessNotification()
-    }catch(e){
-      console.error(e)
-      renderFailureNotification("Something went wrong while uploading")
-    }
+
+
+  onFileUpload =async(data) =>{
+    this.setState({
+      csvData: data,
+      csvUploaded: true
+    })
+
+
+  }
+
+  onFileRemove =() =>{
+    this.setState({
+      csvData: null,
+      csvUploaded: false
+    })
   }
 
 
@@ -139,13 +146,12 @@ export default class GroupBase extends Component {
               {this.state.editGroup && 
               <>
               <Typography variant="body2" className="margin8 bold">
-                Upload csv file with users
+                Upload or drag and drop csv file with users
               </Typography>
               <div className="mgLeft8 fullWidth">
-                <ArenaUploader
-                docUploader={true}
-                extensions={["csv"]}
-                onFileUpload ={this.onFileUpload}
+                <CSVUploader
+                onFileUpload={this.onFileUpload}
+                onFileRemove={this.onFileRemove}
                 />
 
               </div>

@@ -237,3 +237,7 @@ code {
 #editDivider{
   height: 24px !important;
 }
+
+.justifyContentSpaceBetween{
+  justify-content: space-between !important;
+}

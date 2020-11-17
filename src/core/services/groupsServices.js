@@ -35,7 +35,8 @@ export function editGroup(payload, groupId) {
     return http.put(url, payload, { headers })
 }
 
-export function uploadGroupCSV(payload) {
+export function uploadGroupCSV(payload, groupId) {
     const headers = getAuthHeader()
-    return http.post(POST_GROUP_CSV, payload, { headers })
+    const url = POST_GROUP_CSV.replace("<GROUP_ID>", groupId)
+    return http.post(url, payload, { headers })
 }

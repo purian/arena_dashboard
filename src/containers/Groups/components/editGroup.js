@@ -1,5 +1,5 @@
 import GroupBase from "./groupBase"
-import { postGroups, fetchGroupData, editGroup } from "../../../core/services/groupsServices";
+import { postGroups, fetchGroupData, editGroup, uploadGroupCSV } from "../../../core/services/groupsServices";
 import Spinner from "@material-ui/core/CircularProgress";
 import { Typography } from "@material-ui/core";
 import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
@@ -53,7 +53,9 @@ export default class EditGroup extends GroupBase{
         usersData: [],
         loading: true,
         groupData: null,
-        groupId: null
+        groupId: null,
+        csvUploaded: false,
+        csvData: null
       };
 
     async componentDidMount(){
@@ -94,6 +96,20 @@ export default class EditGroup extends GroupBase{
             })
         }
     }
+
+    prepareCsvData =(data)=>{
+      let users=[]
+      data?.map((singleData) =>{
+        if(singleData.data[1]){
+          let userData={
+          "name": singleData.data[0],
+          "email": singleData.data[1]
+          }
+          users.push(userData)
+        }
+      })
+      return users
+    }
     
       handleSave = async () => {
         let data = {
@@ -102,7 +118,20 @@ export default class EditGroup extends GroupBase{
           users: this.state.users,
         };
         ;
+
         try {
+          if(this.state.csvUploaded){
+
+            let result = this.prepareCsvData(this.state.csvData)
+
+            let payloadData ={
+              users: result
+            }
+            let csvResult = await uploadGroupCSV(payloadData, this.state.groupId)
+            
+            data.users = this.state.users.concat(csvResult.data.users)
+          }
+          
           await editGroup(data, this.state.groupId);
           ;
           renderSuccessNotification("Group edit success");
