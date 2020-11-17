@@ -111,7 +111,7 @@ const FORM_TYPE = {
 };
 
 export const CustomOption = ({ data}) => {
-  debugger
+  
   //TODO: bring label from translation for aria label
   return (
     <div

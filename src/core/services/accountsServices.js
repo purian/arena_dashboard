@@ -11,6 +11,7 @@ const SEARCH_ACCOUNT = API_ENDPOINTS.ACCOUNT.SEARCH_ACCOUNTS;
 const GET_USERS_BY_ACCOUNT_ID = API_ENDPOINTS.ACCOUNT.GET_USERS_BY_ACCOUNT_ID
 
 export function getAccounts(limit, offset, seacrhPrm) {
+    
     const headers = getAuthHeader()
     const url = GET_ACCOUNTS.replace("<LIMIT>", limit).replace("<OFFSET>", offset).replace("<SEARCH_PARM>", seacrhPrm)
     return http.get(url, { headers })

@@ -71,6 +71,7 @@ class GroupsTable extends Component {
       ;
       this.setState({
         accountsData: response.data.items,
+        totalItems: response.data.count
       });
     } catch (e) {
       console.error(e);
@@ -165,6 +166,33 @@ class GroupsTable extends Component {
       openDeleteModal: true
     })
   }
+
+  handlePageChange(page) {
+    this.setState({
+        currentPage: page
+    }, () => this.loadPageData())
+
+}
+
+loadPageData = () => {
+  const { currentPage, searchValue } = this.state;
+  let offset = (currentPage - 1) * PAGE_LIMIT
+  if (offset < 0) {
+      offset = 0
+  }
+  searchGroupByAccountId(
+    "",
+    this.state.account.id,
+    PAGE_LIMIT,
+    this.state.currentPage
+  ).then(resp => {
+      this.setState({
+          data: resp.data.items,
+          totalItems: resp.data.count
+      })
+  }).catch(err => {
+  })
+}
 
 
   render() {

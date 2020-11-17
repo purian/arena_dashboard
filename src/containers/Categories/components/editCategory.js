@@ -32,7 +32,7 @@ export default class EditCategory extends CategoryBase{
         }
         try{
             let response = await fetchCategoryById(id)
-            debugger
+            
             this.setState({
                 account: response.data.account,
                 name: response.data.name,

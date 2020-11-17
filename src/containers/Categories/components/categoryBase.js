@@ -41,7 +41,7 @@ export default class CategoryBase extends Component {
   };
 
   handleUsers = async (value) => {
-    debugger
+    
     try {
       let response = await getUsersByAccountId(this.state.account.id, PAGE_LIMIT, this.state.currentPage, value);
       ;
