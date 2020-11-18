@@ -31,7 +31,7 @@ const styles = (theme) => ({
     minWidth: 650,
   },
 });
-const PAGE_LIMIT = 4;
+const PAGE_LIMIT = 20;
 
 class SubjectsTable extends Component {
   state = {
