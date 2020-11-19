@@ -35,7 +35,8 @@ export default class CreateSubject extends SubjectBase {
         choice: null,
         allocation: null,
         files: [],
-        openCommentModal: false
+        openCommentModal: false,
+        groupsData:[],
       };
 
       handleSave = async () => {
@@ -64,7 +65,7 @@ export default class CreateSubject extends SubjectBase {
             private: this.state.private,
             files: this.state.files,
             experts: this.state.experts,
-            groups: [this.state.groups],
+            groups: this.state.groups,
             question: this.state.question,
             cover: this.state.cover,
             conclusionFiles: this.state.conclusionFiles,

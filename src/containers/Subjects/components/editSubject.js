@@ -16,7 +16,7 @@ export default class EditSubject extends SubjectBase{
     adminsData: [],
     description: null,
     admins: [],
-
+    groupsData:[],
     status: this.getStatusType(SUBJECT_STATUS.DRAFT),
     startDate: new Date(),
     endDate: new Date(),
@@ -85,7 +85,7 @@ export default class EditSubject extends SubjectBase{
               private: response.data.private,
               files: response.data.files,
               experts: response.data.experts,
-              groups: response.data.groups[0],
+              groups: response.data.groups,
               loading: false,
               subjectData: response.data,
               subjectId: id,
@@ -131,7 +131,7 @@ export default class EditSubject extends SubjectBase{
           private: this.state.private,
           files: this.state.files,
           experts: this.state.experts,
-          groups: [this.state.groups],
+          groups: this.state.groups,
           question: this.state.question,
           cover: this.state.cover,
           conclusionFiles: this.state.conclusionFiles

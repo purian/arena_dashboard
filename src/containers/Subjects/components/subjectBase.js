@@ -181,7 +181,7 @@ export default class SubjectBase extends Component {
       let response = await searchGroupByAccountId("",this.state.account.id, PAGE_LIMIT, this.state.currentPage)
       
       this.setState({
-        groups: response.data.items,
+        groupsData: response.data.items,
       });
     } catch (e) {
       renderFailureNotification("Groups not fetched");
@@ -861,8 +861,9 @@ export default class SubjectBase extends Component {
   renderGroupsDropdown = () => {
     return (
       <Autocomplete
+        multiple
         id="groups"
-        options={this.state.groups}
+        options={this.state.groupsData}
         getOptionLabel={(option) => option.name}
         onChange={(event, newValue) =>
           this.handleOptionChange(event, newValue, "groups")
