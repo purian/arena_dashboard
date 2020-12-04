@@ -1,28 +1,32 @@
-import React from 'react';
-import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { NavLink, withRouter } from 'react-router-dom'
-import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Toolbar from '@material-ui/core/Toolbar';
 import InboxIcon from '@material-ui/icons/AccountBox';
-import PersonIcon from '@material-ui/icons/Person';
-import GroupIcon from '@material-ui/icons/Group';
 import CategoryIcon from '@material-ui/icons/Category';
-import SubjectIcon from '@material-ui/icons/Subject';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { logout } from '../../core/services/authenticationServices'
+import GroupIcon from '@material-ui/icons/Group';
+import PersonIcon from '@material-ui/icons/Person';
+import SubjectIcon from '@material-ui/icons/Subject';
+import clsx from 'clsx';
+import React from 'react';
+import { NavLink, withRouter } from 'react-router-dom';
+import { logout } from '../../core/services/authenticationServices';
+import Typography from "@material-ui/core/Typography";
 
+const ROUTES ={
+  accounts: "Accounts",
+  subjects: "Subjects",
+  user: "User",
+  groups: "Groups",
+  categories: "Categories"
+}
 
 const drawerWidth = 240;
 
@@ -86,6 +90,10 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+
+  appBarTitle: {
+    marginLeft: 240
+  }
 }));
 
 
@@ -101,6 +109,24 @@ function Layout(props) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const getTitle=()=>{
+    if(window.location.pathname.includes("accounts")){
+      return ROUTES.accounts
+    }
+    if(window.location.pathname.includes("user")){
+      return ROUTES.user
+    }
+    if(window.location.pathname.includes("subjects")){
+      return ROUTES.subjects
+    }
+    if(window.location.pathname.includes("groups")){
+      return ROUTES.groups
+    }
+    if(window.location.pathname.includes("categories")){
+      return ROUTES.categories
+    }
+  }
 
   const handleLogout = () => {
     logout()
@@ -126,6 +152,9 @@ function Layout(props) {
           >
             <MenuIcon />
           </IconButton> */}
+          <Typography variant="h6" className={classes.appBarTitle}>
+            {getTitle()}
+          </Typography>
         </Toolbar>
       </AppBar>
       <Drawer
