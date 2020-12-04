@@ -22,7 +22,7 @@ import { searchGroupByAccountId, deleteGroup } from "../../../core/services/grou
 import { renderFailureNotification, renderSuccessNotification } from "../../../common/Notifications/showNotifications";
 import DeleteModal from "../../../common/deleteModal/deleteModal"
 import Divider from '@material-ui/core/Divider';
-
+import UserModal from "./userModal"
 const styles = (theme) => ({
   table: {
     minWidth: 650,
@@ -60,6 +60,8 @@ class GroupsTable extends Component {
     searchValue: "",
     accountsData: [],
     account: null,
+    openUsersModal: false,
+    selectedGroup: null
   };
   handleAccounts = async (value) => {
     try {
@@ -194,7 +196,28 @@ loadPageData = () => {
   })
 }
 
+onClickViewUsers=(item)=>{
+  this.setState({
+    openUsersModal: true,
+    selectedGroup: item
+  })
+}
 
+closeUserModal=()=>{
+  this.setState({
+    openUsersModal: false
+  })
+}
+renderUserModal=()=>{
+  return(
+
+      <UserModal
+      selectedGroup={this.state.selectedGroup}
+      closeUserModal={this.closeUserModal}
+      openUsersModal={this.state.openUsersModal}
+      />
+  )
+}
   render() {
     const { classes } = this.props;
     const { data, totalItems, selectedPage, accountsData } = this.state;
@@ -281,7 +304,18 @@ loadPageData = () => {
                         >
                           Delete
                         </Button>
-
+                        
+                        <Divider id="editDivider" className="mgLeft8" orientation="vertical" />
+                         
+                        <Button
+                          onClick={() =>
+                            this.onClickViewUsers(item)
+                          }
+                          color="primary"
+                          className="noPadding minWidthInitial mgLeft8"
+                        >
+                          View Users
+                        </Button>
                     </div>
                     </TableCell>
                   </TableRow>
@@ -298,6 +332,7 @@ loadPageData = () => {
           />
         </TableContainer>
         <ToastContainer />
+        {this.state.openUsersModal && this.renderUserModal()}
         {this.renderDeleteModal()}
       </Fragment>
     );
