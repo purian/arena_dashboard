@@ -155,7 +155,7 @@ class AccountTable extends Component {
                             <TableRow>
                                 <TableCell >Name</TableCell>
                                 <TableCell >Slug</TableCell>
-                                <TableCell >Owner</TableCell>
+                                <TableCell className="displayNone" >Owner</TableCell>
                                 <TableCell >Actions</TableCell>
                                 <TableCell >Active</TableCell>
                             </TableRow>
@@ -166,7 +166,7 @@ class AccountTable extends Component {
                                     <TableRow key={item.id}>
                                         <TableCell >{item.name}</TableCell>
                                         <TableCell >{item.slug}</TableCell>
-                                        <TableCell ></TableCell>
+                                        <TableCell className="displayNone" ></TableCell>
                                         <TableCell >
                                             <Button className="noPadding minWidthInitial" onClick={() => this.props.history.push(`/admin/accounts/${item.id}`)} color="primary">Edit</Button>
                                         </TableCell>
