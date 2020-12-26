@@ -3,6 +3,7 @@ let baseUrl = ''
 if (process.env.NODE_ENV === 'development') {
   baseUrl = 'https://api.arena.shabloool.co.il'
 } else if (process.env.NODE_ENV === 'production') {
+    baseUrl = 'https://api.arena-inql.co.il'
 }
 
 export const API_ENDPOINTS = {
