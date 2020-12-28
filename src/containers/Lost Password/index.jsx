@@ -14,6 +14,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { lostPassword } from "../../core/services/authenticationServices"
 import { getHomePage } from '../../core/services/authenticationServices';
+import { renderFailureNotification, renderSuccessNotification } from "../../common/Notifications/showNotifications";
 
 const styles = theme => ({
   paper: {
@@ -52,10 +53,14 @@ class LostPassword extends Component {
     const { userName, password } = this.state;
     if (userName !== "") {
       payload.email = userName
-      payload.returnUrl = "http://localhost:3001/resetPassword"
+      payload.returnUrl = `${process.env.REACT_APP_RESET_PASSWORD_RETURN_URL}/auth/reset-password`
     }
     lostPassword(payload).then(res => {
-
+      renderSuccessNotification("Please check your email id")
+      this.props.history.push("/log_in");
+    }).catch(err => {
+      console.error(err)
+      renderFailureNotification("Something went wrong")
     })
   }
   handleCancel = () => {

@@ -13,10 +13,11 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { login } from "../../core/services/authenticationServices"
-import { getHomePage } from '../../core/services/authenticationServices';
+import { getHomePage, checkRoleIfValid } from '../../core/services/authenticationServices';
 import validator from 'validator';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {renderSuccessNotification, renderFailureNotification} from "../../common/Notifications/showNotifications"
 
 const styles = theme => ({
   paper: {
@@ -65,20 +66,19 @@ class SignIn extends Component {
       payload.password = password
     }
     login(payload).then(res => {
-      window.localStorage.setItem("token", res.data.accessToken)
-      if (getHomePage()) {
-        this.props.history.push(getHomePage());
+      if(checkRoleIfValid(res.data.accessToken)){
+        window.localStorage.setItem("token", res.data.accessToken)
+        if (getHomePage()) {
+          this.props.history.push(getHomePage());
+        }
+      }else{
+        renderFailureNotification("Invalid credentials")
+        return
       }
     }).catch(err => {
-      toast.error('Error', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      console.error(err)
+      renderFailureNotification("Invalid credentials")
+
 
     })
   }

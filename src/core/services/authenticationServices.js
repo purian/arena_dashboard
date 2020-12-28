@@ -67,6 +67,16 @@ export function getHomePage() {
     return false
 }
 
+export function checkRoleIfValid(token){
+    const role = jwtDecode(token)
+    const UserRoutes = ['SYSTEM_ADMIN']
+    debugger
+    if (UserRoutes.includes(role?.userRole)) {
+        return true
+    }
+    return false
+}
+
 export const RBAC_LINK = {
     UserRoutes: ['SYSTEM_ADMIN']
 
