@@ -70,7 +70,9 @@ class CreateUser extends Component {
                 draggable: true,
                 progress: undefined,
             });
-            this.props.history.push("/admin/user")
+            setTimeout(()=>{
+                this.props.history.replace(`/admin/user/${resp.data.id}`)
+              },1000)
         }).catch(err => {
             toast.error('Error', {
                 position: "top-right",

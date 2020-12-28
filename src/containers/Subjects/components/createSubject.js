@@ -78,11 +78,11 @@ export default class CreateSubject extends SubjectBase {
         }
         ;
         try {
-          await postSubject(data);
+          let resp = await postSubject(data);
           ;
           renderSuccessNotification("Subject post success");
           setTimeout(()=>{
-            this.props.history.goBack()
+            this.props.history.replace(`/admin/subjects/${resp.data.id}`)
           },1000)
           
         } catch (e) {

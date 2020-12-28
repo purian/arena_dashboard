@@ -22,11 +22,11 @@ export default class CreateGroup extends GroupBase {
     ;
     try {
       
-      await postGroups(data);
+      let resp = await postGroups(data);
       
       renderSuccessNotification("Group post success");
       setTimeout(()=>{
-        this.props.history.goBack()
+        this.props.history.replace(`/admin/groups/${resp.data.id}`)
       },1000)
     } catch (e) {
       console.error(e);

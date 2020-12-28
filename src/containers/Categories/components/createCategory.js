@@ -50,11 +50,11 @@ export default class CreateCategory extends CategoryBase {
     };
     ;
     try {
-      await postCategory(data);
-      ;
+      let response = await postCategory(data);
+      debugger
       renderSuccessNotification("Category post success");
       setTimeout(()=>{
-        this.props.history.goBack()
+        this.props.history.replace(`/admin/categories/${response.data.id}`)
       },1000)
 
     } catch (e) {
