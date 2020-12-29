@@ -36,8 +36,8 @@ class EditAccount extends Component {
                 owner: resp.data.owner,
                 active: resp.data.active,
                 admins: resp.data.admins,
-                coverURL: resp.data.cover.original,
-                iconURL : resp.data.icon.original
+                coverURL: resp.data?.cover?.original || "",
+                iconURL : resp.data?.icon?.original || ""
             })
         })
 
