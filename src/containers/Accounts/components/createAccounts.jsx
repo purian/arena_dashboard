@@ -74,7 +74,9 @@ class CreateAccount extends Component {
                 draggable: true,
                 progress: undefined,
             });
-            this.props.history.push("/admin/accounts")
+            setTimeout(()=>{
+                this.props.history.replace(`/admin/accounts/${resp.data.id}`)
+              },1000)
         }).catch(err => {
             toast.error('Error', {
                 position: "top-right",
