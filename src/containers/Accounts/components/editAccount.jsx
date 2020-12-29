@@ -35,7 +35,9 @@ class EditAccount extends Component {
                 slug: resp.data.slug,
                 owner: resp.data.owner,
                 active: resp.data.active,
-                admins: resp.data.admins
+                admins: resp.data.admins,
+                coverURL: resp.data.cover.original,
+                iconURL : resp.data.icon.original
             })
         })
 
@@ -112,9 +114,8 @@ class EditAccount extends Component {
         payload.owner = owner.id;
         payload.admins = admins;
         payload.active = active;
-        // payload.cover= cover
-        // payload.icon = icon
-        //TODO: Uncomment this and coverURL and iconURL to be fixed
+        payload.cover= cover
+        payload.icon = icon
         
         editAccount(acntId, payload).then(resp => {
             toast.success('Success', {
