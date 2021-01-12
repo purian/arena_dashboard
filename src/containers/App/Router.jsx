@@ -22,6 +22,10 @@ import CreateCategory from "../Categories/components/createCategory"
 import EditCategory from "../Categories/components/editCategory"
 import CreateSubject from "../Subjects/components/createSubject"
 import EditSubject from "../Subjects/components/editSubject"
+import {
+  GoogleReCaptchaProvider,
+  withGoogleReCaptcha,
+} from "react-google-recaptcha-v3";
 const Routes = () => (
   <Switch>
     <PrivateRoute exact path="/admin/user" component={User} />
@@ -76,7 +80,7 @@ const Router = () => (
       </Switch>
       :
       <Switch>
-        <Route exact path="/" component={Login} />
+        <Route exact path="/" component={withGoogleReCaptcha(Login)} />
         <Route exact path="/log_in" component={Login} />
         <Route exact path="/lostPassword" component={LostPassword} />
         <Route exact path="/resetPassword" component={ResetPassword} />
