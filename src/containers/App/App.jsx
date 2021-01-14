@@ -6,6 +6,7 @@ import {
   withGoogleReCaptcha,
 } from "react-google-recaptcha-v3";
 function App() {
+  console.log("recaptcha key is", process.env.REACT_APP_GOOGLE_CAPTCHA_KEY)
   return (
     <GoogleReCaptchaProvider
     reCaptchaKey={process.env.REACT_APP_GOOGLE_CAPTCHA_KEY}
