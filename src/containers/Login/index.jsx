@@ -56,7 +56,15 @@ class SignIn extends Component {
       })
     }
   }
-  handleSave = () => {
+
+  getRecaptchaToken = async () => {
+    const token = await this.props.googleReCaptchaProps.executeRecaptcha(
+      "login"
+    );
+    return token;
+  };
+
+  handleSave = async() => {
     const payload = {};
     const { userName, password } = this.state;
     if (validator.isEmail(userName)) {
@@ -64,6 +72,18 @@ class SignIn extends Component {
     }
     if (password !== "") {
       payload.password = password
+    }
+    try{
+      let token = await this.getRecaptchaToken();
+      if (!token) {
+        throw new Error();
+      }
+      payload.recaptchaToken = token;
+
+    }catch(e){
+      console.error(e)
+      renderFailureNotification("Invalid captcha")
+      return
     }
     login(payload).then(res => {
       if(checkRoleIfValid(res.data.accessToken)){
