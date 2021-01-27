@@ -69,6 +69,7 @@ export default class CreateSubject extends SubjectBase {
             question: this.state.question,
             cover: this.state.cover,
             conclusionFiles: this.state.conclusionFiles,
+            admins: this.state.subjectAdmins
         };
         if(this.state.type.value === FORM_TYPE_MAP.choice){
           data.choice = this.state.choice

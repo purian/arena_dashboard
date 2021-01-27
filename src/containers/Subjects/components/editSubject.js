@@ -92,7 +92,8 @@ export default class EditSubject extends SubjectBase{
               question: response.data.question,
               cover: response.data?.cover,
               conclusionFiles: response.data.conclusionFiles,
-              editSubject: true
+              editSubject: true,
+              subjectAdmins: response.data.admins
             })
             renderSuccessNotification("Subject data fetched")
 
