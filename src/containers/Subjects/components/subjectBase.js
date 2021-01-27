@@ -171,7 +171,7 @@ export default class SubjectBase extends Component {
         adminsData: response.data.items,
       });
     } catch (e) {
-      renderFailureNotification("Experts not fetched");
+      renderFailureNotification("Data not fetched");
       console.error(e);
     }
   };
@@ -903,9 +903,35 @@ export default class SubjectBase extends Component {
           />
         )}
         value={this.state.experts}
+        disabled={!this.state.account}
       />
     );
   };
+
+  renderAdminsDropdown=()=>{
+    return (
+      <Autocomplete
+        multiple
+        id="admins"
+        options={this.state.adminsData}
+        getOptionLabel={(option) => option.name}
+        onChange={(event, newValue) =>
+          this.handleOptionChange(event, newValue, "subjectAdmins")
+        }
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            style={{ margin: 8 }}
+            label="Admins"
+            onChange={(e) => this.handleUsers(e.target.value)}
+            variant="outlined"
+          />
+        )}
+        value={this.state.subjectAdmins}
+        disabled={!this.state.account}
+      />
+    );
+  }
 
   renderCheckboxes = () => {
     return (
@@ -1114,6 +1140,8 @@ export default class SubjectBase extends Component {
                 {this.renderGroupsDropdown()}
 
                 {this.renderExpertsDropdown()}
+                {this.renderAdminsDropdown()}
+
                 {this.state.openCommentModal && this.renderCommentModal()}
 
                 <Button
