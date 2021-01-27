@@ -145,6 +145,7 @@ export default class GroupBase extends Component {
                   InputLabelProps={{
                     shrink: true,
                   }}
+                  value={this.state.name}
                   onChange={(e) => this.handleChange("name", e.target.value)}
                 />
 
