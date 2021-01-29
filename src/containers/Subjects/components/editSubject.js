@@ -154,7 +154,11 @@ export default class EditSubject extends SubjectBase{
         },1000)
       } catch (e) {
         console.error(e);
-        renderFailureNotification("Subject edit error");
+        if(e?.response?.data?.details?.name?.message){
+          renderFailureNotification(e?.response?.data?.details?.name?.message);
+        }else{
+          renderFailureNotification("Subject edit error");
+        }
       }
     };
     

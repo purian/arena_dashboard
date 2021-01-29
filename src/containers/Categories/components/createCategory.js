@@ -59,7 +59,11 @@ export default class CreateCategory extends CategoryBase {
 
     } catch (e) {
       console.error(e);
-      renderFailureNotification("Category post error");
+      if(e?.response?.data?.details?.name?.message){
+        renderFailureNotification(e?.response?.data?.details?.name?.message);
+      }else{
+        renderFailureNotification("Category post error");
+      }
     }
   };
 

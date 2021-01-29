@@ -13,6 +13,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ArenaUploader from "../../../common/arenaUploader/arenaUploader"
 import Typography from '@material-ui/core/Typography';
+import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
+
 class EditAccount extends Component {
     state = {
         userData: [],
@@ -93,20 +95,32 @@ class EditAccount extends Component {
         })
 
     }
+
+    checkErrors =(payload)=>{
+        if(!payload.name || payload.name.length < 4){
+            renderFailureNotification("Name should be greater than 4")
+            return true
+        }
+        if(!payload.owner){
+            renderFailureNotification("Owner required")
+            return true
+        }
+        return false
+    }
     handleSave = () => {
         const payload = {};
         const acntId = this.props.match.params.id
         const { userName, owner, admins, active, slug , coverURL , iconURL} = this.state;
         let cover ={
-            original: coverURL || "https://s3.arena.shabloool.co.il/uploads/5f68f9aaf778e2149dc5feb1/QPOqKNTA39rXxrBsCYLnyTFn/S5iJwHwLqEHTDRm5v_ALfKea/Ab-0tZh1SWyvFhmI.jpg",
+            original: coverURL ,
             sizes: {
-                "720x360": coverURL || "https://s3.arena.shabloool.co.il/uploads/5f68f9aaf778e2149dc5feb1/QPOqKNTA39rXxrBsCYLnyTFn/S5iJwHwLqEHTDRm5v_ALfKea/Ab-0tZh1SWyvFhmI.jpg",
+                "720x360": coverURL ,
             }
         }
         let icon ={
-            original: iconURL || "https://s3.arena.shabloool.co.il/uploads/5f68f9aaf778e2149dc5feb1/QPOqKNTA39rXxrBsCYLnyTFn/S5iJwHwLqEHTDRm5v_ALfKea/Ab-0tZh1SWyvFhmI.jpg",
+            original: iconURL ,
             sizes: {
-                "240x240": iconURL || "https://s3.arena.shabloool.co.il/uploads/5f68f9aaf778e2149dc5feb1/QPOqKNTA39rXxrBsCYLnyTFn/S5iJwHwLqEHTDRm5v_ALfKea/Ab-0tZh1SWyvFhmI.jpg",
+                "240x240": iconURL ,
             }
         }
         payload.name = userName;
@@ -116,7 +130,9 @@ class EditAccount extends Component {
         payload.active = active;
         payload.cover= cover
         payload.icon = icon
-        
+        if(this.checkErrors(payload)){
+            return 
+        }
         editAccount(acntId, payload).then(resp => {
             toast.success('Success', {
                 position: "top-right",
@@ -129,15 +145,12 @@ class EditAccount extends Component {
             });
             this.props.history.push("/admin/accounts")
         }).catch(err => {
-            toast.error('Error', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            console.error(err)
+            if(err?.response?.data?.details?.name?.message){
+                renderFailureNotification(err?.response?.data?.details?.name?.message);
+              }else{
+                renderFailureNotification("Account edit error");
+              }
         })
     }
 

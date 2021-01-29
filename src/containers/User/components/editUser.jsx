@@ -14,6 +14,8 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
+
 export default class EditUser extends Component {
     state = {
         userName: "",
@@ -71,6 +73,9 @@ export default class EditUser extends Component {
         payload.email = email;
         payload.allowEmails = allowEmails
         payload.role = userType
+        if(this.checkErrors(payload)){
+            return
+        }
         editUser(userId, payload).then(resp => {
             toast.success('Success', {
                 position: "top-right",
@@ -83,16 +88,25 @@ export default class EditUser extends Component {
             });
             this.props.history.push("/admin/user")
         }).catch(err => {
-            toast.success('Error', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            console.error(err)
+            if(err?.response?.data?.details?.name?.message){
+                renderFailureNotification(err?.response?.data?.details?.name?.message);
+              }else{
+                renderFailureNotification("User edit error");
+              }
         })
+    }
+
+    checkErrors =(payload)=>{
+        if(!payload.name || payload.name.length < 4){
+            renderFailureNotification("Name should be greater than 4")
+            return true
+        }
+        if(!payload.email){
+            renderFailureNotification("Email required")
+            return true
+        }
+        return false
     }
 
     render() {

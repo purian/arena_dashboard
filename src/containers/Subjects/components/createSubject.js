@@ -88,7 +88,11 @@ export default class CreateSubject extends SubjectBase {
           
         } catch (e) {
           console.error(e);
-          renderFailureNotification("Subject post error");
+          if(e?.response?.data?.details?.name?.message){
+            renderFailureNotification(e?.response?.data?.details?.name?.message);
+          }else{
+            renderFailureNotification("Subject post error");
+          }
         }
       };
 

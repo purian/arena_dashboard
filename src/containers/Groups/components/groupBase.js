@@ -103,6 +103,18 @@ export default class GroupBase extends Component {
     )
   }
 
+  checkErrors =(data)=>{
+    if(!data.account){
+      renderFailureNotification("Please select a account")
+      return true
+  }
+    if(!data.name || data.name.length < 4){
+        renderFailureNotification("Name should be greater than 4")
+        return true
+    }
+    return false
+}
+
 
   renderMainContent() {
     const { usersData, accountsData, name } = this.state;

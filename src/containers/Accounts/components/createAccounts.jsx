@@ -12,6 +12,8 @@ import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
+
 class CreateAccount extends Component {
     state = {
         userData: [],
@@ -56,6 +58,18 @@ class CreateAccount extends Component {
         })
 
     }
+
+    checkErrors =(payload)=>{
+        if(!payload.name || payload.name.length < 4){
+            renderFailureNotification("Name should be greater than 4")
+            return true
+        }
+        if(!payload.owner){
+            renderFailureNotification("Owner required")
+            return true
+        }
+        return false
+    }
     handleSave = () => {
         const payload = {};
         const { userName, ownerId, admins, active, slug } = this.state;
@@ -64,6 +78,9 @@ class CreateAccount extends Component {
         payload.owner = ownerId;
         payload.admins = admins;
         payload.active = active
+        if(this.checkErrors(payload)){
+            return 
+        }
         postAccounts(payload).then(resp => {
             toast.success('Success', {
                 position: "top-right",
@@ -78,15 +95,12 @@ class CreateAccount extends Component {
                 this.props.history.replace(`/admin/accounts/${resp.data.id}`)
               },1000)
         }).catch(err => {
-            toast.error('Error', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            console.error(err)
+            if(err?.response?.data?.details?.name?.message){
+                renderFailureNotification(err?.response?.data?.details?.name?.message);
+              }else{
+                renderFailureNotification("Account post error");
+              }
         })
     }
 
