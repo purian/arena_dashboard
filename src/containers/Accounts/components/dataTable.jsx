@@ -19,6 +19,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
 
 const styles = theme => ({
     table: {

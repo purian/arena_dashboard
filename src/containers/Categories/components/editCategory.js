@@ -98,7 +98,11 @@ export default class EditCategory extends CategoryBase{
           },1000)
         } catch (e) {
           console.error(e);
-          renderFailureNotification("Category edit error");
+          if(e?.response?.data?.details?.name?.message){
+            renderFailureNotification(e?.response?.data?.details?.name?.message);
+          }else{
+            renderFailureNotification("Category edit error");
+          }
         }
       };
     

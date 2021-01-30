@@ -105,7 +105,9 @@ export default class EditGroup extends GroupBase{
           users: this.state.users,
         };
         ;
-
+        if(this.checkErrors(data)){
+          return
+        }
         try {
           if(this.state.csvUploaded){
 
@@ -125,7 +127,11 @@ export default class EditGroup extends GroupBase{
           },1000)
         } catch (e) {
           console.error(e);
-          renderFailureNotification("Group edit error");
+          if(e?.response?.data?.details?.name?.message){
+            renderFailureNotification(e?.response?.data?.details?.name?.message);
+          }else{
+            renderFailureNotification("Group edit error");
+          }
         }
       };
     

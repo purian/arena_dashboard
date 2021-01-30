@@ -19,7 +19,9 @@ export default class CreateGroup extends GroupBase {
       name: this.state.name,
       users: this.state.users,
     };
-    ;
+    if(this.checkErrors(data)){
+      return
+    }
     try {
       
       let resp = await postGroups(data);
@@ -30,7 +32,11 @@ export default class CreateGroup extends GroupBase {
       },1000)
     } catch (e) {
       console.error(e);
-      renderFailureNotification("Group post error");
+      if(e?.response?.data?.details?.name?.message){
+        renderFailureNotification(e?.response?.data?.details?.name?.message);
+      }else{
+        renderFailureNotification("Group post error");
+      }
     }
   };
 
