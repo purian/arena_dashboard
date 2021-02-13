@@ -1,30 +1,29 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
-
-.selectAccount .MuiInputBase-input{
+.selectAccount .MuiInputBase-input {
   padding: 0px !important;
 }
-.selectAccount .MuiFormLabel-root{
+.selectAccount .MuiFormLabel-root {
   line-height: 0;
 }
-.noData{
+.noData {
   font-size: 20px;
-    text-align: center;
-    font-weight: 600;
+  text-align: center;
+  font-weight: 600;
 }
-.searchInput .MuiIconButton-root{
+.searchInput .MuiIconButton-root {
   padding: 0 !important;
 }
 
@@ -39,18 +38,18 @@ code {
   border-radius: 8px;
   overflow: hidden;
 }
-.mgTop12{
+.mgTop12 {
   margin-top: 12px !important;
 }
-.displayFlex{
+.displayFlex {
   display: flex;
 }
 
-.margin8{
+.margin8 {
   margin: 8px !important;
 }
 
-.fullWidth{
+.fullWidth {
   width: 100%;
 }
 
@@ -88,7 +87,7 @@ code {
 
 /*------------- Arena Date Picker Ends --------------*/
 
-.halfFlex{
+.halfFlex {
   flex: 0.5;
 }
 
@@ -152,59 +151,59 @@ code {
 
 /* ------------------ Arena Dropdown ends ----------*/
 
-.flex1{
+.flex1 {
   flex: 1;
 }
 
-.mgTop8{
+.mgTop8 {
   margin-top: 8px !important;
 }
 
-.conclusionDropdown .margin8{
+.conclusionDropdown .margin8 {
   margin: 0 !important;
 }
 
-.conclusionDropdown{
+.conclusionDropdown {
   margin: 8px;
   width: 100%;
 }
 
-#conclusionHeader{
+#conclusionHeader {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
 
-.noMargin{
+.noMargin {
   margin: 0 !important;
 }
 
-#imageContainer{
+#imageContainer {
   max-width: 250px;
 }
 
-.uploadedImageContainer{
+.uploadedImageContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 8px;
 }
 
-#commentSingleContainer{
+#commentSingleContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.bold{
+.bold {
   font-weight: bold !important;
 }
 
-.alignCenter{
+.alignCenter {
   align-self: center !important;
 }
 
-#commentModalMainContainer .MuiDialog-paperScrollPaper{
+#commentModalMainContainer .MuiDialog-paperScrollPaper {
   height: 500px;
 }
 
@@ -213,45 +212,45 @@ code {
   background: transparent; /* Chrome/Safari/Webkit */
 }
 
-#closeSubjectCommentIcon{
+#closeSubjectCommentIcon {
   position: absolute;
   right: 4px;
   top: 4px;
 }
 
-#commentModalTitle{
+#commentModalTitle {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.customHeight .MuiInputBase-root{
+.customHeight .MuiInputBase-root {
   height: 40px;
 }
 
-.noPadding{
+.noPadding {
   padding: 0 !important;
 }
 
-.minWidthInitial{
+.minWidthInitial {
   min-width: initial !important;
 }
 
-#imageContainer .uploaderMainContainer{
+#imageContainer .uploaderMainContainer {
   width: 100px;
   background-color: #fff;
   height: initial;
 }
 
-.mgLeft8{
+.mgLeft8 {
   margin-left: 8px !important;
 }
 
-#editDivider{
+#editDivider {
   height: 24px !important;
 }
 
-.justifyContentSpaceBetween{
+.justifyContentSpaceBetween {
   justify-content: space-between !important;
 }
 #csvDataContainer {
@@ -259,11 +258,11 @@ code {
   border: 1px solid #000;
   padding: 8px;
 }
-.mgBottom8{
+.mgBottom8 {
   margin-bottom: 8px !important;
 }
 
-.loadingContainer{
+.loadingContainer {
   display: flex;
   width: 100%;
   justify-content: center;
@@ -271,6 +270,14 @@ code {
   height: 100%;
 }
 
-.displayNone{
+.displayNone {
   display: none !important;
+}
+.chipInputContainer {
+  width: 100%;
+  margin: 8px;
+}
+.chipInput {
+  width: 100%;
+  padding: 9px;
 }
