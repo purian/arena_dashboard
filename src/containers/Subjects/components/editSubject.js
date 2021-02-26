@@ -104,7 +104,7 @@ export default class EditSubject extends SubjectBase {
         conclusionFiles: response.data.conclusionFiles,
         editSubject: true,
         subjectAdmins: response.data.admins,
-        tags: response.data.tags,
+        tags: (response.data.tags && response.data.tags) || [],
       });
       renderSuccessNotification("Subject data fetched");
     } catch (e) {
