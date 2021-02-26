@@ -274,3 +274,10 @@ code {
 .displayNone{
   display: none !important;
 }
+
+.grecaptcha-badge {
+  position: relative;
+  left: 0;
+  z-index: 9999;
+  bottom: 0;
+}
