@@ -15,16 +15,23 @@ import {
   FORM_TYPE_MAP,
   SUBJECT_STATUS,
 } from "../../../core/constants/constant";
-import { getAccounts, getUsersByAccountId } from "../../../core/services/accountsServices";
-import { fetchCategoryByAccountId,  } from "../../../core/services/categoriesServices";
+import {
+  getAccounts,
+  getUsersByAccountId,
+} from "../../../core/services/accountsServices";
+import { fetchCategoryByAccountId } from "../../../core/services/categoriesServices";
 import { getUsers } from "../../../core/services/usersServices";
 import Icon from "@material-ui/core/Icon";
 import ArenaDropdown from "../../../common/arenaDropdown/arenaDropdown";
 import ConclusionComponent from "../../../common/conclusionComponent/conclusionComponent";
-import CommentsModal from "./commentsModal"
-import Dialog from '@material-ui/core/Dialog';
-import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
-import {searchGroupByAccountId} from "../../../core/services/groupsServices"
+import CommentsModal from "./commentsModal";
+import Dialog from "@material-ui/core/Dialog";
+import {
+  renderSuccessNotification,
+  renderFailureNotification,
+} from "../../../common/Notifications/showNotifications";
+import { searchGroupByAccountId } from "../../../core/services/groupsServices";
+import ChipInput from "material-ui-chip-input";
 const PAGE_LIMIT = 20;
 
 const STATUS_DATA = [
@@ -110,22 +117,19 @@ const FORM_TYPE = {
   ALLOCATION: "allocation",
 };
 
-export const CustomOption = ({ data}) => {
-  
+export const CustomOption = ({ data }) => {
   //TODO: bring label from translation for aria label
   return (
-    <div
-      className={`dropDownIconsContainer`}
-    >
+    <div className={`dropDownIconsContainer`}>
       <Icon className={`${data.value} dropDownIcon`} />
-      <span >{data.label}</span>{" "}
+      <span>{data.label}</span>{" "}
     </div>
   );
 };
 
 export default class SubjectBase extends Component {
+
   handleOptionChange = (e, newValue, type) => {
-    ;
     this.setState({
       [type]: newValue,
     });
@@ -138,7 +142,6 @@ export default class SubjectBase extends Component {
         this.state.currentPage,
         value
       );
-      ;
       this.setState({
         accountsData: response.data.items,
       });
@@ -165,8 +168,12 @@ export default class SubjectBase extends Component {
 
   handleUsers = async (value) => {
     try {
-      let response = await getUsersByAccountId(this.state.account.id, PAGE_LIMIT, this.state.currentPage, value);
-      ;
+      let response = await getUsersByAccountId(
+        this.state.account.id,
+        PAGE_LIMIT,
+        this.state.currentPage,
+        value
+      );
       this.setState({
         adminsData: response.data.items,
       });
@@ -178,8 +185,13 @@ export default class SubjectBase extends Component {
 
   handleGroups = async (value) => {
     try {
-      let response = await searchGroupByAccountId("",this.state.account.id, PAGE_LIMIT, this.state.currentPage)
-      
+      let response = await searchGroupByAccountId(
+        "",
+        this.state.account.id,
+        PAGE_LIMIT,
+        this.state.currentPage
+      );
+
       this.setState({
         groupsData: response.data.items,
       });
@@ -202,14 +214,12 @@ export default class SubjectBase extends Component {
   };
 
   handleCheckboxChange = (type, newValue) => {
-    ;
     this.setState({
       [type]: newValue,
     });
   };
 
   onUploadComplete = (response, type) => {
-    
     if (!this.state[type]) {
       let files = [];
       files.push(response.data);
@@ -242,7 +252,6 @@ export default class SubjectBase extends Component {
     let data = FORM_TYPE_DATA.filter((singleElement) => {
       return singleElement.value === type;
     });
-    ;
     return data[0];
   };
 
@@ -250,7 +259,6 @@ export default class SubjectBase extends Component {
     let data = STATUS_DATA.filter((singleElement) => {
       return singleElement.value === status;
     });
-    ;
     return data[0];
   };
 
@@ -272,12 +280,10 @@ export default class SubjectBase extends Component {
         </div>
       ),
     };
-    ;
     return iconOption;
   };
 
   onChangeIconDropdown = (selectedOption, index, type) => {
-    ;
     let dataCopy = Object.assign({}, this.state[type]);
     dataCopy.options[index].icon = selectedOption.value;
     this.setState({
@@ -304,7 +310,7 @@ export default class SubjectBase extends Component {
     });
   };
 
-  onClickDeleteOptions=(index, type)=>{
+  onClickDeleteOptions = (index, type) => {
     if (index > 0) {
       let dataCopy = Object.assign({}, this.state[type]);
       dataCopy.options.splice(index, 1);
@@ -312,24 +318,47 @@ export default class SubjectBase extends Component {
         [type]: dataCopy,
       });
     }
-  }
+  };
+  handleAddChip = (chip) => {
+    var labels = Object.assign([], this.state.tags);
+    for (var label in labels) {
+      if (label === chip) {
+        window.NotificationUtils.showError("Name already exists!");
+        return;
+      }
+    }
+    labels.push(chip);
+    this.setState({
+      tags: labels,
+    });
+  };
+
+  handleDeleteChip = (chip, i) => {
+    var labels = Object.assign([], this.state.tags);
+    var filtered = labels.filter(function (value, index) {
+      return index !== i;
+    });
+    this.setState({
+      tags: filtered,
+    });
+  };
 
   renderMultiChoiceFields = () => {
     return (
       <React.Fragment>
         {this.state.choice.options.map((item, index) => {
           return (
-            <div className="displayFlex">
+            <div className='displayFlex'>
               <TextField
                 id={`Title ${index}`}
                 label={`Title`}
-                className="textTransform flex1"
+                className='textTransform flex1'
                 style={{ margin: 8 }}
                 placeholder={`Title`}
                 value={item.name}
                 fullWidth
-                variant="outlined"
-                margin="normal"
+                variant='outlined'
+                margin='normal'
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -354,9 +383,16 @@ export default class SubjectBase extends Component {
                 placeholder={"Icon"}
               />
 
-              {index > 1 && <Button color="primary" className="mgLeft8" onClick={() =>this.onClickDeleteOptions(index, FORM_TYPE.CHOICE)}>
-                Delete
-              </Button>}
+              {index > 1 && (
+                <Button
+                  color='primary'
+                  className='mgLeft8'
+                  onClick={() =>
+                    this.onClickDeleteOptions(index, FORM_TYPE.CHOICE)
+                  }>
+                  Delete
+                </Button>
+              )}
             </div>
           );
         })}
@@ -371,24 +407,24 @@ export default class SubjectBase extends Component {
       <>
         <Button
           onClick={() => this.addOption(FORM_TYPE.CHOICE)}
-          id="addChoiceOption"
+          id='addChoiceOption'
           fullWidth={true}
-          className="margin8"
-          color="primary" variant="contained"
-        >
+          className='margin8'
+          color='primary'
+          variant='contained'>
           Add Option
         </Button>
-        <div className="displayFlex mgTop8">
+        <div className='displayFlex mgTop8'>
           <TextField
-            id="minimum"
-            label="Minimum"
-            className="textTransform"
+            id='minimum'
+            label='Minimum'
+            className='textTransform'
             style={{ margin: 8 }}
-            placeholder="Minimum"
+            placeholder='Minimum'
             value={this.state.choice.min}
             fullWidth
-            variant="outlined"
-            margin="normal"
+            variant='outlined'
+            margin='normal'
             InputLabelProps={{
               shrink: true,
             }}
@@ -400,18 +436,17 @@ export default class SubjectBase extends Component {
               )
             }
             error={this.state.checkErrors && this.errorInMultiChoiceMin()}
-
           />
           <TextField
-            id="maximum"
-            label="Maximum"
-            className="textTransform"
+            id='maximum'
+            label='Maximum'
+            className='textTransform'
             style={{ margin: 8 }}
-            placeholder="Maximum"
+            placeholder='Maximum'
             value={this.state.choice.max}
             fullWidth
-            variant="outlined"
-            margin="normal"
+            variant='outlined'
+            margin='normal'
             InputLabelProps={{
               shrink: true,
             }}
@@ -423,7 +458,6 @@ export default class SubjectBase extends Component {
               )
             }
             error={this.state.checkErrors && this.errorInMultiChoiceMax()}
-
           />
         </div>
       </>
@@ -435,16 +469,16 @@ export default class SubjectBase extends Component {
       <React.Fragment>
         {this.state.allocation.options.map((item, index) => {
           return (
-            <div className="displayFlex margin8 fullWidth">
+            <div className='displayFlex margin8 fullWidth'>
               <TextField
                 id={`Title ${index}`}
                 label={`Title`}
-                className="textTransform flex1 fullWidth noMargin"
+                className='textTransform flex1 fullWidth noMargin'
                 placeholder={`Title`}
                 value={item.name}
                 fullWidth
-                variant="outlined"
-                margin="normal"
+                variant='outlined'
+                margin='normal'
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -452,33 +486,40 @@ export default class SubjectBase extends Component {
                   this.onChangeOptionsTextField(e, index, FORM_TYPE.ALLOCATION)
                 }
               />
-              {index > 1 && <Button color="primary" className="mgLeft8" onClick={() =>this.onClickDeleteOptions(index, FORM_TYPE.ALLOCATION)}>
-                Delete
-              </Button>}
+              {index > 1 && (
+                <Button
+                  color='primary'
+                  className='mgLeft8'
+                  onClick={() =>
+                    this.onClickDeleteOptions(index, FORM_TYPE.ALLOCATION)
+                  }>
+                  Delete
+                </Button>
+              )}
             </div>
           );
         })}
         <Button
           onClick={() => this.addOption(FORM_TYPE.ALLOCATION)}
-          id="addChoiceOption"
+          id='addChoiceOption'
           fullWidth={true}
-          className="margin8"
-          color="primary" variant="contained"
-        >
+          className='margin8'
+          color='primary'
+          variant='contained'>
           Add Option
         </Button>
 
-        <div className="displayFlex mgTop8">
+        <div className='displayFlex mgTop8'>
           <TextField
-            id="step"
-            label="Step"
-            className="textTransform"
+            id='step'
+            label='Step'
+            className='textTransform'
             style={{ margin: 8 }}
-            placeholder="Step"
+            placeholder='Step'
             value={this.state.allocation.step}
             fullWidth
-            variant="outlined"
-            margin="normal"
+            variant='outlined'
+            margin='normal'
             InputLabelProps={{
               shrink: true,
             }}
@@ -490,19 +531,18 @@ export default class SubjectBase extends Component {
               )
             }
             error={this.state.checkErrors && this.errorInAllocationStep()}
-
           />
 
           <TextField
-            id="total"
-            label="Total"
-            className="textTransform"
+            id='total'
+            label='Total'
+            className='textTransform'
             style={{ margin: 8 }}
-            placeholder="Total"
+            placeholder='Total'
             value={this.state.allocation.total}
             fullWidth
-            variant="outlined"
-            margin="normal"
+            variant='outlined'
+            margin='normal'
             InputLabelProps={{
               shrink: true,
             }}
@@ -514,19 +554,18 @@ export default class SubjectBase extends Component {
               )
             }
             error={this.state.checkErrors && this.errorInAllocationTotal()}
-
           />
 
           <TextField
-            id="min"
-            label="Min"
-            className="textTransform"
+            id='min'
+            label='Min'
+            className='textTransform'
             style={{ margin: 8 }}
-            placeholder="Min"
+            placeholder='Min'
             value={this.state.allocation.min}
             fullWidth
-            variant="outlined"
-            margin="normal"
+            variant='outlined'
+            margin='normal'
             InputLabelProps={{
               shrink: true,
             }}
@@ -538,19 +577,18 @@ export default class SubjectBase extends Component {
               )
             }
             error={this.state.checkErrors && this.errorInAllocationMin()}
-
           />
 
           <TextField
-            id="max"
-            label="Max"
-            className="textTransform"
+            id='max'
+            label='Max'
+            className='textTransform'
             style={{ margin: 8 }}
-            placeholder="Max"
+            placeholder='Max'
             value={this.state.allocation.max}
             fullWidth
-            variant="outlined"
-            margin="normal"
+            variant='outlined'
+            margin='normal'
             InputLabelProps={{
               shrink: true,
             }}
@@ -562,7 +600,6 @@ export default class SubjectBase extends Component {
               )
             }
             error={this.state.checkErrors && this.errorInAllocationMax()}
-
           />
         </div>
       </React.Fragment>
@@ -584,7 +621,7 @@ export default class SubjectBase extends Component {
   renderAccountDropdown = () => {
     return (
       <Autocomplete
-        id="account"
+        id='account'
         options={this.state.accountsData}
         getOptionLabel={(option) => option.name}
         onChange={(event, newValue) =>
@@ -594,9 +631,9 @@ export default class SubjectBase extends Component {
           <TextField
             {...params}
             style={{ margin: 8 }}
-            label="Accounts"
+            label='Accounts'
             onChange={(e) => this.handleAccounts(e.target.value)}
-            variant="outlined"
+            variant='outlined'
             error={this.state.checkErrors && this.errorInAccounts()}
           />
         )}
@@ -609,7 +646,7 @@ export default class SubjectBase extends Component {
   renderCategoryDropdown = () => {
     return (
       <Autocomplete
-        id="category"
+        id='category'
         options={this.state.categoryData}
         getOptionLabel={(option) => option.name}
         onChange={(event, newValue) =>
@@ -619,11 +656,10 @@ export default class SubjectBase extends Component {
           <TextField
             {...params}
             style={{ margin: 8 }}
-            label="Categories"
+            label='Categories'
             onChange={(e) => this.handleCategories(e.target.value)}
-            variant="outlined"
+            variant='outlined'
             error={this.state.checkErrors && this.errorInCategory()}
-
           />
         )}
         value={this.state.category}
@@ -635,7 +671,7 @@ export default class SubjectBase extends Component {
   renderTypeDropdown = () => {
     return (
       <Autocomplete
-        id="type"
+        id='type'
         options={FORM_TYPE_DATA}
         getOptionLabel={(option) => option.name}
         onChange={(event, newValue) => {
@@ -646,11 +682,10 @@ export default class SubjectBase extends Component {
           <TextField
             {...params}
             style={{ margin: 8 }}
-            label="Type"
+            label='Type'
             //   onChange={(e) => this.handleAccounts(e.target.value)}
-            variant="outlined"
+            variant='outlined'
             error={this.state.checkErrors && this.errorInType()}
-
           />
         )}
         value={this.state.type}
@@ -662,7 +697,7 @@ export default class SubjectBase extends Component {
   renderStatusDropdown = () => {
     return (
       <Autocomplete
-        id="status"
+        id='status'
         options={STATUS_DATA}
         getOptionLabel={(option) => option.name}
         onChange={(event, newValue) =>
@@ -672,11 +707,10 @@ export default class SubjectBase extends Component {
           <TextField
             {...params}
             style={{ margin: 8 }}
-            label="Status"
+            label='Status'
             //   onChange={(e) => this.handleAccounts(e.target.value)}
-            variant="outlined"
+            variant='outlined'
             error={this.state.checkErrors && this.errorInStatus()}
-
           />
         )}
         value={this.state.status}
@@ -687,24 +721,24 @@ export default class SubjectBase extends Component {
   renderDatePicker = () => {
     return (
       <>
-        <div className="margin8 fullWidth">
-          <Typography variant="body2" className="mgTop12">
+        <div className='margin8 fullWidth'>
+          <Typography variant='body2' className='mgTop12'>
             Start Date
           </Typography>
           <ArenaDatePicker
-            id="startDropDownContainer"
+            id='startDropDownContainer'
             value={this.state.startDate}
             onChange={(date) => {
               this.onChangeDate(date, "startDate");
             }}
           />
         </div>
-        <div className="margin8 fullWidth">
-          <Typography variant="body2" className="mgTop12">
+        <div className='margin8 fullWidth'>
+          <Typography variant='body2' className='mgTop12'>
             End Date
           </Typography>
           <ArenaDatePicker
-            id="startDropDownContainer"
+            id='startDropDownContainer'
             value={this.state.endDate}
             onChange={(date) => {
               this.onChangeDate(date, "endDate");
@@ -743,24 +777,23 @@ export default class SubjectBase extends Component {
   };
 
   renderImage = (file, files, key) => {
-    
     return (
-      <div id="imageUploaderContainer" className="uploadedImageContainer">
-        <div id="imageContainer">
+      <div id='imageUploaderContainer' className='uploadedImageContainer'>
+        <div id='imageContainer'>
           <ArenaUploader fileURL={file.url} />
         </div>
         <Typography
-          variant="body2"
-          id="imageUploaderName"
-          className="marginLeft8 dullWhite bold textAlignEnd"
-        >
+          variant='body2'
+          id='imageUploaderName'
+          className='marginLeft8 dullWhite bold textAlignEnd'>
           {file.name}
         </Typography>
-        <Button color="primary" variant="contained" onClick={() => this.onClickDeleteAttachments(file, files, key)}>
+        <Button
+          color='primary'
+          variant='contained'
+          onClick={() => this.onClickDeleteAttachments(file, files, key)}>
           Delete
         </Button>
-          
-        
       </div>
     );
   };
@@ -769,51 +802,49 @@ export default class SubjectBase extends Component {
     return (
       <>
         <TextField
-          id="name"
-          label="Name"
-          className="textTransform"
+          id='name'
+          label='Name'
+          className='textTransform'
           style={{ margin: 8 }}
-          placeholder="Name"
+          placeholder='Name'
           value={this.state.name}
           fullWidth
-          variant="outlined"
-          margin="normal"
+          variant='outlined'
+          margin='normal'
           InputLabelProps={{
             shrink: true,
           }}
           onChange={(e) => this.handleChange("name", e.target.value)}
           error={this.state.checkErrors && this.errorInName()}
-          
         />
 
         <TextField
-          id="question"
-          label="Question"
-          className="textTransform"
+          id='question'
+          label='Question'
+          className='textTransform'
           style={{ margin: 8 }}
-          placeholder="Question"
+          placeholder='Question'
           value={this.state.question}
           fullWidth
-          variant="outlined"
-          margin="normal"
+          variant='outlined'
+          margin='normal'
           InputLabelProps={{
             shrink: true,
           }}
           onChange={(e) => this.handleChange("question", e.target.value)}
           error={this.state.checkErrors && this.errorInQuestion()}
-
         />
 
         <TextField
-          id="description"
-          label="Description"
-          className="textTransform"
+          id='description'
+          label='Description'
+          className='textTransform'
           style={{ margin: 8 }}
-          placeholder="Description"
+          placeholder='Description'
           value={this.state.description}
           fullWidth
-          variant="outlined"
-          margin="normal"
+          variant='outlined'
+          margin='normal'
           InputLabelProps={{
             shrink: true,
           }}
@@ -821,10 +852,9 @@ export default class SubjectBase extends Component {
           multiline
           rows={4}
           error={this.state.checkErrors && this.errorInDescription()}
-
         />
-        <div className="margin8 fullWidth">
-          <Typography variant="body2" className="mgTop12">
+        <div className='margin8 fullWidth'>
+          <Typography variant='body2' className='mgTop12'>
             Attachments
           </Typography>
 
@@ -838,10 +868,11 @@ export default class SubjectBase extends Component {
             }}
           />
         </div>
-        {this.state.files?.length > 0 && this.renderUploadedImages(this.state.files)}
+        {this.state.files?.length > 0 &&
+          this.renderUploadedImages(this.state.files)}
 
-        <div className="margin8 fullWidth">
-          <Typography variant="body2" className="mgTop12">
+        <div className='margin8 fullWidth'>
+          <Typography variant='body2' className='mgTop12'>
             Background Image
           </Typography>
 
@@ -862,7 +893,7 @@ export default class SubjectBase extends Component {
     return (
       <Autocomplete
         multiple
-        id="groups"
+        id='groups'
         options={this.state.groupsData}
         getOptionLabel={(option) => option.name}
         onChange={(event, newValue) =>
@@ -872,9 +903,9 @@ export default class SubjectBase extends Component {
           <TextField
             {...params}
             style={{ margin: 8 }}
-            label="Groups"
+            label='Groups'
             onChange={(e) => this.handleGroups(e.target.value)}
-            variant="outlined"
+            variant='outlined'
           />
         )}
         value={this.state.groups}
@@ -887,7 +918,7 @@ export default class SubjectBase extends Component {
     return (
       <Autocomplete
         multiple
-        id="experts"
+        id='experts'
         options={this.state.adminsData}
         getOptionLabel={(option) => option.name}
         onChange={(event, newValue) =>
@@ -897,9 +928,9 @@ export default class SubjectBase extends Component {
           <TextField
             {...params}
             style={{ margin: 8 }}
-            label="Experts"
+            label='Experts'
             onChange={(e) => this.handleUsers(e.target.value)}
-            variant="outlined"
+            variant='outlined'
           />
         )}
         value={this.state.experts}
@@ -908,11 +939,11 @@ export default class SubjectBase extends Component {
     );
   };
 
-  renderAdminsDropdown=()=>{
+  renderAdminsDropdown = () => {
     return (
       <Autocomplete
         multiple
-        id="admins"
+        id='admins'
         options={this.state.adminsData}
         getOptionLabel={(option) => option.name}
         onChange={(event, newValue) =>
@@ -922,21 +953,37 @@ export default class SubjectBase extends Component {
           <TextField
             {...params}
             style={{ margin: 8 }}
-            label="Admins"
+            label='Admins'
             onChange={(e) => this.handleUsers(e.target.value)}
-            variant="outlined"
+            variant='outlined'
           />
         )}
         value={this.state.subjectAdmins}
         disabled={!this.state.account}
       />
     );
-  }
+  };
+  renderChipInput = () => {
+    return (
+      <div className='chipInputContainer'>
+        <ChipInput
+          variant='outlined'
+          className='chipInput'
+          disableUnderline={true}
+          id='addLabels'
+          placeholder='Press `Enter` to add labels'
+          value={this.state.tags}
+          onAdd={(chip) => this.handleAddChip(chip)}
+          onDelete={(chip, index) => this.handleDeleteChip(chip, index)}
+        />
+      </div>
+    );
+  };
 
   renderCheckboxes = () => {
     return (
       <>
-        <div className="checkBoxContainer margin8 fullWidth">
+        <div className='checkBoxContainer margin8 fullWidth'>
           <FormControlLabel
             control={
               <Checkbox
@@ -944,15 +991,15 @@ export default class SubjectBase extends Component {
                 onChange={(e) =>
                   this.handleCheckboxChange("private", e.target.checked)
                 }
-                name="checkedB"
-                color="primary"
+                name='checkedB'
+                color='primary'
               />
             }
             label={"Private"}
           />
         </div>
 
-        <div className="checkBoxContainer margin8 fullWidth">
+        <div className='checkBoxContainer margin8 fullWidth'>
           <FormControlLabel
             control={
               <Checkbox
@@ -960,8 +1007,8 @@ export default class SubjectBase extends Component {
                 onChange={(e) =>
                   this.handleCheckboxChange("showReport", e.target.checked)
                 }
-                name="checkedB"
-                color="primary"
+                name='checkedB'
+                color='primary'
               />
             }
             label={"Show Immediate Report"}
@@ -971,39 +1018,39 @@ export default class SubjectBase extends Component {
     );
   };
 
-  addConclusion =() =>{
-    let conclusionData = Object.assign([], this.state.conclusion)
-    let data ={
-        title: "",
-        icon: null,
-        text1: "",
-        text2: "",
-      }
-    conclusionData.push(data)
-    
-    this.setState({
-      conclusion: conclusionData
-    })
-  }
+  addConclusion = () => {
+    let conclusionData = Object.assign([], this.state.conclusion);
+    let data = {
+      title: "",
+      icon: null,
+      text1: "",
+      text2: "",
+    };
+    conclusionData.push(data);
 
-  addConclusionButton =() =>{
-    return(
+    this.setState({
+      conclusion: conclusionData,
+    });
+  };
+
+  addConclusionButton = () => {
+    return (
       <Button
-      onClick={() => this.addConclusion()}
-      id="addConclusion"
-      fullWidth={true}
-      className="mgTop8"
-      color="primary" variant="contained"
-    >
-      Add Conclusion
-    </Button>
-    )
-  }
+        onClick={() => this.addConclusion()}
+        id='addConclusion'
+        fullWidth={true}
+        className='mgTop8'
+        color='primary'
+        variant='contained'>
+        Add Conclusion
+      </Button>
+    );
+  };
 
   renderConclusionFields = () => {
     return (
       <>
-        <div className="checkBoxContainer margin8 fullWidth">
+        <div className='checkBoxContainer margin8 fullWidth'>
           <FormControlLabel
             control={
               <Checkbox
@@ -1011,8 +1058,8 @@ export default class SubjectBase extends Component {
                 onChange={(e) =>
                   this.handleCheckboxChange("showConclusion", e.target.checked)
                 }
-                name="checkedB"
-                color="primary"
+                name='checkedB'
+                color='primary'
               />
             }
             label={"Conclusion"}
@@ -1020,7 +1067,6 @@ export default class SubjectBase extends Component {
         </div>
         {this.state.showConclusion && this.renderConclusion()}
         {this.state.showConclusion && this.addConclusionButton()}
-
       </>
     );
   };
@@ -1028,7 +1074,7 @@ export default class SubjectBase extends Component {
   onChangeConclusionTextfields = (e, index, type) => {
     let conclusionCopy = Object.assign([], this.state.conclusion);
     conclusionCopy[index][type] = e.target.value;
-    
+
     this.setState({
       conclusion: conclusionCopy,
     });
@@ -1043,19 +1089,17 @@ export default class SubjectBase extends Component {
     });
   };
 
-  onClickDeleteConclusion =(index) =>{
+  onClickDeleteConclusion = (index) => {
     let conclusionCopy = Object.assign([], this.state.conclusion);
     conclusionCopy.splice(index, 1);
 
     this.setState({
       conclusion: conclusionCopy,
     });
-  }
-
+  };
 
   renderConclusion = () => {
     return this.state.conclusion.map((singleConclusion, index) => {
-      ;
       return (
         <>
           <ConclusionComponent
@@ -1065,7 +1109,7 @@ export default class SubjectBase extends Component {
             getDropdownValue={this.getDropdownValue}
             onChangeConclusionDropdown={this.onChangeConclusionDropdown}
             onUploadComplete={this.onUploadComplete}
-            length = {this.state.conclusion?.length}
+            length={this.state.conclusion?.length}
             onClickDeleteConclusion={this.onClickDeleteConclusion}
             renderUploadedImages={this.renderUploadedImages}
             conclusionFiles={this.state.conclusionFiles}
@@ -1075,36 +1119,38 @@ export default class SubjectBase extends Component {
     });
   };
 
-  closeCommentModal=()=>{
+  closeCommentModal = () => {
     this.setState({
-      openCommentModal: false
-    })
-  }
-  renderCommentModal=()=>{
-    return(
-
-        <CommentsModal
+      openCommentModal: false,
+    });
+  };
+  renderCommentModal = () => {
+    return (
+      <CommentsModal
         subjectId={this.state.subjectId}
         closeCommentModal={this.closeCommentModal}
         openCommentModal={this.state.openCommentModal}
-        />
-    )
-  }
+      />
+    );
+  };
 
-  onClickViewComments=()=>{
+  onClickViewComments = () => {
     this.setState({
-      openCommentModal: true
-    })
-  }
+      openCommentModal: true,
+    });
+  };
 
-  renderViewCommentButton=()=>{
-    return(
-      <Button color="primary" variant="contained" className="margin8" onClick={this.onClickViewComments}>
+  renderViewCommentButton = () => {
+    return (
+      <Button
+        color='primary'
+        variant='contained'
+        className='margin8'
+        onClick={this.onClickViewComments}>
         View Comments
       </Button>
-    )
-  }
-
+    );
+  };
 
   renderMainContent() {
     return (
@@ -1113,16 +1159,16 @@ export default class SubjectBase extends Component {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <Paper style={{ padding: "20px" }}>
-              <form autoComplete="off">
+              <form autoComplete='off'>
                 {this.renderAccountDropdown()}
 
                 {this.renderCategoryDropdown()}
 
                 {this.renderTypeDropdown()}
 
-                {this.state.type?.value === FORM_TYPE_MAP.discussion  && 
-                this.state.subjectId &&
-                this.renderViewCommentButton()}
+                {this.state.type?.value === FORM_TYPE_MAP.discussion &&
+                  this.state.subjectId &&
+                  this.renderViewCommentButton()}
 
                 {this.state.type?.value === FORM_TYPE_MAP.choice &&
                   this.renderMultiChoiceFields()}
@@ -1141,15 +1187,15 @@ export default class SubjectBase extends Component {
 
                 {this.renderExpertsDropdown()}
                 {this.renderAdminsDropdown()}
+                {this.renderChipInput()}
 
                 {this.state.openCommentModal && this.renderCommentModal()}
 
                 <Button
-                  variant="contained"
+                  variant='contained'
                   style={{ margin: 8 }}
-                  color="primary"
-                  onClick={() => this.handleSave()}
-                >
+                  color='primary'
+                  onClick={() => this.handleSave()}>
                   Save
                 </Button>
               </form>
@@ -1160,58 +1206,73 @@ export default class SubjectBase extends Component {
     );
   }
 
-  errorInAccounts=()=>{
+  errorInAccounts = () => {
     return !this.state.account;
-  }
+  };
 
-  errorInCategory=()=>{
+  errorInCategory = () => {
     return !this.state.category;
-  }
+  };
 
-  errorInType=()=>{
+  errorInType = () => {
     return !this.state.type;
-  }
+  };
 
-  errorInStatus=()=>{
+  errorInStatus = () => {
     return !this.state.status;
-  }
+  };
 
-  errorInName=()=>{
+  errorInName = () => {
     return !this.state.name;
-  }
+  };
 
-  errorInDescription=()=>{
+  errorInDescription = () => {
     return !this.state.description;
-  }
+  };
 
-  errorInQuestion=()=>{
+  errorInQuestion = () => {
     return !this.state.question;
-  }
+  };
 
-  errorInAllocationTotal=()=>{
-    return this.state.type?.value === FORM_TYPE_MAP.allocation && !this.state.allocation.total;
-  }
+  errorInAllocationTotal = () => {
+    return (
+      this.state.type?.value === FORM_TYPE_MAP.allocation &&
+      !this.state.allocation.total
+    );
+  };
 
-  errorInAllocationMin=()=>{
-    return this.state.type?.value === FORM_TYPE_MAP.allocation && !this.state.allocation.min;
-  }
+  errorInAllocationMin = () => {
+    return (
+      this.state.type?.value === FORM_TYPE_MAP.allocation &&
+      !this.state.allocation.min
+    );
+  };
 
-  errorInAllocationMax=()=>{
-    return this.state.type?.value === FORM_TYPE_MAP.allocation && !this.state.allocation.max;
-  }
+  errorInAllocationMax = () => {
+    return (
+      this.state.type?.value === FORM_TYPE_MAP.allocation &&
+      !this.state.allocation.max
+    );
+  };
 
-  errorInAllocationStep=()=>{
-    return this.state.type?.value === FORM_TYPE_MAP.allocation && !this.state.allocation.step;
-  }
+  errorInAllocationStep = () => {
+    return (
+      this.state.type?.value === FORM_TYPE_MAP.allocation &&
+      !this.state.allocation.step
+    );
+  };
 
-  errorInMultiChoiceMin=()=>{
-    return this.state.type?.value === FORM_TYPE_MAP.choice && !this.state.choice.min;
-  }
+  errorInMultiChoiceMin = () => {
+    return (
+      this.state.type?.value === FORM_TYPE_MAP.choice && !this.state.choice.min
+    );
+  };
 
-  errorInMultiChoiceMax=()=>{
-    return this.state.type?.value === FORM_TYPE_MAP.choice && !this.state.choice.max;
-  }
-
+  errorInMultiChoiceMax = () => {
+    return (
+      this.state.type?.value === FORM_TYPE_MAP.choice && !this.state.choice.max
+    );
+  };
 
   checkErrors() {
     if (!this.state.account) {
@@ -1246,7 +1307,7 @@ export default class SubjectBase extends Component {
       let allocation = this.state.allocation;
 
       for (let item of this.state.allocation.options) {
-        if (!item.name|| !item.icon) {
+        if (!item.name || !item.icon) {
           renderFailureNotification("Enter Allocation Fields");
           return true;
         }
@@ -1264,9 +1325,7 @@ export default class SubjectBase extends Component {
         return true;
       }
       if (!allocation.step) {
-        renderFailureNotification(
-          "Enter Allocation step value"
-        );
+        renderFailureNotification("Enter Allocation step value");
         return true;
       }
     }
@@ -1297,5 +1356,4 @@ export default class SubjectBase extends Component {
 
     return false;
   }
-
 }

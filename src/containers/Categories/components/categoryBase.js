@@ -16,7 +16,7 @@ const PAGE_LIMIT = 20;
 
 export default class CategoryBase extends Component {
 
-
+  
   handleOptionChange = (e, newValue, type) => {
     ;
     this.setState({
