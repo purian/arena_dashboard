@@ -1,6 +1,7 @@
 import GroupBase from "./groupBase"
 import { postGroups } from "../../../core/services/groupsServices";
 import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
+import { getAccounts } from "../../../core/services/accountsServices";
 
 
 export default class CreateGroup extends GroupBase {
@@ -13,6 +14,20 @@ export default class CreateGroup extends GroupBase {
     usersData: [],
   };
 
+  componentDidMount=async()=>{
+    try {
+      let response = await getAccounts(
+        100,
+        this.state.currentPage,
+        ""
+      );
+      this.setState({
+        accountsData: response.data.items
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
   handleSave = async () => {
     let data = {
       account: this.state.account,

@@ -16,20 +16,6 @@ const PAGE_LIMIT = 20;
 
 export default class CategoryBase extends Component {
 
-  componentDidMount=async()=>{
-    try {
-      let response = await getAccounts(
-        100,
-        this.state.currentPage,
-        ""
-      );
-      this.setState({
-        accountsData: response.data.items
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  }
   
   handleOptionChange = (e, newValue, type) => {
     ;

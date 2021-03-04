@@ -4,6 +4,7 @@ import {
   renderSuccessNotification,
   renderFailureNotification,
 } from "../../../common/Notifications/showNotifications";
+import { getAccounts } from "../../../core/services/accountsServices";
 
 export default class CreateCategory extends CategoryBase {
   state = {
@@ -17,6 +18,21 @@ export default class CreateCategory extends CategoryBase {
     coverURL: null,
     admins: [],
   };
+
+  componentDidMount=async()=>{
+    try {
+      let response = await getAccounts(
+        100,
+        this.state.currentPage,
+        ""
+      );
+      this.setState({
+        accountsData: response.data.items
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   handleSave = async () => {
     this.setState({

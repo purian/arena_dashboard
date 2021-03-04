@@ -9,7 +9,7 @@ import {
   renderSuccessNotification,
   renderFailureNotification,
 } from "../../../common/Notifications/showNotifications";
-
+import {getAccounts} from "../../../core/services/accountsServices"
 export default class CreateSubject extends SubjectBase {
   state = {
     account: null,
@@ -46,6 +46,21 @@ export default class CreateSubject extends SubjectBase {
     groupsData: [],
     tags: [],
   };
+
+  componentDidMount=async()=>{
+    try {
+      let response = await getAccounts(
+        100,
+        this.state.currentPage,
+        ""
+      );
+      this.setState({
+        accountsData: response.data.items
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   handleSave = async () => {
     this.setState({

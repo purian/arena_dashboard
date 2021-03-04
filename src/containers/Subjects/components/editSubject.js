@@ -55,7 +55,6 @@ export default class EditSubject extends SubjectBase {
 
   componentDidMount() {
     const subjectId = this.props.match.params.id;
-
     this.fetchSubjectData(subjectId);
   }
 
