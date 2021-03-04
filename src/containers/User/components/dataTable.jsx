@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import { getUsers, blockUser, searchUser, seacrUserByAccount } from "../../../core/services/usersServices"
-import { searchAccounts, postAccounts } from '../../../core/services/accountsServices';
+import { searchAccounts, getAccounts } from '../../../core/services/accountsServices';
 import Pagination from '@material-ui/lab/Pagination';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
@@ -20,6 +20,9 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Divider from '@material-ui/core/Divider';
+import AccountsModal from "./accountsModal"
+import { renderFailureNotification, renderSuccessNotification } from "../../../common/Notifications/showNotifications";
 
 const styles = theme => ({
     table: {
@@ -33,7 +36,9 @@ class UserTable extends Component {
         userData: [],
         totalItems: null,
         currentPage: 0,
-        searchValue: ""
+        searchValue: "",
+        openAccountsModal: false,
+        selectedAccount: null
     }
     componentDidMount() {
         const { currentPage, searchValue } = this.state;
@@ -62,6 +67,13 @@ class UserTable extends Component {
                 draggable: true,
                 progress: undefined,
             });
+        })
+        getAccounts(100,0,"").then(resp => {
+            this.setState({
+                userData: resp.data.items
+            })
+        }).catch(err => {
+            renderFailureNotification("Couldn't fetch accounts")
         })
     }
     handleActive = (e, item) => {
@@ -113,6 +125,25 @@ class UserTable extends Component {
     handleUsersOption = (e, newValue) => {
         console.log(e, newValue, "e, newValue")
         const { currentPage } = this.state;
+        if(!newValue || !newValue.id){
+            getUsers(PAGE_LIMIT, currentPage, "").then(resp => {
+                this.setState({
+                    data: resp.data.items,
+                    totalItems: resp.data.count
+                })
+            }).catch(err => {
+                toast.error('Error', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            })
+            return
+          }
         if (newValue) {
             this.setState({
                 ownerId: newValue.id
@@ -157,6 +188,30 @@ class UserTable extends Component {
         }).catch(err => {
         })
     }
+
+    onClickViewAccounts=(item)=>{
+        this.setState({
+          openAccountsModal: true,
+          selectedAccount: item
+        })
+      }
+      
+      closeAccountsModal=()=>{
+        this.setState({
+          openAccountsModal: false
+        })
+      }
+      renderAccountsModal=()=>{
+        return(
+      
+            <AccountsModal
+            selectedAccount={this.state.selectedAccount}
+            closeAccountsModal={this.closeAccountsModal}
+            openAccountsModal={this.state.openAccountsModal}
+            />
+        )
+      }
+
     render() {
         const { classes } = this.props;
         const { data, userData, totalItems } = this.state;
@@ -199,7 +254,20 @@ class UserTable extends Component {
                                     <TableCell >{item.name}</TableCell>
                                     <TableCell >{item.email}</TableCell>
                                     <TableCell >
-                                        <Button className="noPadding minWidthInitial" onClick={() => this.props.history.push(`/admin/user/${item.id}`)} color="primary">Edit</Button>
+                                        <div className="displayFlex">
+                                            <Button className="noPadding minWidthInitial" onClick={() => this.props.history.push(`/admin/user/${item.id}`)} color="primary">Edit</Button>
+                                            <Divider id="editDivider" className="mgLeft8" orientation="vertical" />
+                            
+                                            <Button
+                                            onClick={() =>
+                                                this.onClickViewAccounts(item)
+                                            }
+                                            color="primary"
+                                            className="noPadding minWidthInitial mgLeft8"
+                                            >
+                                            View Accounts
+                                            </Button>
+                                        </div>
                                     </TableCell>
                                     <TableCell >
                                         <Checkbox
@@ -219,6 +287,7 @@ class UserTable extends Component {
                     />
                 </TableContainer>
                 <ToastContainer />
+                {this.state.openAccountsModal && this.renderAccountsModal()}
             </Fragment>
         );
     }

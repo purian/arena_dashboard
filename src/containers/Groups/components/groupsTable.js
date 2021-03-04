@@ -63,6 +63,22 @@ class GroupsTable extends Component {
     openUsersModal: false,
     selectedGroup: null
   };
+
+  componentDidMount=async()=>{
+    try {
+      let response = await getAccounts(
+        100,
+        this.state.currentPage,
+        ""
+      );
+      ;
+      this.setState({
+        accountsData: response.data.items
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
   handleAccounts = async (value) => {
     try {
       let response = await getAccounts(
@@ -84,6 +100,13 @@ class GroupsTable extends Component {
     this.setState({
       [type]: newValue,
     });
+    if(!newValue || !newValue.id){
+      this.setState({
+        data: null,
+        totalItems: null
+      })
+      return
+    }
     if(type === "account"){
       try{
           let response = await searchGroupByAccountId("",newValue.id, PAGE_LIMIT, this.state.currentPage)
@@ -94,7 +117,7 @@ class GroupsTable extends Component {
           })
 
       }catch(e){
-          renderFailureNotification("Subject fetch error")
+          renderFailureNotification("Groups fetch error")
       }
   }
   };

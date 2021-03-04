@@ -43,6 +43,22 @@ class CategoriesTable extends Component {
     openDeleteModal: false
   };
 
+  componentDidMount=async()=>{
+    try {
+      let response = await getAccounts(
+        100,
+        this.state.currentPage,
+        ""
+      );
+      ;
+      this.setState({
+        accountsData: response.data.items
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   handleAccounts = async (value) => {
     try {
       let response = await getAccounts(
@@ -64,6 +80,13 @@ class CategoriesTable extends Component {
     this.setState({
       [type]: newValue,
     });
+    if(!newValue || !newValue.id){
+      this.setState({
+        data: null,
+        totalItems: null
+      })
+      return
+    }
     if(type === "account"){
         try{
             let response = await fetchCategoryByAccountId(newValue.id, PAGE_LIMIT, this.state.currentPage, "")
