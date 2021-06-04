@@ -128,7 +128,6 @@ export const CustomOption = ({ data }) => {
 };
 
 export default class SubjectBase extends Component {
-
   handleOptionChange = (e, newValue, type) => {
     this.setState({
       [type]: newValue,
@@ -368,7 +367,6 @@ export default class SubjectBase extends Component {
               />
 
               <ArenaDropdown
-                components={{ Option: CustomOption }}
                 options={IMAGE_DROPDOWN}
                 selectedOption={this.getDropdownValue(
                   this.state.choice.options[index].icon
