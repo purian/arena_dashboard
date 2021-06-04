@@ -71,7 +71,6 @@ export default class ConclusionComponent extends React.Component{
     renderIconDropdown =() =>{
         return (<div id="dropDown" className="dropdownContainer conclusionDropdown">
         <ArenaDropdown
-          components={{ Option: CustomOption }}
           options={IMAGE_DROPDOWN}
           selectedOption={this.props.getDropdownValue(
             this.props.conclusionData.icon

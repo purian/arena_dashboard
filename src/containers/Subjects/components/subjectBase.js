@@ -119,7 +119,7 @@ const FORM_TYPE = {
 export const CustomOption = ({ data }) => {
   //TODO: bring label from translation for aria label
   return (
-    <div className={`dropDownIconsContainer`}>
+    <div className={`dropDownIconsContainer`} onClick={console.log("CLICKED")}>
       <Icon className={`${data.value} dropDownIcon`} />
       <span>{data.label}</span>{" "}
     </div>
