@@ -1,77 +1,85 @@
 import React, { Component, Fragment } from "react";
 import TextField from "@material-ui/core/TextField";
-import ArenaDropdown from "../arenaDropdown/arenaDropdown"
-import {CustomOption, IMAGE_DROPDOWN} from "../../containers/Subjects/components/subjectBase"
-import ArenaUploader from "../arenaUploader/arenaUploader"
+import ArenaDropdown from "../arenaDropdown/arenaDropdown";
+import {
+  CustomOption,
+  IMAGE_DROPDOWN,
+} from "../../containers/Subjects/components/subjectBase";
+import ArenaUploader from "../arenaUploader/arenaUploader";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
-export default class ConclusionComponent extends React.Component{
+export default class ConclusionComponent extends React.Component {
+  renderDescription = () => {
+    return (
+      <TextField
+        id={`Conclusion ${this.props.index}`}
+        label='Description'
+        className='textTransform'
+        style={{ margin: 8 }}
+        placeholder='Description'
+        value={this.props.conclusionData.text1}
+        fullWidth
+        variant='outlined'
+        margin='normal'
+        InputLabelProps={{
+          shrink: true,
+        }}
+        onChange={(e) =>
+          this.props.onChangeConclusionTextfields(e, this.props.index, "text1")
+        }
+      />
+    );
+  };
 
-    renderDescription=()=>{
-        return(
-            <TextField
-                id={`Conclusion ${this.props.index}`}
-                label="Description"
-                className="textTransform"
-                style={{ margin: 8 }}
-                placeholder="Description"
-                value={this.props.conclusionData.text1}
-                fullWidth
-                variant="outlined"
-                margin="normal"
-                InputLabelProps={{
-                shrink: true,
-                }}
-                onChange={(e) => this.props.onChangeConclusionTextfields(e, this.props.index, "text1")}
-            />
-        )
-    }
+  renderTitle = () => {
+    return (
+      <TextField
+        id={`ConclusionTitle${this.props.index}`}
+        label='Title'
+        className='textTransform'
+        style={{ margin: 8 }}
+        placeholder='Title'
+        value={this.props.conclusionData.title}
+        fullWidth
+        variant='outlined'
+        margin='normal'
+        InputLabelProps={{
+          shrink: true,
+        }}
+        onChange={(e) =>
+          this.props.onChangeConclusionTextfields(e, this.props.index, "title")
+        }
+      />
+    );
+  };
 
-    renderTitle=()=>{
-        return(
-            <TextField
-                id={`ConclusionTitle${this.props.index}`}
-                label="Title"
-                className="textTransform"
-                style={{ margin: 8 }}
-                placeholder="Title"
-                value={this.props.conclusionData.title}
-                fullWidth
-                variant="outlined"
-                margin="normal"
-                InputLabelProps={{
-                shrink: true,
-                }}
-                onChange={(e) => this.props.onChangeConclusionTextfields(e, this.props.index, "title")}
-            />
-        )
-    }
+  renderContent = () => {
+    return (
+      <TextField
+        id={`ConclusionContent${this.props.index}`}
+        label='Content'
+        className='textTransform'
+        style={{ margin: 8 }}
+        placeholder='Content'
+        value={this.props.conclusionData.text2}
+        fullWidth
+        variant='outlined'
+        margin='normal'
+        InputLabelProps={{
+          shrink: true,
+        }}
+        onChange={(e) =>
+          this.props.onChangeConclusionTextfields(e, this.props.index, "text2")
+        }
+      />
+    );
+  };
 
-    renderContent=()=>{
-        return(
-            <TextField
-                id={`ConclusionContent${this.props.index}`}
-                label="Content"
-                className="textTransform"
-                style={{ margin: 8 }}
-                placeholder="Content"
-                value={this.props.conclusionData.text2}
-                fullWidth
-                variant="outlined"
-                margin="normal"
-                InputLabelProps={{
-                shrink: true,
-                }}
-                onChange={(e) => this.props.onChangeConclusionTextfields(e, this.props.index, "text2")}
-            />
-        )
-    }
-
-    renderIconDropdown =() =>{
-        return (<div id="dropDown" className="dropdownContainer conclusionDropdown">
+  renderIconDropdown = () => {
+    return (
+      <div id='dropDown' className='dropdownContainer conclusionDropdown'>
         <ArenaDropdown
-          components={{ Option: CustomOption }}
           options={IMAGE_DROPDOWN}
           selectedOption={this.props.getDropdownValue(
             this.props.conclusionData.icon

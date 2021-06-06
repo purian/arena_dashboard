@@ -116,19 +116,16 @@ const FORM_TYPE = {
   CHOICE: "choice",
   ALLOCATION: "allocation",
 };
-
 export const CustomOption = ({ data }) => {
   //TODO: bring label from translation for aria label
   return (
-    <div className={`dropDownIconsContainer`}>
+    <div className={`dropDownIconsContainer`} onClick={console.log("CLICKED")}>
       <Icon className={`${data.value} dropDownIcon`} />
       <span>{data.label}</span>{" "}
     </div>
   );
 };
-
 export default class SubjectBase extends Component {
-
   handleOptionChange = (e, newValue, type) => {
     this.setState({
       [type]: newValue,
@@ -368,7 +365,6 @@ export default class SubjectBase extends Component {
               />
 
               <ArenaDropdown
-                components={{ Option: CustomOption }}
                 options={IMAGE_DROPDOWN}
                 selectedOption={this.getDropdownValue(
                   this.state.choice.options[index].icon
