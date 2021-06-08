@@ -146,6 +146,7 @@ export default class EditSubject extends SubjectBase {
       cover: this.state.cover,
       conclusionFiles: this.state.conclusionFiles,
       tags: this.state.tags,
+      admins: this.state.subjectAdmins,
     };
     if (this.state.choice) {
       data.choice = this.state.choice;
