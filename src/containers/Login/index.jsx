@@ -74,11 +74,11 @@ class SignIn extends Component {
       payload.password = password
     }
     try{
-      let token = await this.getRecaptchaToken();
-      if (!token) {
-        throw new Error();
-      }
-      payload.recaptchaToken = token;
+      // let token = await this.getRecaptchaToken();
+      // if (!token) {
+      //   throw new Error();
+      // }
+      // payload.recaptchaToken = token;
 
     }catch(e){
       console.error(e)

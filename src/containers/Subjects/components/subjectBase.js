@@ -173,7 +173,28 @@ export default class SubjectBase extends Component {
       );
       this.setState({
         adminsData: response.data.items,
+        adminValue: value
       });
+      
+    } catch (e) {
+      renderFailureNotification("Data not fetched");
+      console.error(e);
+    }
+  };
+
+  handleExpertUsers = async (value) => {
+    try {
+      let response = await getUsersByAccountId(
+        this.state.account.id,
+        PAGE_LIMIT,
+        this.state.currentPage,
+        value
+      );
+      this.setState({
+        expertAdminsData: response.data.items,
+        expertValue: value
+      });
+      
     } catch (e) {
       renderFailureNotification("Data not fetched");
       console.error(e);
@@ -915,7 +936,7 @@ export default class SubjectBase extends Component {
       <Autocomplete
         multiple
         id='experts'
-        options={this.state.adminsData}
+        options={this.state.expertAdminsData}
         getOptionLabel={(option) => option.name}
         onChange={(event, newValue) =>
           this.handleOptionChange(event, newValue, "experts")
@@ -925,7 +946,8 @@ export default class SubjectBase extends Component {
             {...params}
             style={{ margin: 8 }}
             label='Experts'
-            onChange={(e) => this.handleUsers(e.target.value)}
+            value={this.state.expertValue}
+            onChange={(e) => this.handleExpertUsers(e.target.value)}
             variant='outlined'
           />
         )}
@@ -950,6 +972,7 @@ export default class SubjectBase extends Component {
             {...params}
             style={{ margin: 8 }}
             label='Admins'
+            value={this.state.adminValue}
             onChange={(e) => this.handleUsers(e.target.value)}
             variant='outlined'
           />

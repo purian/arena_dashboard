@@ -22,6 +22,7 @@ export default class EditSubject extends SubjectBase {
     currentPage: 0,
     accountsData: [],
     adminsData: [],
+    expertAdminsData: [],
     description: null,
     admins: [],
     groupsData: [],
