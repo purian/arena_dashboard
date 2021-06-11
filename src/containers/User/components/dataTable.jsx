@@ -222,6 +222,7 @@ class UserTable extends Component {
                     options={userData}
                     style={{ width: "20%", float: "left", margin: "0 16px" }}
                     getOptionLabel={(option) => option.name}
+                    filterOptions={(option, state) => option}
                     onChange={(event, newValue) => this.handleUsersOption(event, newValue)}
                     renderInput={(params) => <TextField {...params} className="selectAccount customHeight" label="Select Account" onChange={(e) => this.handleUser(e.target.value)} variant="outlined" />}
                 />

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { withRouter } from 'react-router';
 import Grid from '@material-ui/core/Grid';
@@ -9,10 +8,9 @@ import { getAcntUsers, postAccounts } from '../../../core/services/accountsServi
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
-import Alert from '@material-ui/lab/Alert';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
+import {renderFailureNotification} from "../../../common/Notifications/showNotifications"
 
 class CreateAccount extends Component {
     state = {
@@ -145,6 +143,7 @@ class CreateAccount extends Component {
                                     id="owner"
                                     options={userData}
                                     getOptionLabel={(option) => option.name}
+                                    filterOptions={(option, state) => option}
                                     onChange={(event, newValue) => this.handleUsersOption(event, newValue)}
                                     renderInput={(params) => <TextField {...params} style={{ margin: 8 }} label="Owner" onChange={(e) => this.handleUser(e.target.value)} variant="outlined" />}
                                 />
@@ -153,6 +152,7 @@ class CreateAccount extends Component {
                                     id="tags-outlined"
                                     options={userData}
                                     getOptionLabel={(option) => option.name}
+                                    filterOptions={(option, state) => option}
                                     filterSelectedOptions
                                     onChange={(event, newValue) => this.handleAdmins(event, newValue)}
                                     renderInput={(params) => (

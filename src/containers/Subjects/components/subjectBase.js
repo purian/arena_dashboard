@@ -171,6 +171,7 @@ export default class SubjectBase extends Component {
         this.state.currentPage,
         value
       );
+      debugger
       this.setState({
         adminsData: response.data.items,
         adminValue: value
@@ -644,6 +645,7 @@ export default class SubjectBase extends Component {
         onChange={(event, newValue) =>
           this.handleOptionChange(event, newValue, "account")
         }
+        filterOptions={(option, state) => option}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -669,6 +671,7 @@ export default class SubjectBase extends Component {
         onChange={(event, newValue) =>
           this.handleOptionChange(event, newValue, "category")
         }
+        filterOptions={(option, state) => option}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -695,6 +698,7 @@ export default class SubjectBase extends Component {
           this.handleOptionChange(event, newValue, "type");
           this.changeFields(newValue?.value);
         }}
+        filterOptions={(option, state) => option}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -720,6 +724,7 @@ export default class SubjectBase extends Component {
         onChange={(event, newValue) =>
           this.handleOptionChange(event, newValue, "status")
         }
+        filterOptions={(option, state) => option}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -916,6 +921,7 @@ export default class SubjectBase extends Component {
         onChange={(event, newValue) =>
           this.handleOptionChange(event, newValue, "groups")
         }
+        filterOptions={(option, state) => option}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -941,6 +947,7 @@ export default class SubjectBase extends Component {
         onChange={(event, newValue) =>
           this.handleOptionChange(event, newValue, "experts")
         }
+        filterOptions={(option, state) => option}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -964,9 +971,11 @@ export default class SubjectBase extends Component {
         id='admins'
         options={this.state.adminsData}
         getOptionLabel={(option) => option.name}
+        filterOptions={(option, state) => option}
         onChange={(event, newValue) =>
           this.handleOptionChange(event, newValue, "subjectAdmins")
         }
+        filterOptions={(option, state) => option}
         renderInput={(params) => (
           <TextField
             {...params}

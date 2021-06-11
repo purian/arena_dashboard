@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { withRouter } from 'react-router';
 import Grid from '@material-ui/core/Grid';
@@ -9,11 +8,11 @@ import { getUserAccount, getAcntUsers, editAccount } from '../../../core/service
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ArenaUploader from "../../../common/arenaUploader/arenaUploader"
 import Typography from '@material-ui/core/Typography';
-import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
+import {renderFailureNotification} from "../../../common/Notifications/showNotifications"
 
 class EditAccount extends Component {
     state = {
@@ -203,6 +202,7 @@ class EditAccount extends Component {
                                     id="owner"
                                     options={userData}
                                     getOptionLabel={(option) => option.name}
+                                    filterOptions={(option, state) => option}
                                     onChange={(event, newValue) => this.handleUsersOption(event, newValue)}
                                     value={this.state.owner}
                                     renderInput={(params) => <TextField {...params} label="Owner" style={{ marginBottom: "8px" }} onChange={(e) => this.handleUser(e.target.value)} variant="outlined" />}
@@ -212,6 +212,7 @@ class EditAccount extends Component {
                                     id="tags-outlined"
                                     options={userData}
                                     getOptionLabel={(option) => option.name}
+                                    filterOptions={(option, state) => option}
                                     filterSelectedOptions
                                     onChange={(event, newValue) => this.handleAdmins(event, newValue)}
                                     value={this.state.admins}

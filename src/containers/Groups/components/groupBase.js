@@ -8,10 +8,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAccounts } from "../../../core/services/accountsServices";
 import { getAccountActivityUsers } from "../../../core/services/usersServices";
-import ArenaUploader from "../../../common/arenaUploader/arenaUploader"
 import Typography from "@material-ui/core/Typography";
-import {uploadGroupCSV} from "../../../core/services/groupsServices"
-import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
+import {renderFailureNotification} from "../../../common/Notifications/showNotifications"
 import CSVUploader from "../../../common/csvReader/csvReader"
 const PAGE_LIMIT = 20;
 
@@ -130,6 +128,7 @@ export default class GroupBase extends Component {
                   id="account"
                   options={accountsData}
                   getOptionLabel={(option) => option.name}
+                  filterOptions={(option, state) => option}
                   onChange={(event, newValue) =>
                     this.handleOptionChange(event, newValue, "account")
                   }
@@ -167,6 +166,7 @@ export default class GroupBase extends Component {
                   id="users"
                   options={usersData}
                   getOptionLabel={(option) => option.email}
+                  filterOptions={(option, state) => option}
                   onChange={(event, newValue) =>
                     this.handleOptionChange(event, newValue, "users")
                   }

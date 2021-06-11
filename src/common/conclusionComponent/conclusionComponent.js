@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import TextField from "@material-ui/core/TextField";
 import ArenaDropdown from "../arenaDropdown/arenaDropdown";
 import {
-  CustomOption,
   IMAGE_DROPDOWN,
 } from "../../containers/Subjects/components/subjectBase";
 import ArenaUploader from "../arenaUploader/arenaUploader";

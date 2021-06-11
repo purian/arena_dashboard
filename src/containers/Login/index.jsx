@@ -79,7 +79,6 @@ class SignIn extends Component {
         throw new Error();
       }
       payload.recaptchaToken = token;
-
     }catch(e){
       console.error(e)
       renderFailureNotification("Invalid captcha")
