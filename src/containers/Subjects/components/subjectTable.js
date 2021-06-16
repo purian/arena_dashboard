@@ -234,6 +234,7 @@ loadPageData = () => {
           onChange={(event, newValue) =>
             this.handleOptionChange(event, newValue, "account")
           }
+          filterOptions={(option, state) => option}
           renderInput={(params) => (
             <TextField
               {...params}

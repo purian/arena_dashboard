@@ -18,7 +18,6 @@ import { withRouter } from "react-router";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAccounts } from "../../../core/services/accountsServices";
-import { searchGroupByAccountId } from "../../../core/services/groupsServices";
 import { fetchCategoryByAccountId, deleteCategory} from "../../../core/services/categoriesServices"
 import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
 import DeleteModal from "../../../common/deleteModal/deleteModal"
@@ -203,6 +202,7 @@ loadPageData = () => {
           options={accountsData}
           style={{ width: "20%", float: "left", margin: "0 16px" }}
           getOptionLabel={(option) => option.name}
+          filterOptions={(option, state) => option}
           onChange={(event, newValue) =>
             this.handleOptionChange(event, newValue, "account")
           }

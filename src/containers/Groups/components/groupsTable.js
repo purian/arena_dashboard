@@ -251,6 +251,7 @@ renderUserModal=()=>{
           options={accountsData}
           style={{ width: "20%", float: "left", margin: "0 16px" }}
           getOptionLabel={(option) => option.name}
+          filterOptions={(option, state) => option}
           onChange={(event, newValue) =>
             this.handleOptionChange(event, newValue, "account")
           }

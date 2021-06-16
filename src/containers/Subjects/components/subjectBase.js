@@ -171,9 +171,31 @@ export default class SubjectBase extends Component {
         this.state.currentPage,
         value
       );
+      debugger
       this.setState({
         adminsData: response.data.items,
+        adminValue: value
       });
+      
+    } catch (e) {
+      renderFailureNotification("Data not fetched");
+      console.error(e);
+    }
+  };
+
+  handleExpertUsers = async (value) => {
+    try {
+      let response = await getUsersByAccountId(
+        this.state.account.id,
+        PAGE_LIMIT,
+        this.state.currentPage,
+        value
+      );
+      this.setState({
+        expertAdminsData: response.data.items,
+        expertValue: value
+      });
+      
     } catch (e) {
       renderFailureNotification("Data not fetched");
       console.error(e);
@@ -623,6 +645,7 @@ export default class SubjectBase extends Component {
         onChange={(event, newValue) =>
           this.handleOptionChange(event, newValue, "account")
         }
+        filterOptions={(option, state) => option}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -648,6 +671,7 @@ export default class SubjectBase extends Component {
         onChange={(event, newValue) =>
           this.handleOptionChange(event, newValue, "category")
         }
+        filterOptions={(option, state) => option}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -674,6 +698,7 @@ export default class SubjectBase extends Component {
           this.handleOptionChange(event, newValue, "type");
           this.changeFields(newValue?.value);
         }}
+        filterOptions={(option, state) => option}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -699,6 +724,7 @@ export default class SubjectBase extends Component {
         onChange={(event, newValue) =>
           this.handleOptionChange(event, newValue, "status")
         }
+        filterOptions={(option, state) => option}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -895,6 +921,7 @@ export default class SubjectBase extends Component {
         onChange={(event, newValue) =>
           this.handleOptionChange(event, newValue, "groups")
         }
+        filterOptions={(option, state) => option}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -915,17 +942,19 @@ export default class SubjectBase extends Component {
       <Autocomplete
         multiple
         id='experts'
-        options={this.state.adminsData}
+        options={this.state.expertAdminsData}
         getOptionLabel={(option) => option.name}
         onChange={(event, newValue) =>
           this.handleOptionChange(event, newValue, "experts")
         }
+        filterOptions={(option, state) => option}
         renderInput={(params) => (
           <TextField
             {...params}
             style={{ margin: 8 }}
             label='Experts'
-            onChange={(e) => this.handleUsers(e.target.value)}
+            value={this.state.expertValue}
+            onChange={(e) => this.handleExpertUsers(e.target.value)}
             variant='outlined'
           />
         )}
@@ -942,14 +971,17 @@ export default class SubjectBase extends Component {
         id='admins'
         options={this.state.adminsData}
         getOptionLabel={(option) => option.name}
+        filterOptions={(option, state) => option}
         onChange={(event, newValue) =>
           this.handleOptionChange(event, newValue, "subjectAdmins")
         }
+        filterOptions={(option, state) => option}
         renderInput={(params) => (
           <TextField
             {...params}
             style={{ margin: 8 }}
             label='Admins'
+            value={this.state.adminValue}
             onChange={(e) => this.handleUsers(e.target.value)}
             variant='outlined'
           />

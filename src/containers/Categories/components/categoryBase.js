@@ -7,10 +7,9 @@ import React, { Component } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAccounts, getUsersByAccountId } from "../../../core/services/accountsServices";
-import { getUsers } from "../../../core/services/usersServices";
 import ArenaUploader from "../../../common/arenaUploader/arenaUploader"
 import Typography from '@material-ui/core/Typography';
-import {renderSuccessNotification, renderFailureNotification} from "../../../common/Notifications/showNotifications"
+import {renderFailureNotification} from "../../../common/Notifications/showNotifications"
 
 const PAGE_LIMIT = 20;
 
@@ -117,6 +116,7 @@ export default class CategoryBase extends Component {
                   id="account"
                   options={accountsData}
                   getOptionLabel={(option) => option.name}
+                  filterOptions={(option, state) => option}
                   onChange={(event, newValue) =>
                     this.handleOptionChange(event, newValue, "account")
                   }
@@ -206,6 +206,7 @@ export default class CategoryBase extends Component {
                   id="admins"
                   options={adminsData}
                   getOptionLabel={(option) => option.name}
+                  filterOptions={(option, state) => option}
                   onChange={(event, newValue) =>
                     this.handleOptionChange(event, newValue, "admins")
                   }
