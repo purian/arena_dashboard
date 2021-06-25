@@ -122,9 +122,6 @@ export default class EditGroup extends GroupBase{
           await editGroup(data, this.state.groupId);
           ;
           renderSuccessNotification("Group edit success");
-          setTimeout(()=>{
-            this.props.history.goBack()
-          },1000)
         } catch (e) {
           console.error(e);
           if(e?.response?.data?.details?.name?.message){
